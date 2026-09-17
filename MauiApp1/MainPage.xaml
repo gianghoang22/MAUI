@@ -1,8 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1.MainPage">
-
-    <Grid />
-
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.MainPage" x:DataType="vm:LibraryViewModel" Title="VocabMate">
+    <ContentPage.ToolbarItems><ToolbarItem Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" /></ContentPage.ToolbarItems>
+    <Grid Padding="20" MaximumWidthRequest="900">
+        <CollectionView ItemsSource="{Binding Classes}" ItemTemplate="{StaticResource NamedRowTemplate}" SelectionMode="None">
+            <CollectionView.Header>
+                <VerticalStackLayout Spacing="16" Padding="0,0,0,20" IsEnabled="{Binding IsNotBusy}">
+                    <Label Text="VOCABMATE" FontAttributes="Bold" CharacterSpacing="3" TextColor="{AppThemeBinding Light=#512BD4, Dark=#C5B4FF}" />
+                    <Label Text="{DynamicResource L10n.VHomeHeading}" Style="{StaticResource PageHeading}" />
+                    <Label Text="{DynamicResource L10n.VHomeIntro}" Style="{StaticResource MutedText}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{Binding Summary}" Style="{StaticResource SectionHeading}" />
+                            <Button Text="{DynamicResource L10n.VResume}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" />
+                            <Label Text="{DynamicResource L10n.VLocalClassesHint}" Style="{StaticResource MutedText}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="{DynamicResource L10n.VAddClass}" Style="{StaticResource SectionHeading}" />
+                            <Entry Text="{Binding NewName}" MaxLength="80" Placeholder="{DynamicResource L10n.VClassPlaceholder}" AutomationId="NewClassName" />
+                            <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding AddCommand}" AutomationId="AddClassButton" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                    <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" />
+                </VerticalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VClassesEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
 </ContentPage>

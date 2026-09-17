@@ -1,13 +1,13 @@
 using MauiApp1.ViewModels;
 using MauiApp1.Services;
 
-namespace MauiApp1;
+namespace MauiApp1.Views;
 
-public partial class MainPage : ContentPage
+public partial class HistoryPage : ContentPage
 {
-    private readonly LibraryViewModel viewModel;
+    private readonly HistoryViewModel viewModel;
 
-    public MainPage(LibraryViewModel viewModel)
+    public HistoryPage(HistoryViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = this.viewModel = viewModel;

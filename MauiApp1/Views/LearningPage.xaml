@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels" xmlns:controls="clr-namespace:MauiApp1.Controls"
+             x:Class="MauiApp1.Views.LearningPage" x:DataType="vm:LearningViewModel" Title="{DynamicResource L10n.VLearn}">
+    <ContentPage.ToolbarItems><ToolbarItem Text="{DynamicResource L10n.VExit}" Command="{Binding ExitCommand}" /></ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16" MaximumWidthRequest="900" IsEnabled="{Binding IsNotBusy}">
+            <Label Text="{Binding DeckName}" Style="{StaticResource PageHeading}" />
+            <Label Text="{Binding ModeName}" Style="{StaticResource SectionHeading}" />
+            <Label Text="{Binding DirectionName}" Style="{StaticResource MutedText}" />
+            <Label Text="{Binding Position}" FontAttributes="Bold" />
+            <VerticalStackLayout Spacing="16" IsVisible="{Binding ShowQuestion}">
+                <controls:VocabularyFlashcard Prompt="{Binding QuestionText}" Answer="{Binding AnswerText}" IsRevealed="{Binding ShowAnswer}" />
+                <Button Text="{DynamicResource L10n.VSpeak}" Command="{Binding SpeakCommand}" />
+                <Button Text="{DynamicResource L10n.VFlip}" Command="{Binding FlipCommand}" IsVisible="{Binding ShowFlip}" AutomationId="FlipButton" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10" IsVisible="{Binding ShowRating}">
+                    <Button Text="{DynamicResource L10n.VRemember}" Command="{Binding RememberCommand}" AutomationId="RememberButton" />
+                    <Button Grid.Column="1" Text="{DynamicResource L10n.VForget}" Command="{Binding ForgetCommand}" />
+                </Grid>
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Choices}" BindableLayout.ItemTemplate="{StaticResource ChoiceTemplate}" Spacing="10" IsVisible="{Binding ShowChoices}" />
+                <VerticalStackLayout Spacing="10" IsVisible="{Binding ShowWritten}">
+                    <Entry Text="{Binding Input}" Placeholder="{DynamicResource L10n.VTypeAnswer}" MaxLength="200" ReturnCommand="{Binding SubmitCommand}" ReturnType="Done" AutomationId="WrittenAnswerEntry" />
+                    <Button Text="{DynamicResource L10n.VCheckAnswer}" Command="{Binding SubmitCommand}" />
+                </VerticalStackLayout>
+                <Label Text="{Binding Feedback}" FontSize="20" FontAttributes="Bold" />
+                <Button Text="{DynamicResource L10n.VNext}" Command="{Binding NextCommand}" IsVisible="{Binding ShowNext}" AutomationId="NextQuestionButton" />
+            </VerticalStackLayout>
+            <VerticalStackLayout IsVisible="{Binding ShowMatch}" Spacing="12">
+                <Label Text="{Binding MatchFeedback}" Style="{StaticResource SectionHeading}" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding MatchLeft}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="10" />
+                    <VerticalStackLayout Grid.Column="1" BindableLayout.ItemsSource="{Binding MatchRight}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="10" />
+                </Grid>
+            </VerticalStackLayout>
+            <Border Style="{StaticResource Card}" IsVisible="{Binding ShowResult}">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="{DynamicResource L10n.VSessionComplete}" Style="{StaticResource SectionHeading}" />
+                    <Label Text="{Binding Score}" FontSize="30" FontAttributes="Bold" />
+                    <Label Text="{Binding ResultDetails}" Style="{StaticResource MutedText}" />
+                    <Label Text="{Binding WrongAnswers}" IsVisible="{Binding CanRetry}" />
+                    <Button Text="{DynamicResource L10n.VRetryWrong}" Command="{Binding RetryCommand}" IsVisible="{Binding CanRetry}" />
+                    <Button Text="{DynamicResource L10n.VBackToDeck}" Command="{Binding ExitCommand}" />
+                </VerticalStackLayout>
+            </Border>
+            <Label Text="{Binding SaveStatus}" Style="{StaticResource MutedText}" />
+            <Label Text="{DynamicResource L10n.VSessionSavedHint}" Style="{StaticResource MutedText}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

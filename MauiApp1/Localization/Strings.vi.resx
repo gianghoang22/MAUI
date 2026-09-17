@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Refresh" xml:space="preserve">
+    <value>Tải lại</value>
+  </data>
+  <data name="DashboardTab" xml:space="preserve">
+    <value>Tổng quan</value>
+  </data>
+  <data name="SubjectsTitle" xml:space="preserve">
+    <value>Môn học</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="DashboardHeading" xml:space="preserve">
+    <value>Học một chút, tiến một bước.</value>
+  </data>
+  <data name="DashboardIntro" xml:space="preserve">
+    <value>Gom mục tiêu của bạn về một nơi. Bắt đầu từ một nhiệm vụ nhỏ hôm nay.</value>
+  </data>
+  <data name="PendingStatus" xml:space="preserve">
+    <value>Cần học</value>
+  </data>
+  <data name="OverdueStatus" xml:space="preserve">
+    <value>Quá hạn</value>
+  </data>
+  <data name="CompletedStatus" xml:space="preserve">
+    <value>Đã hoàn thành</value>
+  </data>
+  <data name="DashboardProgressHeading" xml:space="preserve">
+    <value>Mỗi nhiệm vụ đều có ý nghĩa</value>
+  </data>
+  <data name="OpenSubjects" xml:space="preserve">
+    <value>Đến môn học của tôi</value>
+  </data>
+  <data name="UpcomingHeading" xml:space="preserve">
+    <value>Ưu tiên tiếp theo</value>
+  </data>
+  <data name="UpcomingHint" xml:space="preserve">
+    <value>Tối đa 8 nhiệm vụ chưa hoàn thành, xếp theo hạn gần nhất.</value>
+  </data>
+  <data name="UpcomingEmpty" xml:space="preserve">
+    <value>Chưa có việc cần học. Thêm môn học và nhiệm vụ đầu tiên, hoặc tận hưởng lúc đã hoàn thành tất cả!</value>
+  </data>
+  <data name="SubjectsHeading" xml:space="preserve">
+    <value>Môn học của tôi</value>
+  </data>
+  <data name="SubjectsIntro" xml:space="preserve">
+    <value>Một môn học cho mỗi kỹ năng bạn muốn chinh phục.</value>
+  </data>
+  <data name="AddSubject" xml:space="preserve">
+    <value>Thêm môn học</value>
+  </data>
+  <data name="SubjectPlaceholder" xml:space="preserve">
+    <value>Ví dụ: .NET MAUI</value>
+  </data>
+  <data name="NewSubjectDescription" xml:space="preserve">
+    <value>Tên môn học mới</value>
+  </data>
+  <data name="SubjectsEmpty" xml:space="preserve">
+    <value>Danh sách đang trống. Hãy thêm môn .NET MAUI để bắt đầu roadmap của bạn.</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Mở</value>
+  </data>
+  <data name="SubjectDetailTitle" xml:space="preserve">
+    <value>Chi tiết môn học</value>
+  </data>
+  <data name="StudyPlanHeading" xml:space="preserve">
+    <value>Kế hoạch học tập</value>
+  </data>
+  <data name="SubjectName" xml:space="preserve">
+    <value>Tên môn học</value>
+  </data>
+  <data name="SaveSubjectName" xml:space="preserve">
+    <value>Lưu tên môn học</value>
+  </data>
+  <data name="AddTask" xml:space="preserve">
+    <value>+ Thêm nhiệm vụ</value>
+  </data>
+  <data name="SearchTasks" xml:space="preserve">
+    <value>Tìm theo tiêu đề nhiệm vụ</value>
+  </data>
+  <data name="FilterStatus" xml:space="preserve">
+    <value>Lọc trạng thái</value>
+  </data>
+  <data name="FilterDescription" xml:space="preserve">
+    <value>Lọc nhiệm vụ theo trạng thái</value>
+  </data>
+  <data name="TasksEmpty" xml:space="preserve">
+    <value>Chưa có nhiệm vụ phù hợp. Thêm nhiệm vụ hoặc thay đổi bộ lọc.</value>
+  </data>
+  <data name="DeleteSubject" xml:space="preserve">
+    <value>Xóa môn học</value>
+  </data>
+  <data name="TaskTitle" xml:space="preserve">
+    <value>Nhiệm vụ</value>
+  </data>
+  <data name="TaskHeading" xml:space="preserve">
+    <value>Từng bước hoàn thành</value>
+  </data>
+  <data name="TaskPrompt" xml:space="preserve">
+    <value>Bạn sẽ học gì?</value>
+  </data>
+  <data name="TaskPlaceholder" xml:space="preserve">
+    <value>Ví dụ: Thực hành Data Binding</value>
+  </data>
+  <data name="TaskTitleDescription" xml:space="preserve">
+    <value>Tiêu đề nhiệm vụ, bắt buộc</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Hạn hoàn thành</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="NotesPlaceholder" xml:space="preserve">
+    <value>Kiến thức cần nhớ, bài tập và tài liệu tham khảo…</value>
+  </data>
+  <data name="NotesDescription" xml:space="preserve">
+    <value>Ghi chú nhiệm vụ</value>
+  </data>
+  <data name="CompleteDescription" xml:space="preserve">
+    <value>Đánh dấu nhiệm vụ đã hoàn thành</value>
+  </data>
+  <data name="UnsavedHint" xml:space="preserve">
+    <value>Nhấn Lưu để giữ thay đổi. Quay lại mà chưa lưu sẽ bỏ thay đổi.</value>
+  </data>
+  <data name="SaveTask" xml:space="preserve">
+    <value>Lưu nhiệm vụ</value>
+  </data>
+  <data name="DeleteTask" xml:space="preserve">
+    <value>Xóa nhiệm vụ</value>
+  </data>
+  <data name="SettingsHeading" xml:space="preserve">
+    <value>Góc học tập của bạn</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Giao diện</value>
+  </data>
+  <data name="ChooseTheme" xml:space="preserve">
+    <value>Chọn giao diện</value>
+  </data>
+  <data name="ThemeDescription" xml:space="preserve">
+    <value>Giao diện sáng, tối hoặc theo thiết bị</value>
+  </data>
+  <data name="DeviceDataHeading" xml:space="preserve">
+    <value>Dữ liệu trên thiết bị</value>
+  </data>
+  <data name="OfflineExplanation" xml:space="preserve">
+    <value>StudyMate hoạt động offline. Môn học và nhiệm vụ được lưu khi bạn nhấn Lưu hoặc Thêm; chưa đồng bộ lên cloud.</value>
+  </data>
+  <data name="DataFile" xml:space="preserve">
+    <value>File dữ liệu</value>
+  </data>
+  <data name="PrivacyHint" xml:space="preserve">
+    <value>Dữ liệu JSON chưa mã hóa. Không ghi mật khẩu hoặc thông tin nhạy cảm. Gỡ app có thể làm mất dữ liệu; hãy sao lưu file trước.</value>
+  </data>
+  <data name="MvpHeading" xml:space="preserve">
+    <value>StudyMate · MVP cho checkpoint 1</value>
+  </data>
+  <data name="ProgressHeading" xml:space="preserve">
+    <value>Tiến độ</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Chọn ngôn ngữ</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>Ngôn ngữ giao diện của ứng dụng</value>
+  </data>
+  <data name="LanguageHint" xml:space="preserve">
+    <value>Đổi ngôn ngữ giao diện ngay, không dịch tên lớp, bộ từ hoặc nội dung thẻ do bạn nhập.</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>Theo thiết bị</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Sáng</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Tối</value>
+  </data>
+  <data name="FilterAll" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="FilterPending" xml:space="preserve">
+    <value>Chưa hoàn thành</value>
+  </data>
+  <data name="FilterCompleted" xml:space="preserve">
+    <value>Đã hoàn thành</value>
+  </data>
+  <data name="FilterOverdue" xml:space="preserve">
+    <value>Quá hạn</value>
+  </data>
+  <data name="ProgressSummary" xml:space="preserve">
+    <value>{0}/{1} nhiệm vụ hoàn thành</value>
+  </data>
+  <data name="OpenTaskDescription" xml:space="preserve">
+    <value>Mở nhiệm vụ {0}</value>
+  </data>
+  <data name="OpenSubjectDescription" xml:space="preserve">
+    <value>Mở môn học {0}</value>
+  </data>
+  <data name="TaskDetailFormat" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>dd/MM/yyyy</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Chưa thể thực hiện</value>
+  </data>
+  <data name="ErrorUnexpected" xml:space="preserve">
+    <value>Không thể hoàn tất thao tác. Hãy thử lại; nếu vừa lưu hoặc xóa, tải lại để kiểm tra kết quả.</value>
+  </data>
+  <data name="ErrorSubjectName" xml:space="preserve">
+    <value>Tên môn học phải có từ 1 đến 80 ký tự.</value>
+  </data>
+  <data name="ErrorDuplicateSubject" xml:space="preserve">
+    <value>Môn học này đã tồn tại.</value>
+  </data>
+  <data name="ErrorSubjectGone" xml:space="preserve">
+    <value>Môn học không còn tồn tại. Hãy quay lại danh sách.</value>
+  </data>
+  <data name="ErrorTaskTitle" xml:space="preserve">
+    <value>Tiêu đề phải có từ 1 đến 120 ký tự.</value>
+  </data>
+  <data name="ErrorNotesTooLong" xml:space="preserve">
+    <value>Ghi chú không được quá 10.000 ký tự.</value>
+  </data>
+  <data name="ErrorDataUnreadable" xml:space="preserve">
+    <value>Không đọc được dữ liệu StudyMate. File gốc được giữ nguyên; hãy sao lưu trước khi khôi phục.</value>
+  </data>
+  <data name="ErrorDataInvalid" xml:space="preserve">
+    <value>Dữ liệu StudyMate không hợp lệ hoặc thuộc phiên bản chưa hỗ trợ. File gốc được giữ nguyên.</value>
+  </data>
+  <data name="ErrorSubjectNotLoaded" xml:space="preserve">
+    <value>Chưa tải được môn học. Hãy thử tải lại hoặc quay về danh sách.</value>
+  </data>
+  <data name="ErrorSubjectNotFound" xml:space="preserve">
+    <value>Không tìm thấy môn học. Hãy quay lại danh sách.</value>
+  </data>
+  <data name="ErrorInvalidTaskLink" xml:space="preserve">
+    <value>Đường dẫn nhiệm vụ không hợp lệ.</value>
+  </data>
+  <data name="ErrorTaskGone" xml:space="preserve">
+    <value>Nhiệm vụ không còn tồn tại.</value>
+  </data>
+  <data name="ErrorDueDateRequired" xml:space="preserve">
+    <value>Hãy chọn hạn hoàn thành.</value>
+  </data>
+  <data name="ErrorTaskNotLoaded" xml:space="preserve">
+    <value>Chưa tải được nhiệm vụ. Hãy thử tải lại hoặc quay về danh sách.</value>
+  </data>
+  <data name="ConfirmDeleteSubject" xml:space="preserve">
+    <value>Xóa môn học?</value>
+  </data>
+  <data name="ConfirmDeleteSubjectMessage" xml:space="preserve">
+    <value>Môn “{0}” và toàn bộ nhiệm vụ bên trong sẽ bị xóa. Không thể hoàn tác.</value>
+  </data>
+  <data name="ConfirmDeleteTask" xml:space="preserve">
+    <value>Xóa nhiệm vụ?</value>
+  </data>
+  <data name="ConfirmDeleteTaskMessage" xml:space="preserve">
+    <value>Xóa “{0}”? Không thể hoàn tác.</value>
+  </data>
+  <data name="MvpDescription" xml:space="preserve">
+    <value>Bản này có XAML, MVVM, Shell, DI, lưu trữ local và đa ngôn ngữ Anh/Việt. Behavior validation, lưu nháp và handler native nằm ở bước học tiếp theo.</value>
+  </data>
+  <data name="VLibrary" xml:space="preserve">
+    <value>Thư viện</value>
+  </data>
+  <data name="VHomeHeading" xml:space="preserve">
+    <value>Từ mới hôm nay. Tự tin ngày mai.</value>
+  </data>
+  <data name="VHomeIntro" xml:space="preserve">
+    <value>Bộ từ của bạn, cách học của bạn. Import Excel và bắt đầu một lượt học nhỏ.</value>
+  </data>
+  <data name="VLocalClassesHint" xml:space="preserve">
+    <value>Lớp là nhóm bộ từ trên thiết bị, chưa phải lớp học online.</value>
+  </data>
+  <data name="VYourClasses" xml:space="preserve">
+    <value>Lớp của tôi</value>
+  </data>
+  <data name="VAddClass" xml:space="preserve">
+    <value>Thêm lớp</value>
+  </data>
+  <data name="VClassPlaceholder" xml:space="preserve">
+    <value>Ví dụ: TOEIC, IELTS, Tiếng Anh mỗi ngày</value>
+  </data>
+  <data name="VClassesEmpty" xml:space="preserve">
+    <value>Chưa có lớp. Tạo lớp đầu tiên để lưu bộ từ của bạn.</value>
+  </data>
+  <data name="VClass" xml:space="preserve">
+    <value>Lớp học</value>
+  </data>
+  <data name="VClassName" xml:space="preserve">
+    <value>Tên lớp</value>
+  </data>
+  <data name="VAddDeck" xml:space="preserve">
+    <value>Thêm bộ từ</value>
+  </data>
+  <data name="VDeckPlaceholder" xml:space="preserve">
+    <value>Ví dụ: Đồ ăn, Du lịch, Công việc</value>
+  </data>
+  <data name="VDecksEmpty" xml:space="preserve">
+    <value>Chưa có bộ từ trong lớp này.</value>
+  </data>
+  <data name="VDeck" xml:space="preserve">
+    <value>Bộ từ vựng</value>
+  </data>
+  <data name="VDeckName" xml:space="preserve">
+    <value>Tên bộ từ</value>
+  </data>
+  <data name="VDescription" xml:space="preserve">
+    <value>Mô tả bộ từ (không bắt buộc)</value>
+  </data>
+  <data name="VSave" xml:space="preserve">
+    <value>Lưu thay đổi</value>
+  </data>
+  <data name="VEdit" xml:space="preserve">
+    <value>Sửa</value>
+  </data>
+  <data name="VAddCard" xml:space="preserve">
+    <value>Thêm từ</value>
+  </data>
+  <data name="VCard" xml:space="preserve">
+    <value>Thẻ từ vựng</value>
+  </data>
+  <data name="VSaveCard" xml:space="preserve">
+    <value>Lưu từ vào bộ</value>
+  </data>
+  <data name="VVietnamese" xml:space="preserve">
+    <value>Tiếng Việt</value>
+  </data>
+  <data name="VEnglish" xml:space="preserve">
+    <value>Tiếng Anh</value>
+  </data>
+  <data name="VSearchCards" xml:space="preserve">
+    <value>Tìm từ tiếng Anh hoặc tiếng Việt</value>
+  </data>
+  <data name="VCardsEmpty" xml:space="preserve">
+    <value>Chưa có từ phù hợp. Thêm từ hoặc import file Excel.</value>
+  </data>
+  <data name="VStudySetup" xml:space="preserve">
+    <value>Học bộ từ này</value>
+  </data>
+  <data name="VChooseMode" xml:space="preserve">
+    <value>Chế độ học</value>
+  </data>
+  <data name="VChooseDirection" xml:space="preserve">
+    <value>Chiều học</value>
+  </data>
+  <data name="VMode0" xml:space="preserve">
+    <value>Flashcard</value>
+  </data>
+  <data name="VMode1" xml:space="preserve">
+    <value>Chọn đáp án</value>
+  </data>
+  <data name="VMode2" xml:space="preserve">
+    <value>Viết đáp án</value>
+  </data>
+  <data name="VMode3" xml:space="preserve">
+    <value>Ghép cặp</value>
+  </data>
+  <data name="VDirection0" xml:space="preserve">
+    <value>Anh → Việt</value>
+  </data>
+  <data name="VDirection1" xml:space="preserve">
+    <value>Việt → Anh</value>
+  </data>
+  <data name="VSessionLimitHint" xml:space="preserve">
+    <value>Mỗi lượt tối đa 20 câu; ghép cặp tối đa 6 cặp. Từ trùng câu hỏi được gom nghĩa. Trắc nghiệm cần 3 đáp án sai phân biệt cho mỗi câu.</value>
+  </data>
+  <data name="VStart" xml:space="preserve">
+    <value>Bắt đầu học</value>
+  </data>
+  <data name="VResume" xml:space="preserve">
+    <value>Tiếp tục lượt học</value>
+  </data>
+  <data name="VStartNew" xml:space="preserve">
+    <value>Bắt đầu lượt mới</value>
+  </data>
+  <data name="VReplaceSession" xml:space="preserve">
+    <value>Thay lượt học đang dở?</value>
+  </data>
+  <data name="VReplaceSessionWarning" xml:space="preserve">
+    <value>Chỉ lưu một lượt học đang dở. Bắt đầu lượt mới sẽ thay lượt hiện tại; kết quả các lượt đã hoàn thành vẫn giữ nguyên.</value>
+  </data>
+  <data name="VLearn" xml:space="preserve">
+    <value>Học từ vựng</value>
+  </data>
+  <data name="VExit" xml:space="preserve">
+    <value>Lưu và thoát</value>
+  </data>
+  <data name="VSpeak" xml:space="preserve">
+    <value>Nghe tiếng Anh</value>
+  </data>
+  <data name="VFlip" xml:space="preserve">
+    <value>Lật thẻ</value>
+  </data>
+  <data name="VRemember" xml:space="preserve">
+    <value>Đã nhớ</value>
+  </data>
+  <data name="VForget" xml:space="preserve">
+    <value>Chưa nhớ</value>
+  </data>
+  <data name="VTypeAnswer" xml:space="preserve">
+    <value>Nhập đáp án…</value>
+  </data>
+  <data name="VCheckAnswer" xml:space="preserve">
+    <value>Kiểm tra</value>
+  </data>
+  <data name="VNext" xml:space="preserve">
+    <value>Câu tiếp theo / Kết quả</value>
+  </data>
+  <data name="VCorrect" xml:space="preserve">
+    <value>Chính xác!</value>
+  </data>
+  <data name="VIncorrect" xml:space="preserve">
+    <value>Chưa đúng — xem đáp án và thử lại ở lượt ôn.</value>
+  </data>
+  <data name="VMatchHint" xml:space="preserve">
+    <value>Chọn một ô bên trái, rồi chọn nghĩa bên phải.</value>
+  </data>
+  <data name="VTryAgain" xml:space="preserve">
+    <value>Chưa khớp. Chọn lại một cặp nhé.</value>
+  </data>
+  <data name="VSelectLeft" xml:space="preserve">
+    <value>Hãy chọn một ô bên trái trước.</value>
+  </data>
+  <data name="VSessionComplete" xml:space="preserve">
+    <value>Hoàn thành lượt học!</value>
+  </data>
+  <data name="VRetryWrong" xml:space="preserve">
+    <value>Ôn lại từ chưa nhớ</value>
+  </data>
+  <data name="VBackToDeck" xml:space="preserve">
+    <value>Quay lại</value>
+  </data>
+  <data name="VSessionSavedHint" xml:space="preserve">
+    <value>Lượt học được lưu sau mỗi thao tác. Có thể thoát và tiếp tục từ Thư viện. Thời gian kết quả bao gồm cả lúc tạm nghỉ.</value>
+  </data>
+  <data name="VHistory" xml:space="preserve">
+    <value>Kết quả</value>
+  </data>
+  <data name="VHistoryHeading" xml:space="preserve">
+    <value>Mỗi lượt học đều có giá trị.</value>
+  </data>
+  <data name="VHistoryEmpty" xml:space="preserve">
+    <value>Hoàn thành một lượt học để xem kết quả tại đây. Giữ tối đa 100 kết quả gần nhất.</value>
+  </data>
+  <data name="VSettingsHeading" xml:space="preserve">
+    <value>Học theo cách của bạn</value>
+  </data>
+  <data name="VDataHint" xml:space="preserve">
+    <value>Từ vựng, bản nháp và kết quả lưu offline trong vocabmate.json. Dữ liệu StudyMate cũ không bị đổi hoặc xóa. Có thể xuất từng bộ từ ra Excel để sao lưu.</value>
+  </data>
+  <data name="VAbout" xml:space="preserve">
+    <value>VocabMate hoạt động local, không cần tài khoản. Phát âm dùng giọng tiếng Anh của hệ điều hành; chia sẻ và chọn file dùng giao diện của thiết bị.</value>
+  </data>
+  <data name="VImportExcel" xml:space="preserve">
+    <value>Import Excel</value>
+  </data>
+  <data name="VExportExcel" xml:space="preserve">
+    <value>Xuất / chia sẻ Excel</value>
+  </data>
+  <data name="VImportHeading" xml:space="preserve">
+    <value>Từ bảng tính thành thẻ học</value>
+  </data>
+  <data name="VImportInstructions" xml:space="preserve">
+    <value>File .xlsx, sheet hiển thị đầu tiên, hai cột A/B. Dòng đầu: Tiếng Việt và English (được đảo thứ tự). Tối đa 2.000 dòng dữ liệu, 10 MB; không nhận công thức. Xem trước và sửa tất cả dòng lỗi trước khi nhập.</value>
+  </data>
+  <data name="VChooseFile" xml:space="preserve">
+    <value>Chọn file .xlsx</value>
+  </data>
+  <data name="VExcelTemplate" xml:space="preserve">
+    <value>Chia sẻ file Excel mẫu</value>
+  </data>
+  <data name="VImportAction" xml:space="preserve">
+    <value>Nhập các dòng hợp lệ</value>
+  </data>
+  <data name="VImportConfirm" xml:space="preserve">
+    <value>Xác nhận nhập bộ từ?</value>
+  </data>
+  <data name="VImportDone" xml:space="preserve">
+    <value>Đã nhập dữ liệu</value>
+  </data>
+  <data name="VReady" xml:space="preserve">
+    <value>Sẵn sàng nhập</value>
+  </data>
+  <data name="VSkippedDuplicate" xml:space="preserve">
+    <value>Trùng cặp từ — sẽ bỏ qua</value>
+  </data>
+  <data name="VFixImport" xml:space="preserve">
+    <value>Hãy chọn file có ít nhất một dòng mới và sửa tất cả dòng lỗi trước khi nhập.</value>
+  </data>
+  <data name="VImportInvalid" xml:space="preserve">
+    <value>Không đọc được file Excel. Chỉ hỗ trợ .xlsx không mã hóa với dữ liệu văn bản trong hai cột.</value>
+  </data>
+  <data name="VImportLimit" xml:space="preserve">
+    <value>File vượt giới hạn: 10 MB, 2.000 dòng dữ liệu hoặc dung lượng giải nén an toàn.</value>
+  </data>
+  <data name="VHeadersInvalid" xml:space="preserve">
+    <value>Dòng đầu phải có hai tiêu đề Tiếng Việt/Vietnamese và Tiếng Anh/English trong cột A/B.</value>
+  </data>
+  <data name="VImportEmpty" xml:space="preserve">
+    <value>File chưa có dòng từ vựng nào.</value>
+  </data>
+  <data name="VFormulaUnsupported" xml:space="preserve">
+    <value>Không nhận công thức. Hãy dán giá trị dạng văn bản vào Excel.</value>
+  </data>
+  <data name="VTwoColumns" xml:space="preserve">
+    <value>Chỉ sử dụng hai cột A và B; hãy bỏ dữ liệu ở cột khác.</value>
+  </data>
+  <data name="VNameInvalid" xml:space="preserve">
+    <value>Tên phải có từ 1 đến 80 ký tự.</value>
+  </data>
+  <data name="VDuplicateName" xml:space="preserve">
+    <value>Tên này đã tồn tại trong nhóm hiện tại.</value>
+  </data>
+  <data name="VDescriptionInvalid" xml:space="preserve">
+    <value>Mô tả không được quá 500 ký tự.</value>
+  </data>
+  <data name="VTermInvalid" xml:space="preserve">
+    <value>Cả hai mặt phải có nội dung, mỗi mặt từ 1 đến 200 ký tự.</value>
+  </data>
+  <data name="VDuplicateCard" xml:space="preserve">
+    <value>Cặp từ này đã có trong bộ từ.</value>
+  </data>
+  <data name="VNotFound" xml:space="preserve">
+    <value>Không tìm thấy dữ liệu. Hãy quay lại thư viện hoặc tải lại.</value>
+  </data>
+  <data name="VDataInvalid" xml:space="preserve">
+    <value>File VocabMate không hợp lệ hoặc thuộc phiên bản chưa hỗ trợ. File gốc được giữ nguyên; hãy sao lưu trước khi khôi phục.</value>
+  </data>
+  <data name="VNoCards" xml:space="preserve">
+    <value>Hãy thêm hoặc import từ vào bộ trước khi học.</value>
+  </data>
+  <data name="VNeedFourAnswers" xml:space="preserve">
+    <value>Trắc nghiệm cần đủ đáp án: mỗi câu phải có 3 đáp án sai khác nhau. Thêm từ hoặc chọn Flashcard/Viết đáp án.</value>
+  </data>
+  <data name="VNeedPairs" xml:space="preserve">
+    <value>Ghép cặp cần ít nhất 2 cặp có câu hỏi và đáp án phân biệt.</value>
+  </data>
+  <data name="VNoWrongAnswers" xml:space="preserve">
+    <value>Lượt này không có từ cần ôn lại.</value>
+  </data>
+  <data name="VAnswerRequired" xml:space="preserve">
+    <value>Hãy nhập đáp án trước khi kiểm tra.</value>
+  </data>
+  <data name="VInvalidSession" xml:space="preserve">
+    <value>Thao tác không phù hợp trạng thái lượt học. Hãy tải lại hoặc bắt đầu lượt mới.</value>
+  </data>
+  <data name="VSessionChanged" xml:space="preserve">
+    <value>Lượt học đã thay đổi ở trang khác. Quay lại thư viện và mở lượt học hiện tại.</value>
+  </data>
+  <data name="VNoSession" xml:space="preserve">
+    <value>Chưa có lượt học. Mở một bộ từ để bắt đầu.</value>
+  </data>
+  <data name="VVoiceUnavailable" xml:space="preserve">
+    <value>Thiết bị chưa có giọng tiếng Anh. Cài giọng trong cài đặt hệ điều hành để dùng phát âm.</value>
+  </data>
+  <data name="VDeleteClass" xml:space="preserve">
+    <value>Xóa lớp</value>
+  </data>
+  <data name="VDeleteClassWarning" xml:space="preserve">
+    <value>Xóa lớp cùng toàn bộ bộ từ, thẻ, bản nháp và kết quả bên trong? Không thể hoàn tác.</value>
+  </data>
+  <data name="VDeleteDeck" xml:space="preserve">
+    <value>Xóa bộ từ</value>
+  </data>
+  <data name="VDeleteDeckWarning" xml:space="preserve">
+    <value>Xóa bộ từ cùng thẻ, bản nháp, lượt học và kết quả liên quan? Không thể hoàn tác.</value>
+  </data>
+  <data name="VDeleteCard" xml:space="preserve">
+    <value>Xóa từ</value>
+  </data>
+  <data name="VDeleteCardWarning" xml:space="preserve">
+    <value>Xóa thẻ này và bản nháp? Các lượt học đã tạo giữ bản chụp dữ liệu cũ.</value>
+  </data>
+  <data name="VDiscardDraft" xml:space="preserve">
+    <value>Bỏ bản nháp</value>
+  </data>
+  <data name="VDiscardDraftWarning" xml:space="preserve">
+    <value>Bỏ phần đang chỉnh sửa và quay lại? Thẻ đã lưu trước đó không bị xóa.</value>
+  </data>
+  <data name="VDiscard" xml:space="preserve">
+    <value>Bỏ thay đổi</value>
+  </data>
+  <data name="VDraftRestored" xml:space="preserve">
+    <value>Đã khôi phục bản nháp. Nhấn Lưu từ vào bộ để xác nhận thay đổi.</value>
+  </data>
+  <data name="VSavingDraft" xml:space="preserve">
+    <value>Đang lưu nháp…</value>
+  </data>
+  <data name="VAutosaveHint" xml:space="preserve">
+    <value>Thay đổi được lưu nháp tự động; chỉ thêm/sửa thẻ chính khi nhấn Lưu.</value>
+  </data>
+  <data name="VDraftSaveFailed" xml:space="preserve">
+    <value>Chưa lưu được bản nháp. Giữ app mở, kiểm tra bộ nhớ/quyền truy cập và thử lưu lại.</value>
+  </data>
+  <data name="VDeckCount" xml:space="preserve">
+    <value>{0} bộ từ</value>
+  </data>
+  <data name="VCardCount" xml:space="preserve">
+    <value>{0} từ</value>
+  </data>
+  <data name="VLibrarySummary" xml:space="preserve">
+    <value>{0} bộ từ · {1} thẻ</value>
+  </data>
+  <data name="VPosition" xml:space="preserve">
+    <value>{0} / {1}</value>
+  </data>
+  <data name="VScore" xml:space="preserve">
+    <value>{0}/{1} câu đã nhớ</value>
+  </data>
+  <data name="VResultSummary" xml:space="preserve">
+    <value>{0}/{1} · {2} · {3}</value>
+  </data>
+  <data name="VResultTime" xml:space="preserve">
+    <value>{0} giây · {1} lần ghép sai</value>
+  </data>
+  <data name="VPreviewSummary" xml:space="preserve">
+    <value>{0} dòng mới · {1} trùng · {2} lỗi</value>
+  </data>
+  <data name="VImportedCount" xml:space="preserve">
+    <value>Đã thêm {0} từ. Cặp từ trùng được bỏ qua.</value>
+  </data>
+  <data name="VSessionCheckpoint" xml:space="preserve">
+    <value>Tiến độ được lưu sau mỗi thao tác; câu đang gõ được lưu nháp tự động.</value>
+  </data>
+</root>

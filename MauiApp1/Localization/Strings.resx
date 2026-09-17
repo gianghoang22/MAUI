@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Refresh" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="DashboardTab" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="SubjectsTitle" xml:space="preserve">
+    <value>Subjects</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="DashboardHeading" xml:space="preserve">
+    <value>Learn a little. Move forward.</value>
+  </data>
+  <data name="DashboardIntro" xml:space="preserve">
+    <value>Keep your goals in one place. Start with one small task today.</value>
+  </data>
+  <data name="PendingStatus" xml:space="preserve">
+    <value>To do</value>
+  </data>
+  <data name="OverdueStatus" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
+  <data name="CompletedStatus" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="DashboardProgressHeading" xml:space="preserve">
+    <value>Every task counts</value>
+  </data>
+  <data name="OpenSubjects" xml:space="preserve">
+    <value>Go to my subjects</value>
+  </data>
+  <data name="UpcomingHeading" xml:space="preserve">
+    <value>Up next</value>
+  </data>
+  <data name="UpcomingHint" xml:space="preserve">
+    <value>Up to 8 unfinished tasks, ordered by earliest due date.</value>
+  </data>
+  <data name="UpcomingEmpty" xml:space="preserve">
+    <value>Nothing to do yet. Add your first subject and task, or enjoy having finished everything!</value>
+  </data>
+  <data name="SubjectsHeading" xml:space="preserve">
+    <value>My subjects</value>
+  </data>
+  <data name="SubjectsIntro" xml:space="preserve">
+    <value>A subject for every skill you want to master.</value>
+  </data>
+  <data name="AddSubject" xml:space="preserve">
+    <value>Add subject</value>
+  </data>
+  <data name="SubjectPlaceholder" xml:space="preserve">
+    <value>For example: .NET MAUI</value>
+  </data>
+  <data name="NewSubjectDescription" xml:space="preserve">
+    <value>New subject name</value>
+  </data>
+  <data name="SubjectsEmpty" xml:space="preserve">
+    <value>Your list is empty. Add a .NET MAUI subject to start your roadmap.</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="SubjectDetailTitle" xml:space="preserve">
+    <value>Subject details</value>
+  </data>
+  <data name="StudyPlanHeading" xml:space="preserve">
+    <value>Study plan</value>
+  </data>
+  <data name="SubjectName" xml:space="preserve">
+    <value>Subject name</value>
+  </data>
+  <data name="SaveSubjectName" xml:space="preserve">
+    <value>Save subject name</value>
+  </data>
+  <data name="AddTask" xml:space="preserve">
+    <value>+ Add task</value>
+  </data>
+  <data name="SearchTasks" xml:space="preserve">
+    <value>Search task titles</value>
+  </data>
+  <data name="FilterStatus" xml:space="preserve">
+    <value>Filter status</value>
+  </data>
+  <data name="FilterDescription" xml:space="preserve">
+    <value>Filter tasks by status</value>
+  </data>
+  <data name="TasksEmpty" xml:space="preserve">
+    <value>No matching tasks. Add a task or change the filter.</value>
+  </data>
+  <data name="DeleteSubject" xml:space="preserve">
+    <value>Delete subject</value>
+  </data>
+  <data name="TaskTitle" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="TaskHeading" xml:space="preserve">
+    <value>One step at a time</value>
+  </data>
+  <data name="TaskPrompt" xml:space="preserve">
+    <value>What will you learn?</value>
+  </data>
+  <data name="TaskPlaceholder" xml:space="preserve">
+    <value>For example: Practice data binding</value>
+  </data>
+  <data name="TaskTitleDescription" xml:space="preserve">
+    <value>Task title, required</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due date</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NotesPlaceholder" xml:space="preserve">
+    <value>Key ideas, exercises, and reference material…</value>
+  </data>
+  <data name="NotesDescription" xml:space="preserve">
+    <value>Task notes</value>
+  </data>
+  <data name="CompleteDescription" xml:space="preserve">
+    <value>Mark task as completed</value>
+  </data>
+  <data name="UnsavedHint" xml:space="preserve">
+    <value>Press Save to keep your changes. Going back without saving discards changes.</value>
+  </data>
+  <data name="SaveTask" xml:space="preserve">
+    <value>Save task</value>
+  </data>
+  <data name="DeleteTask" xml:space="preserve">
+    <value>Delete task</value>
+  </data>
+  <data name="SettingsHeading" xml:space="preserve">
+    <value>Your study space</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="ChooseTheme" xml:space="preserve">
+    <value>Choose a theme</value>
+  </data>
+  <data name="ThemeDescription" xml:space="preserve">
+    <value>Light, dark, or system theme</value>
+  </data>
+  <data name="DeviceDataHeading" xml:space="preserve">
+    <value>On-device data</value>
+  </data>
+  <data name="OfflineExplanation" xml:space="preserve">
+    <value>StudyMate works offline. Subjects and tasks are saved when you press Save or Add; cloud sync is not available.</value>
+  </data>
+  <data name="DataFile" xml:space="preserve">
+    <value>Data file</value>
+  </data>
+  <data name="PrivacyHint" xml:space="preserve">
+    <value>JSON data is not encrypted. Do not store passwords or sensitive information. Uninstalling may remove your data; back up the file first.</value>
+  </data>
+  <data name="MvpHeading" xml:space="preserve">
+    <value>StudyMate · Checkpoint 1 MVP</value>
+  </data>
+  <data name="ProgressHeading" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose a language</value>
+  </data>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>Application display language</value>
+  </data>
+  <data name="LanguageHint" xml:space="preserve">
+    <value>Change the display language instantly without translating your class names, decks, or card content.</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>System default</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="FilterAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="FilterPending" xml:space="preserve">
+    <value>Unfinished</value>
+  </data>
+  <data name="FilterCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="FilterOverdue" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
+  <data name="ProgressSummary" xml:space="preserve">
+    <value>{0}/{1} tasks completed</value>
+  </data>
+  <data name="OpenTaskDescription" xml:space="preserve">
+    <value>Open task {0}</value>
+  </data>
+  <data name="OpenSubjectDescription" xml:space="preserve">
+    <value>Open subject {0}</value>
+  </data>
+  <data name="TaskDetailFormat" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>MM/dd/yyyy</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Unable to continue</value>
+  </data>
+  <data name="ErrorUnexpected" xml:space="preserve">
+    <value>The operation could not be completed. Try again; if you just saved or deleted something, reload to check the result.</value>
+  </data>
+  <data name="ErrorSubjectName" xml:space="preserve">
+    <value>Subject names must contain 1 to 80 characters.</value>
+  </data>
+  <data name="ErrorDuplicateSubject" xml:space="preserve">
+    <value>This subject already exists.</value>
+  </data>
+  <data name="ErrorSubjectGone" xml:space="preserve">
+    <value>This subject no longer exists. Return to the list.</value>
+  </data>
+  <data name="ErrorTaskTitle" xml:space="preserve">
+    <value>Task titles must contain 1 to 120 characters.</value>
+  </data>
+  <data name="ErrorNotesTooLong" xml:space="preserve">
+    <value>Notes cannot exceed 10,000 characters.</value>
+  </data>
+  <data name="ErrorDataUnreadable" xml:space="preserve">
+    <value>StudyMate data could not be read. The original file is preserved; back it up before attempting recovery.</value>
+  </data>
+  <data name="ErrorDataInvalid" xml:space="preserve">
+    <value>StudyMate data is invalid or uses an unsupported version. The original file is preserved.</value>
+  </data>
+  <data name="ErrorSubjectNotLoaded" xml:space="preserve">
+    <value>The subject has not loaded. Try reloading or return to the list.</value>
+  </data>
+  <data name="ErrorSubjectNotFound" xml:space="preserve">
+    <value>Subject not found. Return to the list.</value>
+  </data>
+  <data name="ErrorInvalidTaskLink" xml:space="preserve">
+    <value>The task link is invalid.</value>
+  </data>
+  <data name="ErrorTaskGone" xml:space="preserve">
+    <value>This task no longer exists.</value>
+  </data>
+  <data name="ErrorDueDateRequired" xml:space="preserve">
+    <value>Choose a due date.</value>
+  </data>
+  <data name="ErrorTaskNotLoaded" xml:space="preserve">
+    <value>The task has not loaded. Try reloading or return to the list.</value>
+  </data>
+  <data name="ConfirmDeleteSubject" xml:space="preserve">
+    <value>Delete subject?</value>
+  </data>
+  <data name="ConfirmDeleteSubjectMessage" xml:space="preserve">
+    <value>The subject “{0}” and all its tasks will be deleted. This cannot be undone.</value>
+  </data>
+  <data name="ConfirmDeleteTask" xml:space="preserve">
+    <value>Delete task?</value>
+  </data>
+  <data name="ConfirmDeleteTaskMessage" xml:space="preserve">
+    <value>Delete “{0}”? This cannot be undone.</value>
+  </data>
+  <data name="MvpDescription" xml:space="preserve">
+    <value>This version covers XAML, MVVM, Shell, DI, local storage, and English/Vietnamese localization. Live validation behaviors, draft recovery, and native handlers are planned next.</value>
+  </data>
+  <data name="VLibrary" xml:space="preserve">
+    <value>Library</value>
+  </data>
+  <data name="VHomeHeading" xml:space="preserve">
+    <value>New words today. Confidence tomorrow.</value>
+  </data>
+  <data name="VHomeIntro" xml:space="preserve">
+    <value>Your words, your way. Import Excel and start a short study session.</value>
+  </data>
+  <data name="VLocalClassesHint" xml:space="preserve">
+    <value>Classes organize decks on this device; they are not online classrooms.</value>
+  </data>
+  <data name="VYourClasses" xml:space="preserve">
+    <value>My classes</value>
+  </data>
+  <data name="VAddClass" xml:space="preserve">
+    <value>Add class</value>
+  </data>
+  <data name="VClassPlaceholder" xml:space="preserve">
+    <value>For example: TOEIC, IELTS, Everyday English</value>
+  </data>
+  <data name="VClassesEmpty" xml:space="preserve">
+    <value>No classes yet. Create your first class to organize vocabulary decks.</value>
+  </data>
+  <data name="VClass" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="VClassName" xml:space="preserve">
+    <value>Class name</value>
+  </data>
+  <data name="VAddDeck" xml:space="preserve">
+    <value>Add deck</value>
+  </data>
+  <data name="VDeckPlaceholder" xml:space="preserve">
+    <value>For example: Food, Travel, Work</value>
+  </data>
+  <data name="VDecksEmpty" xml:space="preserve">
+    <value>No decks in this class yet.</value>
+  </data>
+  <data name="VDeck" xml:space="preserve">
+    <value>Vocabulary deck</value>
+  </data>
+  <data name="VDeckName" xml:space="preserve">
+    <value>Deck name</value>
+  </data>
+  <data name="VDescription" xml:space="preserve">
+    <value>Deck description (optional)</value>
+  </data>
+  <data name="VSave" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="VEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="VAddCard" xml:space="preserve">
+    <value>Add word</value>
+  </data>
+  <data name="VCard" xml:space="preserve">
+    <value>Vocabulary card</value>
+  </data>
+  <data name="VSaveCard" xml:space="preserve">
+    <value>Save card to deck</value>
+  </data>
+  <data name="VVietnamese" xml:space="preserve">
+    <value>Vietnamese</value>
+  </data>
+  <data name="VEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="VSearchCards" xml:space="preserve">
+    <value>Search English or Vietnamese words</value>
+  </data>
+  <data name="VCardsEmpty" xml:space="preserve">
+    <value>No matching words. Add a word or import an Excel file.</value>
+  </data>
+  <data name="VStudySetup" xml:space="preserve">
+    <value>Study this deck</value>
+  </data>
+  <data name="VChooseMode" xml:space="preserve">
+    <value>Study mode</value>
+  </data>
+  <data name="VChooseDirection" xml:space="preserve">
+    <value>Study direction</value>
+  </data>
+  <data name="VMode0" xml:space="preserve">
+    <value>Flashcards</value>
+  </data>
+  <data name="VMode1" xml:space="preserve">
+    <value>Multiple choice</value>
+  </data>
+  <data name="VMode2" xml:space="preserve">
+    <value>Written answers</value>
+  </data>
+  <data name="VMode3" xml:space="preserve">
+    <value>Match pairs</value>
+  </data>
+  <data name="VDirection0" xml:space="preserve">
+    <value>English → Vietnamese</value>
+  </data>
+  <data name="VDirection1" xml:space="preserve">
+    <value>Vietnamese → English</value>
+  </data>
+  <data name="VSessionLimitHint" xml:space="preserve">
+    <value>Up to 20 questions per session or 6 matching pairs. Repeated prompts share accepted meanings. Each multiple-choice question needs 3 distinct wrong answers.</value>
+  </data>
+  <data name="VStart" xml:space="preserve">
+    <value>Start learning</value>
+  </data>
+  <data name="VResume" xml:space="preserve">
+    <value>Resume session</value>
+  </data>
+  <data name="VStartNew" xml:space="preserve">
+    <value>Start new session</value>
+  </data>
+  <data name="VReplaceSession" xml:space="preserve">
+    <value>Replace the unfinished session?</value>
+  </data>
+  <data name="VReplaceSessionWarning" xml:space="preserve">
+    <value>Only one unfinished session is stored. Starting a new one replaces it; completed results are kept.</value>
+  </data>
+  <data name="VLearn" xml:space="preserve">
+    <value>Study vocabulary</value>
+  </data>
+  <data name="VExit" xml:space="preserve">
+    <value>Save and exit</value>
+  </data>
+  <data name="VSpeak" xml:space="preserve">
+    <value>Hear English</value>
+  </data>
+  <data name="VFlip" xml:space="preserve">
+    <value>Flip card</value>
+  </data>
+  <data name="VRemember" xml:space="preserve">
+    <value>I remembered</value>
+  </data>
+  <data name="VForget" xml:space="preserve">
+    <value>Still learning</value>
+  </data>
+  <data name="VTypeAnswer" xml:space="preserve">
+    <value>Type your answer…</value>
+  </data>
+  <data name="VCheckAnswer" xml:space="preserve">
+    <value>Check answer</value>
+  </data>
+  <data name="VNext" xml:space="preserve">
+    <value>Next / Results</value>
+  </data>
+  <data name="VCorrect" xml:space="preserve">
+    <value>Correct!</value>
+  </data>
+  <data name="VIncorrect" xml:space="preserve">
+    <value>Not quite — check the answer and review it later.</value>
+  </data>
+  <data name="VMatchHint" xml:space="preserve">
+    <value>Choose a tile on the left, then its match on the right.</value>
+  </data>
+  <data name="VTryAgain" xml:space="preserve">
+    <value>Not a match. Choose another pair.</value>
+  </data>
+  <data name="VSelectLeft" xml:space="preserve">
+    <value>Choose a tile on the left first.</value>
+  </data>
+  <data name="VSessionComplete" xml:space="preserve">
+    <value>Session complete!</value>
+  </data>
+  <data name="VRetryWrong" xml:space="preserve">
+    <value>Review missed words</value>
+  </data>
+  <data name="VBackToDeck" xml:space="preserve">
+    <value>Go back</value>
+  </data>
+  <data name="VSessionSavedHint" xml:space="preserve">
+    <value>Your session is saved after each action. Resume it from Library. Result time includes breaks.</value>
+  </data>
+  <data name="VHistory" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="VHistoryHeading" xml:space="preserve">
+    <value>Every session counts.</value>
+  </data>
+  <data name="VHistoryEmpty" xml:space="preserve">
+    <value>Finish a session to see results here. The latest 100 results are kept.</value>
+  </data>
+  <data name="VSettingsHeading" xml:space="preserve">
+    <value>Make learning your own</value>
+  </data>
+  <data name="VDataHint" xml:space="preserve">
+    <value>Vocabulary, drafts, and results are stored offline in vocabmate.json. Old StudyMate data is untouched. Export individual decks to Excel for backup.</value>
+  </data>
+  <data name="VAbout" xml:space="preserve">
+    <value>VocabMate works locally without an account. Pronunciation uses an installed English system voice; sharing and file selection use system interfaces.</value>
+  </data>
+  <data name="VImportExcel" xml:space="preserve">
+    <value>Import Excel</value>
+  </data>
+  <data name="VExportExcel" xml:space="preserve">
+    <value>Export / share Excel</value>
+  </data>
+  <data name="VImportHeading" xml:space="preserve">
+    <value>From spreadsheet to flashcards</value>
+  </data>
+  <data name="VImportInstructions" xml:space="preserve">
+    <value>Use .xlsx and the first visible worksheet, columns A/B only. Header: Vietnamese and English (either order). Up to 2,000 data rows and 10 MB; formulas are not supported. Preview and fix all invalid rows before importing.</value>
+  </data>
+  <data name="VChooseFile" xml:space="preserve">
+    <value>Choose .xlsx file</value>
+  </data>
+  <data name="VExcelTemplate" xml:space="preserve">
+    <value>Share sample Excel template</value>
+  </data>
+  <data name="VImportAction" xml:space="preserve">
+    <value>Import valid rows</value>
+  </data>
+  <data name="VImportConfirm" xml:space="preserve">
+    <value>Confirm vocabulary import?</value>
+  </data>
+  <data name="VImportDone" xml:space="preserve">
+    <value>Import complete</value>
+  </data>
+  <data name="VReady" xml:space="preserve">
+    <value>Ready to import</value>
+  </data>
+  <data name="VSkippedDuplicate" xml:space="preserve">
+    <value>Duplicate pair — will be skipped</value>
+  </data>
+  <data name="VFixImport" xml:space="preserve">
+    <value>Choose a file with at least one new row and fix every invalid row before importing.</value>
+  </data>
+  <data name="VImportInvalid" xml:space="preserve">
+    <value>The Excel file could not be read. Use an unencrypted .xlsx file with text data in two columns.</value>
+  </data>
+  <data name="VImportLimit" xml:space="preserve">
+    <value>The workbook exceeds the 10 MB, 2,000-row, or safe decompression limit.</value>
+  </data>
+  <data name="VHeadersInvalid" xml:space="preserve">
+    <value>The first row must contain Vietnamese/Tiếng Việt and English/Tiếng Anh headers in columns A/B.</value>
+  </data>
+  <data name="VImportEmpty" xml:space="preserve">
+    <value>The workbook contains no vocabulary rows.</value>
+  </data>
+  <data name="VFormulaUnsupported" xml:space="preserve">
+    <value>Formulas are not supported. Paste plain text values into Excel.</value>
+  </data>
+  <data name="VTwoColumns" xml:space="preserve">
+    <value>Use columns A and B only; remove data from other columns.</value>
+  </data>
+  <data name="VNameInvalid" xml:space="preserve">
+    <value>Names must contain 1 to 80 characters.</value>
+  </data>
+  <data name="VDuplicateName" xml:space="preserve">
+    <value>This name already exists in the current group.</value>
+  </data>
+  <data name="VDescriptionInvalid" xml:space="preserve">
+    <value>Descriptions cannot exceed 500 characters.</value>
+  </data>
+  <data name="VTermInvalid" xml:space="preserve">
+    <value>Both sides are required, with 1 to 200 characters per side.</value>
+  </data>
+  <data name="VDuplicateCard" xml:space="preserve">
+    <value>This vocabulary pair already exists in the deck.</value>
+  </data>
+  <data name="VNotFound" xml:space="preserve">
+    <value>Data not found. Return to Library or reload.</value>
+  </data>
+  <data name="VDataInvalid" xml:space="preserve">
+    <value>VocabMate data is invalid or uses an unsupported version. The original file is preserved; back it up before recovery.</value>
+  </data>
+  <data name="VNoCards" xml:space="preserve">
+    <value>Add or import words into this deck before studying.</value>
+  </data>
+  <data name="VNeedFourAnswers" xml:space="preserve">
+    <value>Each question needs 3 distinct wrong options. Add more words or choose Flashcards/Written answers.</value>
+  </data>
+  <data name="VNeedPairs" xml:space="preserve">
+    <value>Matching needs at least 2 pairs with distinct prompts and answers.</value>
+  </data>
+  <data name="VNoWrongAnswers" xml:space="preserve">
+    <value>There are no missed words to review in this session.</value>
+  </data>
+  <data name="VAnswerRequired" xml:space="preserve">
+    <value>Enter an answer before checking it.</value>
+  </data>
+  <data name="VInvalidSession" xml:space="preserve">
+    <value>This action does not match the session state. Reload or start a new session.</value>
+  </data>
+  <data name="VSessionChanged" xml:space="preserve">
+    <value>The session changed on another page. Return to Library and resume the current session.</value>
+  </data>
+  <data name="VNoSession" xml:space="preserve">
+    <value>No study session yet. Open a deck to get started.</value>
+  </data>
+  <data name="VVoiceUnavailable" xml:space="preserve">
+    <value>No English voice is available. Install a voice in system settings to use pronunciation.</value>
+  </data>
+  <data name="VDeleteClass" xml:space="preserve">
+    <value>Delete class</value>
+  </data>
+  <data name="VDeleteClassWarning" xml:space="preserve">
+    <value>Delete this class and all its decks, cards, drafts, and results? This cannot be undone.</value>
+  </data>
+  <data name="VDeleteDeck" xml:space="preserve">
+    <value>Delete deck</value>
+  </data>
+  <data name="VDeleteDeckWarning" xml:space="preserve">
+    <value>Delete this deck and its cards, drafts, session, and results? This cannot be undone.</value>
+  </data>
+  <data name="VDeleteCard" xml:space="preserve">
+    <value>Delete word</value>
+  </data>
+  <data name="VDeleteCardWarning" xml:space="preserve">
+    <value>Delete this card and its draft? Existing study sessions keep their original snapshot.</value>
+  </data>
+  <data name="VDiscardDraft" xml:space="preserve">
+    <value>Discard draft</value>
+  </data>
+  <data name="VDiscardDraftWarning" xml:space="preserve">
+    <value>Discard these edits and go back? The previously saved card will not be deleted.</value>
+  </data>
+  <data name="VDiscard" xml:space="preserve">
+    <value>Discard changes</value>
+  </data>
+  <data name="VDraftRestored" xml:space="preserve">
+    <value>Draft restored. Press Save card to deck to commit your changes.</value>
+  </data>
+  <data name="VSavingDraft" xml:space="preserve">
+    <value>Saving draft…</value>
+  </data>
+  <data name="VAutosaveHint" xml:space="preserve">
+    <value>Edits are saved automatically as drafts; the card itself changes only when you press Save.</value>
+  </data>
+  <data name="VDraftSaveFailed" xml:space="preserve">
+    <value>Draft save failed. Keep the app open, check storage/access, and try saving again.</value>
+  </data>
+  <data name="VDeckCount" xml:space="preserve">
+    <value>{0} decks</value>
+  </data>
+  <data name="VCardCount" xml:space="preserve">
+    <value>{0} words</value>
+  </data>
+  <data name="VLibrarySummary" xml:space="preserve">
+    <value>{0} decks · {1} cards</value>
+  </data>
+  <data name="VPosition" xml:space="preserve">
+    <value>{0} / {1}</value>
+  </data>
+  <data name="VScore" xml:space="preserve">
+    <value>{0}/{1} remembered</value>
+  </data>
+  <data name="VResultSummary" xml:space="preserve">
+    <value>{0}/{1} · {2} · {3}</value>
+  </data>
+  <data name="VResultTime" xml:space="preserve">
+    <value>{0} seconds · {1} mismatches</value>
+  </data>
+  <data name="VPreviewSummary" xml:space="preserve">
+    <value>{0} new · {1} duplicates · {2} invalid</value>
+  </data>
+  <data name="VImportedCount" xml:space="preserve">
+    <value>Added {0} words. Duplicate pairs were skipped.</value>
+  </data>
+  <data name="VSessionCheckpoint" xml:space="preserve">
+    <value>Progress is saved after each action; your typed answer is saved automatically.</value>
+  </data>
+</root>

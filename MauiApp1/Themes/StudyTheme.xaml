@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:vm="clr-namespace:MauiApp1.ViewModels">
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F4F6FB, Dark=#111827}" /></Style>
+    <Style x:Key="Card" TargetType="Border">
+        <Setter Property="Padding" Value="18" /><Setter Property="StrokeShape" Value="RoundRectangle 18" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light=#E0E5EF, Dark=#374151}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#1F2937}" />
+    </Style>
+    <Style x:Key="PageHeading" TargetType="Label">
+        <Setter Property="FontSize" Value="28" /><Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=#19233C, Dark=#F3F4F6}" />
+        <Setter Property="SemanticProperties.HeadingLevel" Value="Level1" />
+    </Style>
+    <Style x:Key="SectionHeading" TargetType="Label">
+        <Setter Property="FontSize" Value="19" /><Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=#19233C, Dark=#F3F4F6}" />
+        <Setter Property="SemanticProperties.HeadingLevel" Value="Level2" />
+    </Style>
+    <Style x:Key="MutedText" TargetType="Label">
+        <Setter Property="FontSize" Value="14" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#526078, Dark=#B5C0D3}" />
+    </Style>
+    <Style x:Key="DangerButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FDE8E8, Dark=#4C2028}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=#A82032, Dark=#FFB5BE}" />
+        <Setter Property="MinimumHeightRequest" Value="48" /><Setter Property="CornerRadius" Value="10" />
+    </Style>
+    <DataTemplate x:Key="NamedRowTemplate" x:DataType="vm:NamedRow">
+        <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="8"><Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" /><Label Text="{Binding Summary}" Style="{StaticResource MutedText}" /></VerticalStackLayout>
+                <Button Grid.Column="1" Text="{DynamicResource L10n.Open}" Command="{Binding OpenCommand}" VerticalOptions="Center" SemanticProperties.Description="{Binding Name}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="VocabularyCardTemplate" x:DataType="vm:VocabularyCardRow">
+        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="8"><Label Text="{Binding English}" Style="{StaticResource SectionHeading}" /><Label Text="{Binding Vietnamese}" /></VerticalStackLayout>
+                <Button Grid.Column="1" Text="{DynamicResource L10n.VEdit}" Command="{Binding OpenCommand}" VerticalOptions="Center" SemanticProperties.Description="{Binding English}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="ChoiceTemplate" x:DataType="vm:ChoiceRow"><Button Text="{Binding Text}" Command="{Binding SelectCommand}" LineBreakMode="WordWrap" MinimumHeightRequest="52" /></DataTemplate>
+    <DataTemplate x:Key="MatchTemplate" x:DataType="vm:MatchRow">
+        <Button Text="{Binding Text}" Command="{Binding SelectCommand}" IsEnabled="{Binding IsAvailable}" MinimumHeightRequest="70" LineBreakMode="WordWrap" BorderWidth="1" BorderColor="#9277EF"
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#1F2937}" TextColor="{AppThemeBinding Light=#19233C, Dark=White}">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True"><Setter Property="BackgroundColor" Value="#512BD4" /><Setter Property="TextColor" Value="White" /></DataTrigger>
+                <DataTrigger TargetType="Button" Binding="{Binding IsMatched}" Value="True"><Setter Property="Opacity" Value="0.35" /></DataTrigger>
+            </Button.Triggers>
+        </Button>
+    </DataTemplate>
+</ResourceDictionary>

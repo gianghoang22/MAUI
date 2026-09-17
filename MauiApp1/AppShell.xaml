@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="MauiApp1.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:MauiApp1"
-    FlyoutBehavior="Disabled"
-    Shell.NavBarIsVisible="False">
-
-    <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="MauiApp1.AppShell" FlyoutBehavior="Disabled"
+       Shell.TabBarBackgroundColor="{AppThemeBinding Light=White, Dark=#1F2937}"
+       Shell.TabBarTitleColor="{AppThemeBinding Light=#512BD4, Dark=#C5B4FF}"
+       Shell.TabBarUnselectedColor="{AppThemeBinding Light=#526078, Dark=#B5C0D3}">
+    <TabBar>
+        <ShellContent x:Name="LibraryContent" Title="{DynamicResource L10n.VLibrary}" Route="library" />
+        <ShellContent x:Name="HistoryContent" Title="{DynamicResource L10n.VHistory}" Route="history" />
+        <ShellContent x:Name="SettingsContent" Title="{DynamicResource L10n.SettingsTitle}" Route="settings" />
+    </TabBar>
 </Shell>

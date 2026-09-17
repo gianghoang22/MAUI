@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.DeckPage" x:DataType="vm:DeckViewModel" Title="{DynamicResource L10n.VDeck}">
+    <ContentPage.ToolbarItems><ToolbarItem Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" /></ContentPage.ToolbarItems>
+    <Grid Padding="20" MaximumWidthRequest="900">
+        <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource VocabularyCardTemplate}" SelectionMode="None">
+            <CollectionView.Header>
+                <VerticalStackLayout Spacing="16" Padding="0,0,0,16" IsEnabled="{Binding IsNotBusy}">
+                    <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="{DynamicResource L10n.VDeckName}" FontAttributes="Bold" />
+                            <Entry Text="{Binding Name}" MaxLength="80" />
+                            <Editor Text="{Binding Description}" MaxLength="500" HeightRequest="70" Placeholder="{DynamicResource L10n.VDescription}" />
+                            <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                        <Button Text="{DynamicResource L10n.VAddCard}" Command="{Binding AddCommand}" AutomationId="AddCardButton" />
+                        <Button Grid.Column="1" Text="{DynamicResource L10n.VImportExcel}" Command="{Binding ImportCommand}" />
+                        <Button Grid.Row="1" Grid.ColumnSpan="2" Text="{DynamicResource L10n.VExportExcel}" Command="{Binding ExportCommand}" />
+                    </Grid>
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
+                            <Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" AutomationId="LearningModePicker" />
+                            <Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" AutomationId="DirectionPicker" />
+                            <Label Text="{DynamicResource L10n.VSessionLimitHint}" Style="{StaticResource MutedText}" />
+                            <Button Text="{DynamicResource L10n.VStart}" Command="{Binding StartCommand}" AutomationId="StartLearningButton" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <SearchBar Text="{Binding Search}" Placeholder="{DynamicResource L10n.VSearchCards}" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                </VerticalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VCardsEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
+            <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteDeck}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,20" /></CollectionView.Footer>
+        </CollectionView>
+    </Grid>
+</ContentPage>

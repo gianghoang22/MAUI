@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels" xmlns:controls="clr-namespace:MauiApp1.Controls"
+             x:Class="MauiApp1.Views.CardEditorPage" x:DataType="vm:CardEditorViewModel" Title="{DynamicResource L10n.VCard}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16" MaximumWidthRequest="900" IsEnabled="{Binding IsNotBusy}">
+            <Label Text="{Binding DeckName}" Style="{StaticResource PageHeading}" />
+            <Label Text="{DynamicResource L10n.VDraftRestored}" IsVisible="{Binding Restored}" Style="{StaticResource MutedText}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{DynamicResource L10n.VVietnamese}" Style="{StaticResource SectionHeading}" />
+                    <controls:VocabularyEntry Text="{Binding Vietnamese}" MaxLength="200" AutomationId="VietnameseEntry"
+                                              SemanticProperties.Description="{DynamicResource L10n.VVietnamese}">
+                        <Entry.Behaviors><controls:RequiredTermBehavior x:Name="VietnameseValidation" /></Entry.Behaviors>
+                    </controls:VocabularyEntry>
+                    <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource MutedText}">
+                        <Label.Triggers><DataTrigger TargetType="Label" Binding="{Binding IsValid, Source={x:Reference VietnameseValidation}, x:DataType=controls:RequiredTermBehavior}" Value="True"><Setter Property="IsVisible" Value="False" /></DataTrigger></Label.Triggers>
+                    </Label>
+                    <Label Text="{DynamicResource L10n.VEnglish}" Style="{StaticResource SectionHeading}" />
+                    <controls:VocabularyEntry Text="{Binding English}" MaxLength="200" AutomationId="EnglishEntry"
+                                              SemanticProperties.Description="{DynamicResource L10n.VEnglish}">
+                        <Entry.Behaviors><controls:RequiredTermBehavior x:Name="EnglishValidation" /></Entry.Behaviors>
+                    </controls:VocabularyEntry>
+                    <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource MutedText}">
+                        <Label.Triggers><DataTrigger TargetType="Label" Binding="{Binding IsValid, Source={x:Reference EnglishValidation}, x:DataType=controls:RequiredTermBehavior}" Value="True"><Setter Property="IsVisible" Value="False" /></DataTrigger></Label.Triggers>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+            <Label Text="{Binding SaveStatus}" Style="{StaticResource MutedText}" />
+            <Button Text="{DynamicResource L10n.VSaveCard}" Command="{Binding SaveCommand}" AutomationId="SaveCardButton" />
+            <Button Text="{DynamicResource L10n.VDiscardDraft}" Command="{Binding DiscardCommand}" />
+            <Button Text="{DynamicResource L10n.VDeleteCard}" Command="{Binding DeleteCommand}" IsVisible="{Binding IsExisting}" Style="{StaticResource DangerButton}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
