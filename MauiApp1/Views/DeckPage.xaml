@@ -3,19 +3,19 @@
              xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.DeckPage" Shell.NavBarIsVisible="False" x:DataType="vm:DeckViewModel" Title="{DynamicResource L10n.VDeck}">
     <controls:CollectionWorkspace>
         <controls:CollectionWorkspace.Form>
-            <VerticalStackLayout Spacing="12" Padding="0,0,0,8">
+            <VerticalStackLayout Spacing="20" Padding="0,0,0,20">
                 <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
                 <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
                 <Button Text="{DynamicResource L10n.VResume}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" Style="{StaticResource PrimaryButton}" AutomationId="ResumeDeckButton" />
                 <Border Style="{StaticResource Card}">
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VDeckName}" FontAttributes="Bold" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" />
                         <Editor IsReadOnly="{Binding IsBusy}" Text="{Binding Description}" MaxLength="500" HeightRequest="70" Placeholder="{DynamicResource L10n.VDescription}" />
                         <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" />
                     </VerticalStackLayout>
                 </Border>
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
                     <Button Text="{DynamicResource L10n.VAddCard}" Command="{Binding AddCommand}" AutomationId="AddCardButton" />
                     <Button Grid.Column="1" Text="{DynamicResource L10n.VImportExcel}" Command="{Binding ImportCommand}" />
                 </Grid>
@@ -44,7 +44,7 @@
         <controls:CollectionWorkspace.Collection>
             <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource VocabularyCardTemplate}" SelectionMode="None">
                 <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VCardsEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
-                <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteDeck}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,20" /></CollectionView.Footer>
+                <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteDeck}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,24" /></CollectionView.Footer>
             </CollectionView>
         </controls:CollectionWorkspace.Collection>
     </controls:CollectionWorkspace>

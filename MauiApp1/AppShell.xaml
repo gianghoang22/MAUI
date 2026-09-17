@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        x:Class="MauiApp1.AppShell" FlyoutBehavior="Disabled"
-       Shell.BackgroundColor="{AppThemeBinding Light=#EEF7FE, Dark=#132535}"
-       Shell.TabBarBackgroundColor="{AppThemeBinding Light=#E7F2FB, Dark=#203A50}"
-       Shell.TabBarTitleColor="{AppThemeBinding Light=#356A91, Dark=#A9D4F1}"
-       Shell.TabBarForegroundColor="{AppThemeBinding Light=#356A91, Dark=#A9D4F1}"
-       Shell.TabBarUnselectedColor="{AppThemeBinding Light=#46617B, Dark=#B5CDDF}">
+       Shell.BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+       Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+       Shell.TabBarTitleColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}"
+       Shell.TabBarForegroundColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}"
+       Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}">
     <TabBar>
         <ShellContent x:Name="LibraryContent" Title="{DynamicResource L10n.VLibrary}" Route="library" />
         <ShellContent x:Name="HistoryContent" Title="{DynamicResource L10n.VHistory}" Route="history" />

@@ -6,8 +6,8 @@ public sealed class CollectionWorkspace : Grid
     public static readonly BindableProperty CollectionProperty = BindableProperty.Create(nameof(Collection), typeof(CollectionView), typeof(CollectionWorkspace), propertyChanged: OnContentChanged);
     public static readonly BindableProperty ListHeadingProperty = BindableProperty.Create(nameof(ListHeading), typeof(View), typeof(CollectionWorkspace), propertyChanged: OnContentChanged);
     private readonly ScrollView formScroll = new();
-    private readonly Grid listPanel = new() { RowDefinitions = [new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Star)], RowSpacing = 12 };
-    private readonly VerticalStackLayout mobileHeader = new() { Spacing = 12 };
+    private readonly Grid listPanel = new() { RowDefinitions = [new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Star)], RowSpacing = 20 };
+    private readonly VerticalStackLayout mobileHeader = new() { Spacing = 20 };
 
     public View? Form { get => (View?)GetValue(FormProperty); set => SetValue(FormProperty, value); }
     public CollectionView? Collection { get => (CollectionView?)GetValue(CollectionProperty); set => SetValue(CollectionProperty, value); }
@@ -15,9 +15,9 @@ public sealed class CollectionWorkspace : Grid
 
     public CollectionWorkspace()
     {
-        Padding = 16;
-        ColumnSpacing = 20;
-        RowSpacing = 16;
+        Padding = 20;
+        ColumnSpacing = 28;
+        RowSpacing = 24;
         SizeChanged += (_, _) => UpdateLayout();
     }
 
@@ -57,6 +57,8 @@ public sealed class CollectionWorkspace : Grid
     {
         if (Collection is null || DeviceInfo.Platform != DevicePlatform.WinUI) return;
         var wide = Width >= 900;
+        var inset = wide ? 32 : 20;
+        if (Padding.Left != inset) Padding = new Thickness(inset);
         var sidebar = Math.Clamp((Width - Padding.HorizontalThickness - ColumnSpacing) * 0.3, 280, 400);
         formScroll.MaximumHeightRequest = wide ? double.PositiveInfinity : Math.Max(140, (Height - Padding.VerticalThickness) * 0.48);
         Grid.SetColumn((BindableObject)listPanel, wide ? 1 : 0);

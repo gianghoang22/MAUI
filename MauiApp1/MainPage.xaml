@@ -3,8 +3,8 @@
              xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.MainPage" Shell.NavBarIsVisible="False" x:DataType="vm:LibraryViewModel" Title="VocabMate">
     <controls:CollectionWorkspace>
         <controls:CollectionWorkspace.Form>
-            <VerticalStackLayout Spacing="12" Padding="0,0,0,8">
-                <Label Text="VOCABMATE" FontAttributes="Bold" CharacterSpacing="3" TextColor="{AppThemeBinding Light=#356A91, Dark=#A9D4F1}" />
+            <VerticalStackLayout Spacing="20" Padding="0,0,0,20">
+                <Label Text="VOCABMATE" FontAttributes="Bold" CharacterSpacing="3" TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" />
                 <Label Text="{DynamicResource L10n.VHomeHeading}" Style="{StaticResource PageHeading}" />
                 <Label Text="{DynamicResource L10n.VHomeIntro}" Style="{StaticResource MutedText}" />
                 <Border Style="{StaticResource Card}">
@@ -15,7 +15,7 @@
                     </VerticalStackLayout>
                 </Border>
                 <Border Style="{StaticResource Card}">
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VAddClass}" Style="{StaticResource SectionHeading}" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding NewName}" MaxLength="80" Placeholder="{DynamicResource L10n.VClassPlaceholder}" AutomationId="NewClassName" ReturnType="Done" ReturnCommand="{Binding AddCommand}" />
                         <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding AddCommand}" AutomationId="AddClassButton" />
@@ -25,7 +25,7 @@
             </VerticalStackLayout>
         </controls:CollectionWorkspace.Form>
         <controls:CollectionWorkspace.ListHeading>
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
                 <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" VerticalOptions="Center" />
                 <Button Grid.Column="1" Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" Style="{StaticResource QuietButton}" />
             </Grid>

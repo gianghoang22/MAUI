@@ -4,8 +4,8 @@ public sealed class AdaptiveColumns : Grid
 {
     public AdaptiveColumns()
     {
-        ColumnSpacing = 12;
-        RowSpacing = 12;
+        ColumnSpacing = 20;
+        RowSpacing = 20;
         SizeChanged += (_, _) => ArrangeColumns();
     }
 

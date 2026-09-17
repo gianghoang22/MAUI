@@ -16,6 +16,6 @@
 # 4. Về UXUI
 - Phần học UX UI khá là khó chịu, đặc biệt các thao tác như lật thẻ, đã nhớ/chưa nhớ - tham khảo app/web Quizlet để làm lại phần này
 
-- Về mặt UXUI - tao muốn hướng tới Liquid Glass, với tone màu nhẹ nhàng, ko gây mỏi mắt như Baby blue, các UX tao muốn mượt mà hơn có các animation để chuyển động nhìn xịn hơn. 
+- Về mặt UXUI - tao muốn hướng tới Liquid Glass, với tone màu nhẹ nhàng, ko gây mỏi mắt như Baby blue, các UX tao muốn mượt mà hơn có các animation để chuyển động nhìn xịn hơn.
 
 - Sửa lại layout và tỉ lệ các màn hình cần có responsive.

@@ -3,7 +3,7 @@
              xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.ImportPage" Shell.NavBarIsVisible="False" x:DataType="vm:ImportViewModel" Title="{DynamicResource L10n.VImportExcel}">
     <controls:CollectionWorkspace>
         <controls:CollectionWorkspace.Form>
-            <VerticalStackLayout Spacing="14" Padding="0,0,0,16" IsEnabled="{Binding IsNotBusy}">
+            <VerticalStackLayout Spacing="20" Padding="0,0,0,20" IsEnabled="{Binding IsNotBusy}">
                 <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
                 <Label Text="{DynamicResource L10n.VImportHeading}" Style="{StaticResource PageHeading}" />
                 <Label Text="{DynamicResource L10n.VImportInstructions}" Style="{StaticResource MutedText}" />
@@ -19,7 +19,7 @@
             <CollectionView ItemsSource="{Binding Rows}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:ImportRow">
-                        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
+                        <Border Style="{StaticResource Card}" Margin="0,0,0,16">
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="{Binding RowNumber}" FontAttributes="Bold" />
                                 <Label Text="{Binding Vietnamese}" MaxLines="3" LineBreakMode="TailTruncation" />

@@ -2,16 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MauiApp1.ViewModels" xmlns:controls="clr-namespace:MauiApp1.Controls"
              x:Class="MauiApp1.Views.LearningPage" x:DataType="vm:LearningViewModel" Title="{DynamicResource L10n.VLearn}" Shell.NavBarIsVisible="False">
-    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+    <Grid RowDefinitions="Auto,*" Padding="{StaticResource PagePadding}" RowSpacing="24">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
             <Button Text="{DynamicResource L10n.VBack}" Command="{Binding ExitCommand}" Style="{StaticResource QuietButton}" AutomationId="StudyBackButton" />
             <Label Grid.Column="1" Text="{Binding DeckName}" Style="{StaticResource SectionHeading}" VerticalOptions="Center" MaxLines="2" LineBreakMode="TailTruncation" />
             <Button Grid.Column="2" Text="{DynamicResource L10n.VCustomize}" Command="{Binding SetupCommand}" Style="{StaticResource QuietButton}" AutomationId="StudySetupButton" x:Name="StudySetupButton" />
         </Grid>
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="16" MaximumWidthRequest="980" HorizontalOptions="Fill" Padding="4,4,4,20">
+            <VerticalStackLayout Spacing="24" MaximumWidthRequest="980" HorizontalOptions="Fill" Padding="4,4,4,28">
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowSetup}">
-                    <VerticalStackLayout Spacing="12">
+                    <VerticalStackLayout Spacing="16">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
                         <controls:AdaptiveColumns>
                             <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VChooseMode}" Style="{StaticResource MutedText}" /><Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" AutomationId="StudyModePicker" /></VerticalStackLayout>
@@ -21,37 +21,37 @@
                         <Button Text="{DynamicResource L10n.VApplySetup}" Command="{Binding ApplySetupCommand}" Style="{StaticResource PrimaryButton}" AutomationId="ApplyStudySetupButton" />
                     </VerticalStackLayout>
                 </Border>
-                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="4">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="8">
                     <Label Text="{Binding ModeName}" Style="{StaticResource SectionHeading}" />
                     <Label Grid.Column="1" Text="{Binding Position}" VerticalOptions="Center" />
                     <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DirectionName}" Style="{StaticResource MutedText}" />
                 </Grid>
                 <ProgressBar Progress="{Binding Progress}" />
-                <VerticalStackLayout Spacing="12" IsVisible="{Binding ShowQuestion}">
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="16" IsVisible="{Binding ShowQuestion}">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
                         <Button Text="{DynamicResource L10n.VSpeak}" Command="{Binding SpeakCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" />
                         <Button Grid.Column="1" Text="{Binding StarText}" Command="{Binding StarCommand}" Style="{StaticResource QuietButton}" SemanticProperties.Description="{Binding StarDescription}" ToolTipProperties.Text="{Binding StarDescription}" AutomationId="StudyStarButton" />
                     </Grid>
                     <controls:VocabularyFlashcard Prompt="{Binding QuestionText}" Answer="{Binding AnswerText}" IsRevealed="{Binding ShowAnswer}"
                                                   IsTwoSided="{Binding IsFlashcard}" FlipCommand="{Binding FlipCommand}" FrontCaption="{Binding FrontCaption}" BackCaption="{Binding BackCaption}" />
-                    <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10" IsVisible="{Binding ShowRating}">
+                    <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="16" IsVisible="{Binding ShowRating}">
                         <Button Text="{DynamicResource L10n.VForget}" Command="{Binding ForgetCommand}" Style="{StaticResource QuietButton}" AutomationId="ForgetButton" />
                         <Button Grid.Column="1" Text="{DynamicResource L10n.VFlip}" Command="{Binding FlipCommand}" AutomationId="FlipButton" x:Name="FlipButton" />
                         <Button Grid.Column="2" Text="{DynamicResource L10n.VRemember}" Command="{Binding RememberCommand}" Style="{StaticResource PrimaryButton}" AutomationId="RememberButton" x:Name="RememberButton" />
                     </Grid>
                     <controls:AdaptiveColumns x:Name="ChoiceList" BindableLayout.ItemsSource="{Binding Choices}" BindableLayout.ItemTemplate="{StaticResource ChoiceTemplate}" IsVisible="{Binding ShowChoices}" />
-                    <VerticalStackLayout Spacing="10" IsVisible="{Binding ShowWritten}">
+                    <VerticalStackLayout Spacing="16" IsVisible="{Binding ShowWritten}">
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Input}" Placeholder="{DynamicResource L10n.VTypeAnswer}" MaxLength="200" ReturnCommand="{Binding SubmitCommand}" ReturnType="Done" AutomationId="WrittenAnswerEntry" x:Name="WrittenAnswerEntry" />
                         <Button Text="{DynamicResource L10n.VCheckAnswer}" Command="{Binding SubmitCommand}" Style="{StaticResource PrimaryButton}" />
                     </VerticalStackLayout>
                     <Label Text="{Binding Feedback}" IsVisible="{Binding ShowNext}" FontSize="20" FontAttributes="Bold" />
                     <Button Text="{DynamicResource L10n.VNext}" Command="{Binding NextCommand}" IsVisible="{Binding ShowNext}" AutomationId="NextQuestionButton" x:Name="NextQuestionButton" />
                 </VerticalStackLayout>
-                <VerticalStackLayout IsVisible="{Binding ShowMatch}" Spacing="12">
+                <VerticalStackLayout IsVisible="{Binding ShowMatch}" Spacing="16">
                     <Label Text="{Binding MatchFeedback}" Style="{StaticResource SectionHeading}" />
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding MatchLeft}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="10" />
-                        <VerticalStackLayout Grid.Column="1" BindableLayout.ItemsSource="{Binding MatchRight}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="10" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding MatchLeft}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="16" />
+                        <VerticalStackLayout Grid.Column="1" BindableLayout.ItemsSource="{Binding MatchRight}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="16" />
                     </Grid>
                 </VerticalStackLayout>
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowResult}">

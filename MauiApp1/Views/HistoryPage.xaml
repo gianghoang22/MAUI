@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.HistoryPage" Shell.NavBarIsVisible="False" x:DataType="vm:HistoryViewModel" Title="{DynamicResource L10n.VHistory}">
-    <Grid Padding="16" RowDefinitions="Auto,*" RowSpacing="16">
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+    <Grid Padding="{StaticResource PagePadding}" RowDefinitions="Auto,*" RowSpacing="24">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
             <Label Text="{DynamicResource L10n.VHistoryHeading}" Style="{StaticResource PageHeading}" />
             <Button Grid.Column="1" Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" Style="{StaticResource QuietButton}" />
         </Grid>
@@ -12,8 +12,8 @@
         <CollectionView Grid.Row="1" ItemsSource="{Binding Results}" IsVisible="{Binding HasResults}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ResultRow">
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-                        <VerticalStackLayout Spacing="12">
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                        <VerticalStackLayout Spacing="16">
                             <Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" />
                             <Label Text="{Binding Summary}" />
                             <Label Text="{Binding Details}" Style="{StaticResource MutedText}" />

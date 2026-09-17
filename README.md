@@ -33,7 +33,13 @@ dotnet build MauiApp1/MauiApp1.csproj -f net10.0-windows10.0.19041.0 -c Release
 - File Excel mẫu và phát âm bằng giọng tiếng Anh của OS; đã bỏ nút xuất/chia sẻ bộ từ.
 - Sao đánh dấu đã thuộc, học riêng nhóm chưa thuộc/đã thuộc/tất cả; tiếp tục ngay trong bộ từ hoặc sau mỗi lượt.
 - Flashcard lật hai mặt bằng nhấn thẻ/nút Lật; đánh giá một lần rồi tự sang thẻ tiếp theo.
-- Đổi chế độ, chiều học và nhóm từ ngay trong màn học. Giao diện baby blue, bề mặt kính trong nhẹ và animation lật thẻ.
+- Đổi chế độ, chiều học và nhóm từ ngay trong màn học. Giao diện trắng chủ đạo, xanh rất nhạt làm điểm nhấn, bề mặt màu đặc và viền mảnh; giữ animation lật thẻ phục vụ thao tác học.
+
+## Theme và spacing
+
+- Theme sáng dùng nền/trang/thẻ trắng, input trắng ngả xám và nút xanh rất nhạt. Theme tối vẫn có sẵn, dùng màu đặc thay cho hiệu ứng kính. Không tự đổi lựa chọn theme đã lưu của người dùng.
+- Lề ngoài 20–32 DIP tùy màn hình, khoảng cách giữa vùng 20–28 DIP, padding thẻ 20 DIP; ô nhập và nút có khoảng cách riêng. Flashcard giữ padding 32 DIP và chức năng lật hai mặt.
+- Palette và các style dùng chung nằm trong `MauiApp1/Themes/StudyTheme.xaml`.
 
 ## Windows: bố cục và bàn phím
 
@@ -70,7 +76,7 @@ File thực tế ở `Samples/VocabMate-template.xlsx` có 6 cặp từ. Có th�
 - Flashcards là tự đánh giá: **Đã nhớ** đánh dấu sao, **Chưa nhớ** bỏ sao; cả hai lưu tiến độ và tự chuyển câu trong cùng lần ghi. Trắc nghiệm/viết không tự đánh dấu đã thuộc.
 - **Tiếp tục phiên** giữ đúng câu/mặt/chế độ/chiều/input cũ. **Tiếp tục học** sau kết quả tạo lượt mới theo bộ lọc hiện hành, không lặp từ đã thuộc khi chọn Chưa thuộc.
 - Sao có thể bật/tắt trong danh sách hoặc trên thẻ. Đổi chế độ trong Tùy chỉnh bắt đầu phiên mới có xác nhận nếu đang học dở; không xóa sao.
-- Thời gian session tính cả thời gian tạm nghỉ. Giao diện kính là phong cách gradient/translucency, không phải hiệu ứng khúc xạ Liquid Glass native của Apple.
+- Thời gian session tính cả thời gian tạm nghỉ. Đã bỏ toàn bộ gradient, translucency và shadow của theme kính cũ.
 - Chỉ giữ một session đang dở. Bắt đầu session mới có xác nhận thay thế; giữ tối đa 100 kết quả đã hoàn thành.
 
 ## Dữ liệu và an toàn

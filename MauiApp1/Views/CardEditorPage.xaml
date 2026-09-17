@@ -3,13 +3,13 @@
              xmlns:vm="clr-namespace:MauiApp1.ViewModels" xmlns:controls="clr-namespace:MauiApp1.Controls"
              x:Class="MauiApp1.Views.CardEditorPage" Shell.NavBarIsVisible="False" x:DataType="vm:CardEditorViewModel" Title="{DynamicResource L10n.VCard}">
     <ScrollView>
-        <VerticalStackLayout Padding="{OnPlatform Default=20, WinUI=16}" Spacing="10" MaximumWidthRequest="900" HorizontalOptions="Fill">
+        <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20" MaximumWidthRequest="900" HorizontalOptions="Fill">
             <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
             <Label Text="{Binding DeckName}" Style="{StaticResource PageHeading}" />
             <Label Text="{DynamicResource L10n.VDraftRestored}" IsVisible="{Binding Restored}" Style="{StaticResource MutedText}" />
             <Border Style="{StaticResource Card}">
                 <controls:AdaptiveColumns>
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="12">
                     <Label Text="{DynamicResource L10n.VVietnamese}" Style="{StaticResource SectionHeading}" />
                     <controls:VocabularyEntry IsReadOnly="{Binding IsBusy}" Text="{Binding Vietnamese}" MaxLength="200" AutomationId="VietnameseEntry" ReturnType="Next" Completed="OnVietnameseCompleted"
                                               SemanticProperties.Description="{DynamicResource L10n.VVietnamese}">
@@ -19,7 +19,7 @@
                         <Label.Triggers><DataTrigger TargetType="Label" Binding="{Binding IsValid, Source={x:Reference VietnameseValidation}, x:DataType=controls:RequiredTermBehavior}" Value="True"><Setter Property="IsVisible" Value="False" /></DataTrigger></Label.Triggers>
                     </Label>
                     </VerticalStackLayout>
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="12">
                     <Label Text="{DynamicResource L10n.VEnglish}" Style="{StaticResource SectionHeading}" />
                     <controls:VocabularyEntry IsReadOnly="{Binding IsBusy}" Text="{Binding English}" MaxLength="200" AutomationId="EnglishEntry" x:Name="EnglishField" ReturnType="Done" ReturnCommand="{Binding SaveCommand}"
                                               SemanticProperties.Description="{DynamicResource L10n.VEnglish}">
