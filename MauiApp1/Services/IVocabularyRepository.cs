@@ -10,6 +10,7 @@ public interface IVocabularyRepository
     Task SaveDeckAsync(VocabularyDeck deck);
     Task DeleteDeckAsync(Guid deckId);
     Task SaveCardAsync(VocabularyCard card);
+    Task SetStarredAsync(Guid cardId, bool starred);
     Task DeleteCardAsync(Guid cardId);
     Task<int> ImportAsync(Guid deckId, IReadOnlyList<VocabularyCard> cards);
     Task SaveDraftAsync(CardDraft draft);

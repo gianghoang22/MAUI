@@ -646,4 +646,20 @@
   <data name="VSessionCheckpoint" xml:space="preserve">
     <value>Progress is saved after each action; your typed answer is saved automatically.</value>
   </data>
+  <data name="VKeyboardHint" xml:space="preserve"><value>Keyboard: Tab to move · Enter/Space to activate the focused button · 1–4 to choose an answer · 1/2 for remembered/forgotten. In writing mode, type then press Enter.</value></data>
+  <data name="VBack" xml:space="preserve"><value>← Back</value></data>
+  <data name="VCustomize" xml:space="preserve"><value>Customize</value></data>
+  <data name="VStudyFilter" xml:space="preserve"><value>Words to study</value></data>
+  <data name="VFilter0" xml:space="preserve"><value>Not mastered yet</value></data>
+  <data name="VFilter1" xml:space="preserve"><value>Starred · mastered</value></data>
+  <data name="VFilter2" xml:space="preserve"><value>All words</value></data>
+  <data name="VStar" xml:space="preserve"><value>Mark as mastered</value></data>
+  <data name="VUnstar" xml:space="preserve"><value>Mark as not mastered</value></data>
+  <data name="VStarHint" xml:space="preserve"><value>★ marks a mastered word. Study unstarred words to skip these, or choose starred words to review them.</value></data>
+  <data name="VMasterySummary" xml:space="preserve"><value>{0}/{1} words mastered</value></data>
+  <data name="VNoFilteredCards" xml:space="preserve"><value>No words in this group. Change the study filter to review other words.</value></data>
+  <data name="VApplySetup" xml:space="preserve"><value>Start with these settings</value></data>
+  <data name="VChangeSetupWarning" xml:space="preserve"><value>Changing settings starts a new session. Starred words are kept, but this unfinished session will be replaced.</value></data>
+  <data name="VContinueLearning" xml:space="preserve"><value>Continue learning</value></data>
+  <data name="VVocabularyList" xml:space="preserve"><value>Your vocabulary</value></data>
 </root>

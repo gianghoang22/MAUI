@@ -1,52 +1,61 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:vm="clr-namespace:MauiApp1.ViewModels">
-    <Style TargetType="ContentPage" ApplyToDerivedTypes="True"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F4F6FB, Dark=#111827}" /></Style>
+    <LinearGradientBrush x:Key="PageLight" StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#EEF7FE" Offset="0" /><GradientStop Color="#DCECF8" Offset="1" /></LinearGradientBrush>
+    <LinearGradientBrush x:Key="PageDark" StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#132535" Offset="0" /><GradientStop Color="#1A3449" Offset="1" /></LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlassLight" StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#F7FFFFFF" Offset="0" /><GradientStop Color="#DAE7F3FC" Offset="1" /></LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlassDark" StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#F02B465D" Offset="0" /><GradientStop Color="#DC203A50" Offset="1" /></LinearGradientBrush>
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True"><Setter Property="Background" Value="{AppThemeBinding Light={StaticResource PageLight}, Dark={StaticResource PageDark}}" /></Style>
+    <Style TargetType="Label"><Setter Property="TextColor" Value="{AppThemeBinding Light=#243E58, Dark=#E6F3FF}" /><Setter Property="FontSize" Value="16" /><Setter Property="LineBreakMode" Value="WordWrap" /></Style>
+    <Style x:Key="BaseButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#D3E7F8, Dark=#355873}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=#244B6B, Dark=#EFF8FF}" />
+        <Setter Property="CornerRadius" Value="16" /><Setter Property="Padding" Value="16,10" />
+        <Setter Property="FontSize" Value="15" /><Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="MinimumHeightRequest" Value="46" /><Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList><VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver"><VisualState.Setters><Setter Property="Opacity" Value="0.82" /></VisualState.Setters></VisualState>
+                <VisualState x:Name="Pressed"><VisualState.Setters><Setter Property="Scale" Value="0.97" /></VisualState.Setters></VisualState>
+                <VisualState x:Name="Disabled"><VisualState.Setters><Setter Property="Opacity" Value="0.45" /></VisualState.Setters></VisualState>
+            </VisualStateGroup></VisualStateGroupList>
+        </Setter>
+    </Style>
+    <Style TargetType="Button" BasedOn="{StaticResource BaseButton}" />
+    <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#356A91, Dark=#A9D4F1}" /><Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=#18394F}" /></Style>
+    <Style x:Key="QuietButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="Transparent" /><Setter Property="BorderWidth" Value="1" /><Setter Property="BorderColor" Value="{AppThemeBinding Light=#AAC9DF, Dark=#6285A0}" /></Style>
+    <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FBE8E5, Dark=#583D43}" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#8D3F3C, Dark=#FFD4CF}" /></Style>
+    <Style TargetType="Entry" ApplyToDerivedTypes="True"><Setter Property="TextColor" Value="{AppThemeBinding Light=#243E58, Dark=#E6F3FF}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=#56728A, Dark=#A8C2D5}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#BFFFFFFF, Dark=#66355873}" /><Setter Property="MinimumHeightRequest" Value="46" /><Setter Property="FontSize" Value="16" /></Style>
+    <Style TargetType="Picker"><Setter Property="TextColor" Value="{AppThemeBinding Light=#243E58, Dark=#E6F3FF}" /><Setter Property="TitleColor" Value="{AppThemeBinding Light=#56728A, Dark=#A8C2D5}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#BFFFFFFF, Dark=#66355873}" /><Setter Property="MinimumHeightRequest" Value="46" /><Setter Property="FontSize" Value="15" /></Style>
+    <Style TargetType="ProgressBar"><Setter Property="ProgressColor" Value="{AppThemeBinding Light=#568EB9, Dark=#A9D4F1}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#C6DDEC, Dark=#355873}" /></Style>
     <Style x:Key="Card" TargetType="Border">
-        <Setter Property="Padding" Value="18" /><Setter Property="StrokeShape" Value="RoundRectangle 18" />
-        <Setter Property="Stroke" Value="{AppThemeBinding Light=#E0E5EF, Dark=#374151}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#1F2937}" />
+        <Setter Property="Padding" Value="16" /><Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light=#F7FFFFFF, Dark=#607D93}" />
+        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource GlassLight}, Dark={StaticResource GlassDark}}" />
+        <Setter Property="Shadow"><Setter.Value><Shadow Brush="#395B76" Offset="0,5" Radius="14" Opacity="0.10" /></Setter.Value></Setter>
     </Style>
-    <Style x:Key="PageHeading" TargetType="Label">
-        <Setter Property="FontSize" Value="28" /><Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light=#19233C, Dark=#F3F4F6}" />
-        <Setter Property="SemanticProperties.HeadingLevel" Value="Level1" />
-    </Style>
-    <Style x:Key="SectionHeading" TargetType="Label">
-        <Setter Property="FontSize" Value="19" /><Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light=#19233C, Dark=#F3F4F6}" />
-        <Setter Property="SemanticProperties.HeadingLevel" Value="Level2" />
-    </Style>
-    <Style x:Key="MutedText" TargetType="Label">
-        <Setter Property="FontSize" Value="14" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#526078, Dark=#B5C0D3}" />
-    </Style>
-    <Style x:Key="DangerButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FDE8E8, Dark=#4C2028}" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light=#A82032, Dark=#FFB5BE}" />
-        <Setter Property="MinimumHeightRequest" Value="48" /><Setter Property="CornerRadius" Value="10" />
-    </Style>
+    <Style x:Key="PageHeading" TargetType="Label"><Setter Property="FontSize" Value="26" /><Setter Property="FontAttributes" Value="Bold" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#243E58, Dark=#E6F3FF}" /><Setter Property="SemanticProperties.HeadingLevel" Value="Level1" /></Style>
+    <Style x:Key="SectionHeading" TargetType="Label"><Setter Property="FontSize" Value="19" /><Setter Property="FontAttributes" Value="Bold" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#243E58, Dark=#E6F3FF}" /><Setter Property="SemanticProperties.HeadingLevel" Value="Level2" /></Style>
+    <Style x:Key="MutedText" TargetType="Label"><Setter Property="FontSize" Value="14" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#46617B, Dark=#B5CDDF}" /><Setter Property="LineBreakMode" Value="WordWrap" /></Style>
     <DataTemplate x:Key="NamedRowTemplate" x:DataType="vm:NamedRow">
-        <Border Style="{StaticResource Card}" Margin="0,0,0,12">
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <VerticalStackLayout Spacing="8"><Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" /><Label Text="{Binding Summary}" Style="{StaticResource MutedText}" /></VerticalStackLayout>
-                <Button Grid.Column="1" Text="{DynamicResource L10n.Open}" Command="{Binding OpenCommand}" VerticalOptions="Center" SemanticProperties.Description="{Binding Name}" />
-            </Grid>
-        </Border>
+        <Border Style="{StaticResource Card}" Margin="0,0,0,12"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="4"><Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" /><Label Grid.Row="1" Text="{Binding Summary}" Style="{StaticResource MutedText}" /></Grid>
+            <Button Grid.Column="1" Text="{DynamicResource L10n.Open}" Command="{Binding OpenCommand}" VerticalOptions="Center" SemanticProperties.Description="{Binding Name}" />
+        </Grid></Border>
     </DataTemplate>
     <DataTemplate x:Key="VocabularyCardTemplate" x:DataType="vm:VocabularyCardRow">
-        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <VerticalStackLayout Spacing="8"><Label Text="{Binding English}" Style="{StaticResource SectionHeading}" /><Label Text="{Binding Vietnamese}" /></VerticalStackLayout>
-                <Button Grid.Column="1" Text="{DynamicResource L10n.VEdit}" Command="{Binding OpenCommand}" VerticalOptions="Center" SemanticProperties.Description="{Binding English}" />
-            </Grid>
-        </Border>
+        <Border Style="{StaticResource Card}" Margin="0,0,0,12"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="6"><Label Text="{Binding English}" Style="{StaticResource SectionHeading}" /><Label Grid.Row="1" Text="{Binding Vietnamese}" /></Grid>
+            <VerticalStackLayout Grid.Column="1" Spacing="6"><Button Text="{Binding StarText}" Command="{Binding StarCommand}" Style="{StaticResource QuietButton}" SemanticProperties.Description="{Binding StarDescription}" /><Button Text="{DynamicResource L10n.VEdit}" Command="{Binding OpenCommand}" SemanticProperties.Description="{Binding English}" /></VerticalStackLayout>
+        </Grid></Border>
     </DataTemplate>
-    <DataTemplate x:Key="ChoiceTemplate" x:DataType="vm:ChoiceRow"><Button Text="{Binding Text}" Command="{Binding SelectCommand}" LineBreakMode="WordWrap" MinimumHeightRequest="52" /></DataTemplate>
+    <DataTemplate x:Key="ChoiceTemplate" x:DataType="vm:ChoiceRow"><Button Text="{Binding Text}" Command="{Binding SelectCommand}" MinimumHeightRequest="58" /></DataTemplate>
     <DataTemplate x:Key="MatchTemplate" x:DataType="vm:MatchRow">
-        <Button Text="{Binding Text}" Command="{Binding SelectCommand}" IsEnabled="{Binding IsAvailable}" MinimumHeightRequest="70" LineBreakMode="WordWrap" BorderWidth="1" BorderColor="#9277EF"
-                BackgroundColor="{AppThemeBinding Light=White, Dark=#1F2937}" TextColor="{AppThemeBinding Light=#19233C, Dark=White}">
+        <Button Text="{Binding Text}" Command="{Binding SelectCommand}" IsEnabled="{Binding IsAvailable}" MinimumHeightRequest="70" BorderWidth="1" BorderColor="#8EB7D5">
             <Button.Triggers>
-                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True"><Setter Property="BackgroundColor" Value="#512BD4" /><Setter Property="TextColor" Value="White" /></DataTrigger>
+                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True"><Setter Property="BackgroundColor" Value="#356A91" /><Setter Property="TextColor" Value="White" /></DataTrigger>
                 <DataTrigger TargetType="Button" Binding="{Binding IsMatched}" Value="True"><Setter Property="Opacity" Value="0.35" /></DataTrigger>
             </Button.Triggers>
         </Button>

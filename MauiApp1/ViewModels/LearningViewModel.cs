@@ -12,6 +12,13 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
     private LearningSession? session;
     private string input = "";
     private Guid? selectedLeft;
+    private HashSet<Guid> starredIds = [];
+    private List<VocabularyCard> libraryCards = [];
+    private int modeIndex;
+    private int directionIndex;
+    private int filterIndex;
+    private bool showSetup;
+    private bool translating;
     private string matchFeedbackKey = "VMatchHint";
     protected override string SavedHintKey => "VSessionCheckpoint";
 
@@ -21,12 +28,24 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         this.repository = repository;
         this.engine = engine;
         FlipCommand = CreateCommand(() => ChangeAsync(current => current.Mode == LearningMode.Flashcards && !current.IsComplete
-            ? current with { Revealed = true } : throw new StudyException("VInvalidSession")));
-        RememberCommand = CreateCommand(() => ChangeAsync(current => engine.Rate(current, true)));
-        ForgetCommand = CreateCommand(() => ChangeAsync(current => engine.Rate(current, false)));
+            ? current with { Revealed = !current.Revealed } : throw new StudyException("VInvalidSession")));
+        RememberCommand = CreateCommand(() => ChangeAsync(current => engine.Next(engine.Rate(current, true))));
+        ForgetCommand = CreateCommand(() => ChangeAsync(current => engine.Next(engine.Rate(current, false))));
         SubmitCommand = CreateCommand(() => ChangeAsync(current => engine.Submit(current, Input)));
         NextCommand = CreateCommand(() => ChangeAsync(engine.Next));
         RefreshCommand = CreateCommand(LoadAsync);
+        SetupCommand = CreateCommand(() => { ShowSetup = !ShowSetup; return Task.CompletedTask; });
+        ApplySetupCommand = CreateCommand(() => StartBatchAsync(true));
+        ContinueCommand = CreateCommand(() => StartBatchAsync(false));
+        StarCommand = CreateCommand(async () =>
+        {
+            if (CurrentQuestion is null) return;
+            var cardId = CurrentQuestion.CardId;
+            await repository.SetStarredAsync(cardId, !starredIds.Contains(cardId));
+            await ReloadStarsAsync();
+            OnPropertyChanged(nameof(StarText));
+            OnPropertyChanged(nameof(StarDescription));
+        });
         ExitCommand = CreateCommand(async () => { await FlushAsync(); await Interaction.NavigateAsync(".."); });
         SpeakCommand = CreateCommand(async () =>
         {
@@ -39,6 +58,9 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
             var next = engine.Retry(result);
             await repository.StartSessionAsync(next);
             ResetAutosave();
+            UpdateSetupSelection(next);
+            ShowSetup = false;
+            selectedLeft = null;
             Apply(next);
         });
     }
@@ -52,13 +74,29 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
     public string Input { get => input; set { if (SetProperty(ref input, value ?? "")) MarkDirty(); } }
     public bool ShowQuestion => session is { IsComplete: false } && session.Mode != LearningMode.Match;
     public bool ShowAnswer => ShowQuestion && session!.Revealed;
-    public bool ShowFlip => ShowQuestion && session!.Mode == LearningMode.Flashcards && !session.Revealed;
-    public bool ShowRating => ShowQuestion && session!.Mode == LearningMode.Flashcards && session.Revealed && !session.IsAnswered;
+    public bool IsFlashcard => ShowQuestion && session!.Mode == LearningMode.Flashcards;
+    public bool ShowFlip => IsFlashcard && !session!.IsAnswered;
+    public double Progress => session is null ? 0 : (double)(session.Mode == LearningMode.Match ? session.MatchedIds.Count : session.Index) / session.Questions.Count;
+    public string FrontCaption => Localization[session?.Direction == LearningDirection.VietnameseToEnglish ? "VVietnamese" : "VEnglish"];
+    public string BackCaption => Localization[session?.Direction == LearningDirection.VietnameseToEnglish ? "VEnglish" : "VVietnamese"];
+    public string StarText => CurrentQuestion is not null && starredIds.Contains(CurrentQuestion.CardId) ? "★" : "☆";
+    public string StarDescription => Localization[StarText == "★" ? "VUnstar" : "VStar"];
+    public bool ShowSetup { get => showSetup; set => SetProperty(ref showSetup, value); }
+    public int ModeIndex { get => modeIndex; set { if (!translating && value is >= 0 and <= 3) SetProperty(ref modeIndex, value); } }
+    public int DirectionIndex { get => directionIndex; set { if (!translating && value is >= 0 and <= 1) SetProperty(ref directionIndex, value); } }
+    public int FilterIndex { get => filterIndex; set { if (!translating && value is >= 0 and <= 2) SetProperty(ref filterIndex, value); } }
+    public IReadOnlyList<string> Modes => Enumerable.Range(0, 4).Select(index => Localization["VMode" + index]).ToList();
+    public IReadOnlyList<string> Directions => [Localization["VDirection0"], Localization["VDirection1"]];
+    public IReadOnlyList<string> Filters => Enumerable.Range(0, 3).Select(index => Localization["VFilter" + index]).ToList();
+    public bool ShowRating => ShowFlip;
     public bool ShowChoices => ShowQuestion && session!.Mode == LearningMode.MultipleChoice && !session.IsAnswered;
     public bool ShowWritten => ShowQuestion && session!.Mode == LearningMode.Written && !session.IsAnswered;
     public bool ShowNext => ShowQuestion && session!.IsAnswered;
     public bool ShowMatch => session is { IsComplete: false, Mode: LearningMode.Match };
     public bool ShowResult => session is { IsComplete: true };
+    public bool CanContinue => session is not null && libraryCards.Any(card => card.DeckId == session.DeckId &&
+        (session.Filter == LearningFilter.All || card.IsStarred == (session.Filter == LearningFilter.Starred)));
+    public bool NoRemainingCards => ShowResult && !CanContinue;
     public bool CanRetry => ShowResult && session!.Attempts.Any(attempt => !attempt.Correct);
     public string Feedback => ShowNext ? Localization[session!.Attempts[session.Index].Correct ? "VCorrect" : "VIncorrect"] : "";
     public string MatchFeedback => Localization[matchFeedbackKey];
@@ -91,6 +129,10 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
             OnPropertyChanged(null);
         }));
     }).ToList() ?? [];
+    public ICommand SetupCommand { get; }
+    public ICommand ApplySetupCommand { get; }
+    public ICommand ContinueCommand { get; }
+    public ICommand StarCommand { get; }
     public ICommand FlipCommand { get; }
     public ICommand RememberCommand { get; }
     public ICommand ForgetCommand { get; }
@@ -107,7 +149,52 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         await FlushAsync();
         var current = (await repository.ReadAsync()).Session ?? throw new StudyException("VNoSession");
         ResetAutosave();
+        ModeIndex = (int)current.Mode;
+        DirectionIndex = (int)current.Direction;
+        FilterIndex = (int)current.Filter;
+        await ReloadStarsAsync();
         Apply(current);
+    }
+
+    protected override void OnLanguageChanged(object? sender, EventArgs arguments)
+    {
+        translating = true;
+        try { base.OnLanguageChanged(sender, arguments); OnPropertyChanged(nameof(ModeIndex)); OnPropertyChanged(nameof(DirectionIndex)); OnPropertyChanged(nameof(FilterIndex)); }
+        finally { translating = false; }
+    }
+
+    private async Task ReloadStarsAsync()
+    {
+        libraryCards = (await repository.ReadAsync()).Cards;
+        starredIds = libraryCards.Where(card => card.IsStarred).Select(card => card.Id).ToHashSet();
+    }
+
+    private async Task StartBatchAsync(bool changeSettings)
+    {
+        await FlushAsync();
+        if (session is null) throw new StudyException("VNoSession");
+        var data = await repository.ReadAsync();
+        var deck = data.Decks.FirstOrDefault(item => item.Id == session.DeckId) ?? throw new StudyException("VNotFound");
+        var next = engine.Create(deck, data.Cards.Where(card => card.DeckId == deck.Id).ToList(),
+            changeSettings ? (LearningMode)ModeIndex : session.Mode,
+            changeSettings ? (LearningDirection)DirectionIndex : session.Direction,
+            changeSettings ? (LearningFilter)FilterIndex : session.Filter);
+        if (!session.IsComplete && !await Interaction.ConfirmAsync(Localization["VReplaceSession"], Localization["VChangeSetupWarning"], "VStartNew")) return;
+        await repository.StartSessionAsync(next);
+        ResetAutosave();
+        UpdateSetupSelection(next);
+        ShowSetup = false;
+        selectedLeft = null;
+        matchFeedbackKey = "VMatchHint";
+        await ReloadStarsAsync();
+        Apply(next);
+    }
+
+    private void UpdateSetupSelection(LearningSession current)
+    {
+        ModeIndex = (int)current.Mode;
+        DirectionIndex = (int)current.Direction;
+        FilterIndex = (int)current.Filter;
     }
 
     private void Apply(LearningSession current)
@@ -133,6 +220,7 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         if (session is null) throw new StudyException("VNoSession");
         var next = change(session);
         await repository.SaveSessionAsync(next);
+        await ReloadStarsAsync();
         Apply(next);
     }
 }

@@ -22,6 +22,7 @@ public abstract class ViewModelBase(IUserInteraction interaction, LocalizationSe
     }
 
     public bool IsNotBusy => !IsBusy;
+    public ICommand BackCommand => CreateCommand(() => Interaction.NavigateAsync(".."));
     protected ICommand CreateCommand(Func<Task> action) => new Command(async () => await RunAsync(action));
 
     public async Task RunAsync(Func<Task> action)

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.SettingsPage" x:DataType="vm:SettingsViewModel" Title="{DynamicResource L10n.SettingsTitle}">
+             xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.SettingsPage" Shell.NavBarIsVisible="False" x:DataType="vm:SettingsViewModel" Title="{DynamicResource L10n.SettingsTitle}">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20" MaximumWidthRequest="900">
+        <VerticalStackLayout Padding="16" Spacing="12" MaximumWidthRequest="900">
             <Label Text="{DynamicResource L10n.VSettingsHeading}" Style="{StaticResource PageHeading}" />
-            <Border Style="{StaticResource Card}">
+            <controls:AdaptiveColumns>
+            <Border Style="{StaticResource Card}" VerticalOptions="Start">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{DynamicResource L10n.Language}" Style="{StaticResource SectionHeading}" />
                     <Picker Title="{DynamicResource L10n.ChooseLanguage}" ItemsSource="{Binding Languages}" SelectedIndex="{Binding SelectedLanguage}" AutomationId="LanguagePicker" SemanticProperties.Description="{DynamicResource L10n.LanguageDescription}" />
                     <Label Text="{DynamicResource L10n.LanguageHint}" Style="{StaticResource MutedText}" />
                 </VerticalStackLayout>
             </Border>
-            <Border Style="{StaticResource Card}">
+            <Border Style="{StaticResource Card}" VerticalOptions="Start">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{DynamicResource L10n.Appearance}" Style="{StaticResource SectionHeading}" />
                     <Picker Title="{DynamicResource L10n.ChooseTheme}" ItemsSource="{Binding Themes}" SelectedIndex="{Binding SelectedTheme}" AutomationId="ThemePicker" />
                 </VerticalStackLayout>
             </Border>
-            <Border Style="{StaticResource Card}">
+            <Border Style="{StaticResource Card}" VerticalOptions="Start">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{DynamicResource L10n.DeviceDataHeading}" Style="{StaticResource SectionHeading}" />
                     <Label Text="{DynamicResource L10n.VDataHint}" Style="{StaticResource MutedText}" />
@@ -25,6 +26,7 @@
                     <Label Text="{DynamicResource L10n.PrivacyHint}" Style="{StaticResource MutedText}" />
                 </VerticalStackLayout>
             </Border>
+            </controls:AdaptiveColumns>
             <Label Text="VocabMate · 1.0" Style="{StaticResource SectionHeading}" />
             <Label Text="{DynamicResource L10n.VAbout}" Style="{StaticResource MutedText}" />
         </VerticalStackLayout>

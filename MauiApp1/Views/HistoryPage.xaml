@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.HistoryPage" x:DataType="vm:HistoryViewModel" Title="{DynamicResource L10n.VHistory}">
-    <ContentPage.ToolbarItems><ToolbarItem Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" /></ContentPage.ToolbarItems>
-    <Grid Padding="20" MaximumWidthRequest="900">
-        <CollectionView ItemsSource="{Binding Results}" SelectionMode="None">
-            <CollectionView.Header><Label Text="{DynamicResource L10n.VHistoryHeading}" Style="{StaticResource PageHeading}" Margin="0,0,0,20" /></CollectionView.Header>
-            <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VHistoryEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.HistoryPage" Shell.NavBarIsVisible="False" x:DataType="vm:HistoryViewModel" Title="{DynamicResource L10n.VHistory}">
+    <Grid Padding="16" RowDefinitions="Auto,*" RowSpacing="16">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Label Text="{DynamicResource L10n.VHistoryHeading}" Style="{StaticResource PageHeading}" />
+            <Button Grid.Column="1" Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" Style="{StaticResource QuietButton}" />
+        </Grid>
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsEmpty}">
+            <Border Style="{StaticResource Card}" VerticalOptions="Start"><Label Text="{DynamicResource L10n.VHistoryEmpty}" Style="{StaticResource MutedText}" /></Border>
+        </ScrollView>
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Results}" IsVisible="{Binding HasResults}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ResultRow">
                     <Border Style="{StaticResource Card}" Margin="0,0,0,12">

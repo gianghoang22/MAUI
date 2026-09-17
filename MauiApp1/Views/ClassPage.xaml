@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.ClassPage" x:DataType="vm:ClassViewModel" Title="{DynamicResource L10n.VClass}">
-    <ContentPage.ToolbarItems><ToolbarItem Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" /></ContentPage.ToolbarItems>
-    <Grid Padding="20" MaximumWidthRequest="900">
-        <CollectionView ItemsSource="{Binding Decks}" ItemTemplate="{StaticResource NamedRowTemplate}" SelectionMode="None">
-            <CollectionView.Header>
-                <VerticalStackLayout Spacing="16" Padding="0,0,0,20" IsEnabled="{Binding IsNotBusy}">
-                    <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
-                    <Border Style="{StaticResource Card}">
-                        <VerticalStackLayout Spacing="10">
-                            <Label Text="{DynamicResource L10n.VClassName}" FontAttributes="Bold" />
-                            <Entry Text="{Binding Name}" MaxLength="80" SemanticProperties.Description="{DynamicResource L10n.VClassName}" />
-                            <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Style="{StaticResource Card}">
-                        <VerticalStackLayout Spacing="10">
-                            <Label Text="{DynamicResource L10n.VAddDeck}" Style="{StaticResource SectionHeading}" />
-                            <Entry Text="{Binding NewDeckName}" MaxLength="80" Placeholder="{DynamicResource L10n.VDeckPlaceholder}" AutomationId="NewDeckName" />
-                            <Button Text="{DynamicResource L10n.VAddDeck}" Command="{Binding AddCommand}" AutomationId="AddDeckButton" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-                </VerticalStackLayout>
-            </CollectionView.Header>
-            <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VDecksEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
-            <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteClass}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,20" /></CollectionView.Footer>
-        </CollectionView>
-    </Grid>
+             xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.ClassPage" Shell.NavBarIsVisible="False" x:DataType="vm:ClassViewModel" Title="{DynamicResource L10n.VClass}">
+    <controls:CollectionWorkspace>
+        <controls:CollectionWorkspace.Form>
+            <VerticalStackLayout Spacing="12" Padding="0,0,0,8">
+                <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
+                <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{DynamicResource L10n.VClassName}" FontAttributes="Bold" />
+                        <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" SemanticProperties.Description="{DynamicResource L10n.VClassName}" />
+                        <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{DynamicResource L10n.VAddDeck}" Style="{StaticResource SectionHeading}" />
+                        <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding NewDeckName}" MaxLength="80" Placeholder="{DynamicResource L10n.VDeckPlaceholder}" AutomationId="NewDeckName" ReturnType="Done" ReturnCommand="{Binding AddCommand}" />
+                        <Button Text="{DynamicResource L10n.VAddDeck}" Command="{Binding AddCommand}" AutomationId="AddDeckButton" />
+                    </VerticalStackLayout>
+                </Border>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            </VerticalStackLayout>
+        </controls:CollectionWorkspace.Form>
+        <controls:CollectionWorkspace.Collection>
+            <CollectionView ItemsSource="{Binding Decks}" ItemTemplate="{StaticResource NamedRowTemplate}" SelectionMode="None">
+                <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VDecksEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
+                <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteClass}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,20" /></CollectionView.Footer>
+            </CollectionView>
+        </controls:CollectionWorkspace.Collection>
+    </controls:CollectionWorkspace>
 </ContentPage>

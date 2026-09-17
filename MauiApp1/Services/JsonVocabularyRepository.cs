@@ -52,8 +52,9 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         if (data.Cards.Any(existing => existing.Id != card.Id && existing.DeckId == card.DeckId &&
             VocabularyRules.PairKey(existing.Vietnamese, existing.English) == VocabularyRules.PairKey(card.Vietnamese, card.English)))
             throw new StudyException("VDuplicateCard");
+        var starred = data.Cards.FirstOrDefault(existing => existing.Id == card.Id)?.IsStarred ?? card.IsStarred;
         data.Cards.RemoveAll(existing => existing.Id == card.Id);
-        data.Cards.Add(card with { Vietnamese = card.Vietnamese.Trim(), English = card.English.Trim() });
+        data.Cards.Add(card with { Vietnamese = card.Vietnamese.Trim(), English = card.English.Trim(), IsStarred = starred });
         data.Drafts.RemoveAll(draft => draft.CardId == card.Id);
     });
 
@@ -61,6 +62,13 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
     {
         data.Cards.RemoveAll(card => card.Id == cardId);
         data.Drafts.RemoveAll(draft => draft.CardId == cardId);
+    });
+
+    public Task SetStarredAsync(Guid cardId, bool starred) => UpdateAsync(data =>
+    {
+        var index = data.Cards.FindIndex(card => card.Id == cardId);
+        if (index < 0) throw new StudyException("VNotFound");
+        data.Cards[index] = data.Cards[index] with { IsStarred = starred };
     });
 
     public async Task<int> ImportAsync(Guid deckId, IReadOnlyList<VocabularyCard> cards)
@@ -109,7 +117,22 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
             current.DeckId != session.DeckId || current.MatchMistakes > session.MatchMistakes ||
             current.MatchedIds.Except(session.MatchedIds).Any() ||
             !current.Attempts.SequenceEqual(session.Attempts.Take(current.Attempts.Count)) ||
-            (current.Index == session.Index && current.Revealed && !session.Revealed)) throw new StudyException("VSessionChanged");
+            (current.Mode != LearningMode.Flashcards && current.Index == session.Index && current.Revealed && !session.Revealed)) throw new StudyException("VSessionChanged");
+        if (session.Mode == LearningMode.Flashcards)
+        {
+            foreach (var attempt in session.Attempts.Skip(current.Attempts.Count))
+            {
+                var cardIndex = data.Cards.FindIndex(card => card.Id == attempt.CardId);
+                if (cardIndex < 0) continue;
+                var card = data.Cards[cardIndex];
+                var question = session.Questions.First(item => item.CardId == attempt.CardId);
+                var prompt = session.Direction == LearningDirection.EnglishToVietnamese ? card.English : card.Vietnamese;
+                var answer = session.Direction == LearningDirection.EnglishToVietnamese ? card.Vietnamese : card.English;
+                if (VocabularyRules.Normalize(prompt) == VocabularyRules.Normalize(question.Prompt) &&
+                    question.AcceptedAnswers.Any(expected => VocabularyRules.Normalize(expected) == VocabularyRules.Normalize(answer)))
+                    data.Cards[cardIndex] = card with { IsStarred = attempt.Correct };
+            }
+        }
         data.Session = session;
         if (!session.IsComplete || data.Results.Any(result => result.Id == session.Id)) return;
         var wrongIds = session.Attempts.Where(attempt => !attempt.Correct).Select(attempt => attempt.CardId).ToHashSet();
@@ -198,7 +221,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
             var session = data.Session;
             if (!data.Decks.Any(deck => deck.Id == session.DeckId) || session.Id == Guid.Empty || session.DeckName is null ||
                 session.Questions is null || session.Questions.Count == 0 || session.Attempts is null || session.MatchedIds is null || session.MatchOrder is null ||
-                session.Input is null || session.Input.Length > 200 || !Enum.IsDefined(session.Mode) || !Enum.IsDefined(session.Direction) ||
+                session.Input is null || session.Input.Length > 200 || !Enum.IsDefined(session.Mode) || !Enum.IsDefined(session.Direction) || !Enum.IsDefined(session.Filter) ||
                 session.Index < 0 || session.Index > session.Questions.Count || session.Attempts.Count > session.Questions.Count ||
                 session.Questions.Any(InvalidQuestion) ||
                 session.Attempts.Any(attempt => attempt is null || attempt.Submitted is null || attempt.Submitted.Length > 200 || !session.Questions.Any(question => question.CardId == attempt.CardId)) ||

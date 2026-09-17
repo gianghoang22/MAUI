@@ -4,10 +4,11 @@ namespace MauiApp1.Models;
 
 public sealed record VocabularyClass(Guid Id, string Name);
 public sealed record VocabularyDeck(Guid Id, Guid ClassId, string Name, string Description);
-public sealed record VocabularyCard(Guid Id, Guid DeckId, string Vietnamese, string English);
+public sealed record VocabularyCard(Guid Id, Guid DeckId, string Vietnamese, string English, bool IsStarred = false);
 public sealed record CardDraft(Guid CardId, Guid DeckId, bool IsNew, string Vietnamese, string English, DateTimeOffset UpdatedAt);
 public enum LearningMode { Flashcards, MultipleChoice, Written, Match }
 public enum LearningDirection { EnglishToVietnamese, VietnameseToEnglish }
+public enum LearningFilter { Unstarred, Starred, All }
 public sealed record StudyQuestion(Guid CardId, string Prompt, string Answer, List<string> AcceptedAnswers, List<string> Choices);
 public sealed record AnswerAttempt(Guid CardId, string Submitted, bool Correct);
 
@@ -17,6 +18,7 @@ public sealed record LearningSession(
     List<AnswerAttempt> Attempts, int Index, int MatchMistakes, string Input, bool Revealed,
     DateTimeOffset StartedAt, DateTimeOffset? FinishedAt)
 {
+    public LearningFilter Filter { get; init; } = LearningFilter.All;
     [JsonIgnore] public bool IsComplete => FinishedAt.HasValue;
     [JsonIgnore] public bool IsAnswered => Attempts.Count > Index;
     [JsonIgnore] public int Correct => Mode == LearningMode.Match ? MatchedIds.Count : Attempts.Count(attempt => attempt.Correct);

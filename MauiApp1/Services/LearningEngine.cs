@@ -4,11 +4,13 @@ namespace MauiApp1.Services;
 
 public sealed class LearningEngine
 {
-    public LearningSession Create(VocabularyDeck deck, IReadOnlyList<VocabularyCard> cards, LearningMode mode, LearningDirection direction)
+    public LearningSession Create(VocabularyDeck deck, IReadOnlyList<VocabularyCard> cards, LearningMode mode, LearningDirection direction,
+        LearningFilter filter = LearningFilter.All)
     {
-        if (!Enum.IsDefined(mode) || !Enum.IsDefined(direction)) throw new StudyException("VInvalidSession");
-        var groups = cards.GroupBy(card => VocabularyRules.Normalize(Prompt(card, direction))).ToList();
-        if (groups.Count == 0) throw new StudyException("VNoCards");
+        if (!Enum.IsDefined(mode) || !Enum.IsDefined(direction) || !Enum.IsDefined(filter)) throw new StudyException("VInvalidSession");
+        var eligible = cards.Where(card => filter == LearningFilter.All || card.IsStarred == (filter == LearningFilter.Starred));
+        var groups = eligible.GroupBy(card => VocabularyRules.Normalize(Prompt(card, direction))).ToList();
+        if (groups.Count == 0) throw new StudyException(cards.Count == 0 ? "VNoCards" : "VNoFilteredCards");
         var allAnswers = cards.Select(card => Answer(card, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
         var questions = new List<StudyQuestion>();
         var usedMatchAnswers = new HashSet<string>();
@@ -18,7 +20,8 @@ public sealed class LearningEngine
         foreach (var group in orderedGroups)
         {
             var card = group.First();
-            var accepted = group.Select(item => Answer(item, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
+            var accepted = cards.Where(item => VocabularyRules.Normalize(Prompt(item, direction)) == group.Key)
+                .Select(item => Answer(item, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
             var answer = Answer(card, direction);
             if (mode == LearningMode.Match)
             {
@@ -39,7 +42,7 @@ public sealed class LearningEngine
             if (questions.Count == (mode == LearningMode.Match ? 6 : 20)) break;
         }
         if (mode == LearningMode.Match && questions.Count < 2) throw new StudyException("VNeedPairs");
-        return NewSession(deck.Id, deck.Name, mode, direction, questions);
+        return NewSession(deck.Id, deck.Name, mode, direction, questions) with { Filter = filter };
     }
 
     public LearningSession Retry(LearningResult result)
@@ -62,7 +65,7 @@ public sealed class LearningEngine
     public LearningSession Rate(LearningSession session, bool remembered)
     {
         RequireAnswerable(session);
-        if (session.Mode != LearningMode.Flashcards || !session.Revealed) throw new StudyException("VInvalidSession");
+        if (session.Mode != LearningMode.Flashcards) throw new StudyException("VInvalidSession");
         return session with { Attempts = [.. session.Attempts, new AnswerAttempt(session.Questions[session.Index].CardId, "", remembered)] };
     }
 

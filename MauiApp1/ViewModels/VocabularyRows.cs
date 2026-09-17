@@ -11,7 +11,10 @@ public sealed class NamedRow(string name, int count, string countKey, ICommand o
     public ICommand OpenCommand => openCommand;
 }
 
-public sealed record VocabularyCardRow(string Vietnamese, string English, ICommand OpenCommand);
+public sealed record VocabularyCardRow(string Vietnamese, string English, ICommand OpenCommand, bool IsStarred, ICommand StarCommand, string StarDescription)
+{
+    public string StarText => IsStarred ? "★" : "☆";
+}
 
 public sealed class ImportRow(WorkbookRow row, bool duplicate, LocalizationService localization) : LocalizedObject(localization)
 {

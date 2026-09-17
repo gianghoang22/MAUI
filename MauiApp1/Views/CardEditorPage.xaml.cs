@@ -22,6 +22,11 @@ public partial class CardEditorPage : ContentPage, IQueryAttributable
         viewModel.SetIds(deck?.ToString(), card?.ToString());
     }
 
+    private void OnVietnameseCompleted(object? sender, EventArgs arguments)
+    {
+        if (!viewModel.IsBusy) EnglishField.Focus();
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();

@@ -646,4 +646,20 @@
   <data name="VSessionCheckpoint" xml:space="preserve">
     <value>Tiến độ được lưu sau mỗi thao tác; câu đang gõ được lưu nháp tự động.</value>
   </data>
+  <data name="VKeyboardHint" xml:space="preserve"><value>Bàn phím: Tab di chuyển · Enter/Space bấm nút đang chọn · 1–4 chọn đáp án · 1/2 đã nhớ/chưa nhớ. Khi luyện viết, nhập rồi nhấn Enter.</value></data>
+  <data name="VBack" xml:space="preserve"><value>← Quay lại</value></data>
+  <data name="VCustomize" xml:space="preserve"><value>Tùy chỉnh</value></data>
+  <data name="VStudyFilter" xml:space="preserve"><value>Nhóm từ muốn học</value></data>
+  <data name="VFilter0" xml:space="preserve"><value>Chưa thuộc</value></data>
+  <data name="VFilter1" xml:space="preserve"><value>Đã thuộc · có sao</value></data>
+  <data name="VFilter2" xml:space="preserve"><value>Tất cả từ</value></data>
+  <data name="VStar" xml:space="preserve"><value>Đánh dấu đã thuộc</value></data>
+  <data name="VUnstar" xml:space="preserve"><value>Bỏ đánh dấu đã thuộc</value></data>
+  <data name="VStarHint" xml:space="preserve"><value>★ là từ đã thuộc. Chọn Chưa thuộc để bỏ qua, hoặc Đã thuộc để ôn riêng.</value></data>
+  <data name="VMasterySummary" xml:space="preserve"><value>Đã thuộc {0}/{1} từ</value></data>
+  <data name="VNoFilteredCards" xml:space="preserve"><value>Không còn từ trong nhóm này. Đổi nhóm từ để ôn lại hoặc học nhóm khác.</value></data>
+  <data name="VApplySetup" xml:space="preserve"><value>Học với tùy chỉnh này</value></data>
+  <data name="VChangeSetupWarning" xml:space="preserve"><value>Đổi tùy chỉnh sẽ bắt đầu phiên mới và thay phiên đang dở. Những từ đã đánh dấu sao vẫn được giữ.</value></data>
+  <data name="VContinueLearning" xml:space="preserve"><value>Tiếp tục học</value></data>
+  <data name="VVocabularyList" xml:space="preserve"><value>Từ vựng trong bộ</value></data>
 </root>

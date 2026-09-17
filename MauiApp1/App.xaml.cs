@@ -26,6 +26,10 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
         var window = new Window(services.GetRequiredService<AppShell>()) { Title = "VocabMate" };
+#if WINDOWS
+        window.MinimumWidth = 360;
+        window.MinimumHeight = 500;
+#endif
         window.Stopped += OnStopped;
         window.Resumed += OnResumed;
         window.Destroying += OnStopped;

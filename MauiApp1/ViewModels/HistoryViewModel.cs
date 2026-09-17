@@ -17,7 +17,18 @@ public sealed class HistoryViewModel : ViewModelBase, IRefreshable
         RefreshCommand = CreateCommand(LoadAsync);
     }
 
-    public IReadOnlyList<ResultRow> Results { get => results; private set => SetProperty(ref results, value); }
+    public IReadOnlyList<ResultRow> Results
+    {
+        get => results;
+        private set
+        {
+            if (!SetProperty(ref results, value)) return;
+            OnPropertyChanged(nameof(HasResults));
+            OnPropertyChanged(nameof(IsEmpty));
+        }
+    }
+    public bool HasResults => Results.Count > 0;
+    public bool IsEmpty => !HasResults;
     public ICommand RefreshCommand { get; }
     public Task RefreshAsync() => RunAsync(LoadAsync);
 
