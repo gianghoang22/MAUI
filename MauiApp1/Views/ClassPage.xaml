@@ -5,19 +5,21 @@
         <controls:CollectionWorkspace.Form>
             <VerticalStackLayout Spacing="20" Padding="0,0,0,20">
                 <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
-                <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
+                    <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" IsEnabled="{Binding IsNotBusy}" AutomationId="ClassActionsButton" />
+                </Grid>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VClassName}" FontAttributes="Bold" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" SemanticProperties.Description="{DynamicResource L10n.VClassName}" />
-                        <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" />
                     </VerticalStackLayout>
                 </Border>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VAddDeck}" Style="{StaticResource SectionHeading}" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding NewDeckName}" MaxLength="80" Placeholder="{DynamicResource L10n.VDeckPlaceholder}" AutomationId="NewDeckName" ReturnType="Done" ReturnCommand="{Binding AddCommand}" />
-                        <Button Text="{DynamicResource L10n.VAddDeck}" Command="{Binding AddCommand}" AutomationId="AddDeckButton" />
+                        <Button Text="{DynamicResource L10n.VAddDeck}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAddDeck}" AutomationId="AddDeckButton" />
                     </VerticalStackLayout>
                 </Border>
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
@@ -25,8 +27,10 @@
         </controls:CollectionWorkspace.Form>
         <controls:CollectionWorkspace.Collection>
             <CollectionView ItemsSource="{Binding Decks}" ItemTemplate="{StaticResource NamedRowTemplate}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VDecksEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
-                <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteClass}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,24" /></CollectionView.Footer>
             </CollectionView>
         </controls:CollectionWorkspace.Collection>
     </controls:CollectionWorkspace>

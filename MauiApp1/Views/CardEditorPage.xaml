@@ -5,7 +5,10 @@
     <ScrollView>
         <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20" MaximumWidthRequest="900" HorizontalOptions="Fill">
             <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
-            <Label Text="{Binding DeckName}" Style="{StaticResource PageHeading}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Label Text="{Binding DeckName}" Style="{StaticResource PageHeading}" />
+                <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" IsEnabled="{Binding IsNotBusy}" AutomationId="CardEditorActionsButton" />
+            </Grid>
             <Label Text="{DynamicResource L10n.VDraftRestored}" IsVisible="{Binding Restored}" Style="{StaticResource MutedText}" />
             <Border Style="{StaticResource Card}">
                 <controls:AdaptiveColumns>
@@ -32,9 +35,6 @@
                 </controls:AdaptiveColumns>
             </Border>
             <Label Text="{Binding SaveStatus}" Style="{StaticResource MutedText}" />
-            <Button Text="{DynamicResource L10n.VSaveCard}" Command="{Binding SaveCommand}" AutomationId="SaveCardButton" />
-            <Button Text="{DynamicResource L10n.VDiscardDraft}" Command="{Binding DiscardCommand}" />
-            <Button Text="{DynamicResource L10n.VDeleteCard}" Command="{Binding DeleteCommand}" IsVisible="{Binding IsExisting}" Style="{StaticResource DangerButton}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

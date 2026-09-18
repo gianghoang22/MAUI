@@ -7,7 +7,7 @@ public sealed class CollectionWorkspace : Grid
     public static readonly BindableProperty ListHeadingProperty = BindableProperty.Create(nameof(ListHeading), typeof(View), typeof(CollectionWorkspace), propertyChanged: OnContentChanged);
     private readonly ScrollView formScroll = new();
     private readonly Grid listPanel = new() { RowDefinitions = [new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Star)], RowSpacing = 20 };
-    private readonly VerticalStackLayout mobileHeader = new() { Spacing = 20 };
+    private readonly VerticalStackLayout mobileHeader = new() { Spacing = 16, Margin = new Thickness(0, 0, 0, 16) };
 
     public View? Form { get => (View?)GetValue(FormProperty); set => SetValue(FormProperty, value); }
     public CollectionView? Collection { get => (CollectionView?)GetValue(CollectionProperty); set => SetValue(CollectionProperty, value); }
@@ -15,7 +15,7 @@ public sealed class CollectionWorkspace : Grid
 
     public CollectionWorkspace()
     {
-        Padding = 20;
+        Padding = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 16;
         ColumnSpacing = 28;
         RowSpacing = 24;
         SizeChanged += (_, _) => UpdateLayout();
@@ -55,7 +55,13 @@ public sealed class CollectionWorkspace : Grid
 
     private void UpdateLayout()
     {
-        if (Collection is null || DeviceInfo.Platform != DevicePlatform.WinUI) return;
+        if (Collection is null) return;
+        if (DeviceInfo.Platform != DevicePlatform.WinUI)
+        {
+            var mobileInset = Width < 400 ? 14 : 16;
+            if (Padding.Left != mobileInset) Padding = new Thickness(mobileInset);
+            return;
+        }
         var wide = Width >= 900;
         var inset = wide ? 32 : 20;
         if (Padding.Left != inset) Padding = new Thickness(inset);

@@ -94,10 +94,28 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     {
         var query = VocabularyRules.Normalize(Search);
         Cards = allCards.Where(card => VocabularyRules.Normalize(card.Vietnamese).Contains(query) || VocabularyRules.Normalize(card.English).Contains(query))
-            .Select(card => new VocabularyCardRow(card.Vietnamese, card.English,
-                CreateCommand(() => Interaction.NavigateAsync($"card?deckId={deckId}&cardId={card.Id}")), card.IsStarred,
-                CreateCommand(async () => { await repository.SetStarredAsync(card.Id, !card.IsStarred); await LoadAsync(); }),
-                Localization[card.IsStarred ? "VUnstar" : "VStar"])).ToList();
+            .Select(card => new VocabularyCardRow(card,
+                CreateCommand(() => Interaction.NavigateAsync($"card?deckId={deckId}&cardId={card.Id}")),
+                CreateCommand(() => ToggleStarAsync(card.Id)),
+                CreateMenuCommand(() => card.English,
+                    new("VEdit", CreateCommand(() => Interaction.NavigateAsync($"card?deckId={deckId}&cardId={card.Id}"))),
+                    new("VDeleteCard", CreateCommand(async () =>
+                    {
+                        if (!await Interaction.ConfirmAsync(Localization["VDeleteCard"], Localization["VDeleteCardWarning"])) return;
+                        await repository.DeleteCardAsync(card.Id);
+                        await LoadAsync();
+                    }), IsDestructive: true)), Localization)).ToList();
+    }
+
+    private async Task ToggleStarAsync(Guid cardId)
+    {
+        var index = allCards.FindIndex(card => card.Id == cardId);
+        if (index < 0) return;
+        var updated = allCards[index] with { IsStarred = !allCards[index].IsStarred };
+        await repository.SetStarredAsync(cardId, updated.IsStarred);
+        allCards[index] = updated;
+        Cards.FirstOrDefault(card => card.Id == cardId)?.SetStarred(updated.IsStarred);
+        OnPropertyChanged(nameof(MasterySummary));
     }
 
     private async Task StartAsync()

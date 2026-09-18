@@ -47,12 +47,8 @@ public partial class LearningPage
         var state = $"{viewModel.QuestionText}:{viewModel.Position}:{viewModel.ShowWritten}:{viewModel.ShowNext}:{viewModel.ShowFlip}:{viewModel.ShowRating}:{viewModel.ShowChoices}";
         if (state == focusState) return;
         Microsoft.Maui.Controls.VisualElement? target = viewModel.ShowWritten ? WrittenAnswerEntry :
-            viewModel.ShowNext ? NextQuestionButton :
-            viewModel.ShowFlip ? FlipButton :
-            viewModel.ShowRating ? RememberButton :
             viewModel.ShowChoices ? ChoiceList.Children.FirstOrDefault() as Microsoft.Maui.Controls.Button :
-            viewModel.ShowResult && viewModel.CanContinue ? ContinueLearningButton :
-            viewModel.ShowResult ? StudySetupButton : null;
+            viewModel.ShowNext ? NextQuestionButton : viewModel.ShowFlip ? FlipCardButton : StudySetupButton;
         if (target?.Focus() == true) focusState = state;
     });
 

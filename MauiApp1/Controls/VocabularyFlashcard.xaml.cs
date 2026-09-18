@@ -76,7 +76,12 @@ public partial class VocabularyFlashcard : ContentView
         animationVersion++;
         if (surface is null) return;
         surface.CancelAnimations();
+        surface.AbortAnimation("FlashcardFlip");
         surface.RotationY = 0;
+#if WINDOWS
+        if (surface.Handler?.PlatformView is Microsoft.UI.Xaml.UIElement element)
+            element.Projection = null;
+#endif
     }
 
     private async Task FlipAsync()
@@ -87,17 +92,35 @@ public partial class VocabularyFlashcard : ContentView
         if (!IsTwoSided || questionChanging || target?.Handler is null || !MotionEnabled) { UpdateFace(); return; }
         try
         {
-            await target.RotateYToAsync(90, 100, Easing.CubicIn);
+            var direction = IsRevealed ? 1 : -1;
+            await RotateFaceAsync(target, 0, direction * 90, 140, Easing.CubicIn);
             if (version != animationVersion) return;
             UpdateFace();
-            target.RotationY = -90;
-            await target.RotateYToAsync(0, 140, Easing.CubicOut);
+            await RotateFaceAsync(target, -direction * 90, 0, 180, Easing.CubicOut);
         }
         catch (Exception exception) { System.Diagnostics.Debug.WriteLine(exception); }
         finally
         {
-            if (version == animationVersion) { target.RotationY = 0; UpdateFace(); }
+            if (version == animationVersion) { ResetSurface(); UpdateFace(); }
         }
+    }
+
+    private static Task RotateFaceAsync(Border target, double from, double to, uint duration, Easing easing)
+    {
+#if WINDOWS
+        if (target.Handler?.PlatformView is not Microsoft.UI.Xaml.UIElement element) return Task.CompletedTask;
+        var projection = element.Projection as Microsoft.UI.Xaml.Media.PlaneProjection
+            ?? new Microsoft.UI.Xaml.Media.PlaneProjection();
+        element.Projection = projection;
+        projection.RotationY = from;
+        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        new Animation(angle => projection.RotationY = angle, from, to, easing)
+            .Commit(target, "FlashcardFlip", length: duration, finished: (_, _) => completion.TrySetResult());
+        return completion.Task;
+#else
+        target.RotationY = from;
+        return target.RotateYToAsync(to, duration, easing);
+#endif
     }
 
 #if WINDOWS

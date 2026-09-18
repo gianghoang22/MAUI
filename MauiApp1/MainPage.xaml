@@ -10,28 +10,30 @@
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{Binding Summary}" Style="{StaticResource SectionHeading}" />
-                        <Button Text="{DynamicResource L10n.VResume}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" />
                         <Label Text="{DynamicResource L10n.VLocalClassesHint}" Style="{StaticResource MutedText}" />
                     </VerticalStackLayout>
                 </Border>
+                <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ResumeCommand}"
+                        IsVisible="{Binding CanResume}" IsEnabled="{Binding IsNotBusy}"
+                        Style="{StaticResource PrimaryButton}" AutomationId="ResumeLearningButton" />
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VAddClass}" Style="{StaticResource SectionHeading}" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding NewName}" MaxLength="80" Placeholder="{DynamicResource L10n.VClassPlaceholder}" AutomationId="NewClassName" ReturnType="Done" ReturnCommand="{Binding AddCommand}" />
-                        <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding AddCommand}" AutomationId="AddClassButton" />
+                        <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAdd}" AutomationId="AddClassButton" />
                     </VerticalStackLayout>
                 </Border>
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
             </VerticalStackLayout>
         </controls:CollectionWorkspace.Form>
         <controls:CollectionWorkspace.ListHeading>
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
-                <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" VerticalOptions="Center" />
-                <Button Grid.Column="1" Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" Style="{StaticResource QuietButton}" />
-            </Grid>
+            <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" VerticalOptions="Center" Margin="0,0,0,6" />
         </controls:CollectionWorkspace.ListHeading>
         <controls:CollectionWorkspace.Collection>
             <CollectionView ItemsSource="{Binding Classes}" ItemTemplate="{StaticResource NamedRowTemplate}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VClassesEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
             </CollectionView>
         </controls:CollectionWorkspace.Collection>

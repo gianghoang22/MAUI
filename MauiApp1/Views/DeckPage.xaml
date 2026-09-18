@@ -6,19 +6,21 @@
             <VerticalStackLayout Spacing="20" Padding="0,0,0,20">
                 <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
                 <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
-                <Button Text="{DynamicResource L10n.VResume}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" Style="{StaticResource PrimaryButton}" AutomationId="ResumeDeckButton" />
+                <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
+                    <Button Text="{DynamicResource L10n.VAddCard}" Command="{Binding AddCommand}" Margin="4" Style="{StaticResource PrimaryButton}" AutomationId="AddCardButton" />
+                    <Button Text="{DynamicResource L10n.VImportExcel}" Command="{Binding ImportCommand}" Margin="4" Style="{StaticResource QuietButton}" AutomationId="ImportExcelButton" />
+                </FlexLayout>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VDeckName}" FontAttributes="Bold" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" />
                         <Editor IsReadOnly="{Binding IsBusy}" Text="{Binding Description}" MaxLength="500" HeightRequest="70" Placeholder="{DynamicResource L10n.VDescription}" />
-                        <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" />
+                        <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
+                            <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" Margin="4" AutomationId="SaveDeckButton" />
+                            <Button Text="{DynamicResource L10n.VDeleteDeck}" Command="{Binding DeleteCommand}" Margin="4" Style="{StaticResource DangerButton}" AutomationId="DeleteDeckButton" />
+                        </FlexLayout>
                     </VerticalStackLayout>
                 </Border>
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                    <Button Text="{DynamicResource L10n.VAddCard}" Command="{Binding AddCommand}" AutomationId="AddCardButton" />
-                    <Button Grid.Column="1" Text="{DynamicResource L10n.VImportExcel}" Command="{Binding ImportCommand}" />
-                </Grid>
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
@@ -28,7 +30,10 @@
                         <Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" AutomationId="LearningFilterPicker" />
                         <Label Text="{DynamicResource L10n.VStarHint}" Style="{StaticResource MutedText}" />
                         <Label Text="{DynamicResource L10n.VSessionLimitHint}" Style="{StaticResource MutedText}" />
-                        <Button Text="{DynamicResource L10n.VStart}" Command="{Binding StartCommand}" Style="{StaticResource PrimaryButton}" AutomationId="StartLearningButton" />
+                        <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
+                            <Button Text="{DynamicResource L10n.VStart}" Command="{Binding StartCommand}" Margin="4" Style="{StaticResource PrimaryButton}" AutomationId="StartLearningButton" />
+                            <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" Margin="4" Style="{StaticResource QuietButton}" AutomationId="ResumeDeckButton" />
+                        </FlexLayout>
                     </VerticalStackLayout>
                 </Border>
                 <SearchBar Text="{Binding Search}" Placeholder="{DynamicResource L10n.VSearchCards}" />
@@ -36,15 +41,21 @@
             </VerticalStackLayout>
         </controls:CollectionWorkspace.Form>
         <controls:CollectionWorkspace.ListHeading>
-            <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Margin="0,0,0,6">
                 <Label Text="{DynamicResource L10n.VVocabularyList}" Style="{StaticResource SectionHeading}" />
                 <Label Grid.Row="1" Text="{Binding MasterySummary}" Style="{StaticResource MutedText}" />
             </Grid>
         </controls:CollectionWorkspace.ListHeading>
         <controls:CollectionWorkspace.Collection>
             <CollectionView ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource VocabularyCardTemplate}" SelectionMode="None">
-                <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VCardsEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
-                <CollectionView.Footer><Button Text="{DynamicResource L10n.VDeleteDeck}" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,24" /></CollectionView.Footer>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Border Style="{StaticResource Card}" VerticalOptions="Start" Margin="0,8,0,16">
+                        <Label Text="{DynamicResource L10n.VCardsEmpty}" Style="{StaticResource MutedText}" HorizontalTextAlignment="Center" />
+                    </Border>
+                </CollectionView.EmptyView>
             </CollectionView>
         </controls:CollectionWorkspace.Collection>
     </controls:CollectionWorkspace>

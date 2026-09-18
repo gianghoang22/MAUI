@@ -410,7 +410,7 @@
     <value>Save and exit</value>
   </data>
   <data name="VSpeak" xml:space="preserve">
-    <value>Hear English</value>
+    <value>Hear pronunciation</value>
   </data>
   <data name="VFlip" xml:space="preserve">
     <value>Flip card</value>
@@ -662,4 +662,5 @@
   <data name="VChangeSetupWarning" xml:space="preserve"><value>Changing settings starts a new session. Starred words are kept, but this unfinished session will be replaced.</value></data>
   <data name="VContinueLearning" xml:space="preserve"><value>Continue learning</value></data>
   <data name="VVocabularyList" xml:space="preserve"><value>Your vocabulary</value></data>
+  <data name="VActions" xml:space="preserve"><value>Actions</value></data>
 </root>

@@ -3,12 +3,17 @@
              x:Class="MauiApp1.Controls.VocabularyFlashcard">
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border x:Name="CardSurface" Style="{StaticResource Card}" Padding="32" MinimumHeightRequest="230">
-                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="20">
+            <Border x:Name="CardSurface" Style="{StaticResource Card}"
+                    Padding="{OnPlatform Default='18,24', WinUI='32'}"
+                    MinimumHeightRequest="{OnPlatform Default=180, WinUI=230}">
+                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="16">
                     <Label Text="{TemplateBinding FaceCaption}" Style="{StaticResource MutedText}" HorizontalTextAlignment="Center" />
-                    <Label Grid.Row="1" Text="{TemplateBinding FaceText}" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                    <Label Grid.Row="1" Text="{TemplateBinding FaceText}"
+                           FontSize="{OnPlatform Default=24, WinUI=30}"
+                           FontAttributes="Bold" HorizontalTextAlignment="Center"
                            VerticalOptions="Center" LineBreakMode="WordWrap" TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" AutomationId="QuestionText" />
-                    <Label Grid.Row="2" Text="{TemplateBinding Answer}" IsVisible="{TemplateBinding ShowSecondaryAnswer}" FontSize="22"
+                    <Label Grid.Row="2" Text="{TemplateBinding Answer}" IsVisible="{TemplateBinding ShowSecondaryAnswer}"
+                           FontSize="{OnPlatform Default=18, WinUI=22}"
                            HorizontalTextAlignment="Center" LineBreakMode="WordWrap" AutomationId="AnswerText" />
                 </Grid>
             </Border>

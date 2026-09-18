@@ -51,6 +51,9 @@ public sealed class ImportViewModel : ViewModelBase, IRefreshable
     public ICommand ChooseCommand { get; }
     public ICommand ImportCommand { get; }
     public ICommand TemplateCommand { get; }
+    public ICommand MenuCommand => CreateMenuCommand(() => Localization["VImportHeading"],
+        new("VChooseFile", ChooseCommand), new("VExcelTemplate", TemplateCommand),
+        new("VImportAction", ImportCommand, () => CanImport));
     public void SetId(string? value) => deckId = Guid.TryParse(value, out var parsed) ? parsed : Guid.Empty;
     public Task RefreshAsync() => RunAsync(async () => { if (!(await repository.ReadAsync()).Decks.Any(deck => deck.Id == deckId)) throw new StudyException("VNotFound"); });
 }

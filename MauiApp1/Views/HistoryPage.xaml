@@ -4,21 +4,26 @@
     <Grid Padding="{StaticResource PagePadding}" RowDefinitions="Auto,*" RowSpacing="24">
         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
             <Label Text="{DynamicResource L10n.VHistoryHeading}" Style="{StaticResource PageHeading}" />
-            <Button Grid.Column="1" Text="{DynamicResource L10n.Refresh}" Command="{Binding RefreshCommand}" Style="{StaticResource QuietButton}" />
+            <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" IsEnabled="{Binding IsNotBusy}" AutomationId="HistoryActionsButton" />
         </Grid>
         <ScrollView Grid.Row="1" IsVisible="{Binding IsEmpty}">
             <Border Style="{StaticResource Card}" VerticalOptions="Start"><Label Text="{DynamicResource L10n.VHistoryEmpty}" Style="{StaticResource MutedText}" /></Border>
         </ScrollView>
         <CollectionView Grid.Row="1" ItemsSource="{Binding Results}" IsVisible="{Binding HasResults}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ResultRow">
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                    <Border Style="{StaticResource Card}">
                         <VerticalStackLayout Spacing="16">
-                            <Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" />
+                                <Button Grid.Column="1" Command="{Binding MenuCommand}" IsVisible="{Binding CanRetry}" Style="{StaticResource ActionMenuButton}" AutomationId="ResultActionsButton" />
+                            </Grid>
                             <Label Text="{Binding Summary}" />
                             <Label Text="{Binding Details}" Style="{StaticResource MutedText}" />
                             <Label Text="{Binding WrongAnswers}" IsVisible="{Binding CanRetry}" />
-                            <Button Text="{DynamicResource L10n.VRetryWrong}" Command="{Binding RetryCommand}" IsVisible="{Binding CanRetry}" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

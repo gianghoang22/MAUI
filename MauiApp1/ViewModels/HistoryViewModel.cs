@@ -30,17 +30,18 @@ public sealed class HistoryViewModel : ViewModelBase, IRefreshable
     public bool HasResults => Results.Count > 0;
     public bool IsEmpty => !HasResults;
     public ICommand RefreshCommand { get; }
+    public ICommand MenuCommand => CreateMenuCommand(() => Localization["VHistoryHeading"], new MenuAction("Refresh", RefreshCommand));
     public Task RefreshAsync() => RunAsync(LoadAsync);
 
     private async Task LoadAsync()
     {
         Results = (await repository.ReadAsync()).Results.OrderByDescending(result => result.FinishedAt).Select(result =>
-            new ResultRow(result, CreateCommand(async () =>
+            new ResultRow(result, CreateMenuCommand(() => result.DeckName, new MenuAction("VRetryWrong", CreateCommand(async () =>
             {
                 var data = await repository.ReadAsync();
                 if (data.Session is { IsComplete: false } && !await Interaction.ConfirmAsync(Localization["VReplaceSession"], Localization["VReplaceSessionWarning"], "VStartNew")) return;
                 await repository.StartSessionAsync(engine.Retry(result));
                 await Interaction.NavigateAsync("learn");
-            }), Localization)).ToList();
+            }), () => result.WrongQuestions.Count > 0)), Localization)).ToList();
     }
 }

@@ -18,13 +18,18 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
     {
         this.repository = repository;
         SaveCommand = CreateCommand(async () => { RequireLoaded(); await repository.SaveClassAsync(new(classId, Name)); await LoadAsync(); });
-        AddCommand = CreateCommand(async () =>
+        AddCommand = new Command(async () =>
         {
             RequireLoaded();
-            await repository.SaveDeckAsync(new(Guid.NewGuid(), classId, NewDeckName, ""));
-            NewDeckName = "";
-            await LoadAsync();
-        });
+            if (string.IsNullOrWhiteSpace(NewDeckName))
+                return;
+            await RunAsync(async () =>
+            {
+                await repository.SaveDeckAsync(new(Guid.NewGuid(), classId, NewDeckName.Trim(), ""));
+                NewDeckName = "";
+                await LoadAsync();
+            });
+        }, () => CanAddDeck);
         DeleteCommand = CreateCommand(async () =>
         {
             RequireLoaded();
@@ -33,15 +38,30 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
             await Interaction.NavigateAsync("..");
         });
         RefreshCommand = CreateCommand(LoadAsync);
+        MenuCommand = CreateMenuCommand(() => Name,
+            new("VSave", SaveCommand), new("VDeleteClass", DeleteCommand, IsDestructive: true));
     }
 
     public string Name { get => name; set => SetProperty(ref name, value ?? ""); }
-    public string NewDeckName { get => newDeckName; set => SetProperty(ref newDeckName, value ?? ""); }
+    public string NewDeckName
+    {
+        get => newDeckName;
+        set
+        {
+            if (SetProperty(ref newDeckName, value ?? ""))
+            {
+                OnPropertyChanged(nameof(CanAddDeck));
+                ((Command)AddCommand).ChangeCanExecute();
+            }
+        }
+    }
+    public bool CanAddDeck => !string.IsNullOrWhiteSpace(NewDeckName);
     public IReadOnlyList<NamedRow> Decks { get => decks; private set => SetProperty(ref decks, value); }
     public ICommand SaveCommand { get; }
     public ICommand AddCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand RefreshCommand { get; }
+    public ICommand MenuCommand { get; }
     public void SetId(string? value) { classId = Guid.TryParse(value, out var parsed) ? parsed : Guid.Empty; loaded = false; }
     public Task RefreshAsync() => RunAsync(LoadAsync);
     private void RequireLoaded() { if (!loaded) throw new StudyException("VNotFound"); }
@@ -53,7 +73,21 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
         Name = data.Classes.FirstOrDefault(classroom => classroom.Id == classId)?.Name ?? throw new StudyException("VNotFound");
         Decks = data.Decks.Where(deck => deck.ClassId == classId).OrderBy(deck => deck.Name).Select(deck => new NamedRow(deck.Name,
             data.Cards.Count(card => card.DeckId == deck.Id), "VCardCount",
-            CreateCommand(() => Interaction.NavigateAsync($"deck?deckId={deck.Id}")), Localization)).ToList();
+            CreateCommand(() => Interaction.NavigateAsync($"deck?deckId={deck.Id}")), Localization,
+            CreateMenuCommand(() => deck.Name,
+                new("VEdit", CreateCommand(async () =>
+                {
+                    var updatedName = await Interaction.PromptAsync(Localization["VEdit"], Localization["VDeckName"], deck.Name);
+                    if (string.IsNullOrWhiteSpace(updatedName)) return;
+                    await repository.SaveDeckAsync(deck with { Name = updatedName.Trim() });
+                    await LoadAsync();
+                })),
+                new("VDeleteDeck", CreateCommand(async () =>
+                {
+                    if (!await Interaction.ConfirmAsync(Localization["VDeleteDeck"], Localization["VDeleteDeckWarning"])) return;
+                    await repository.DeleteDeckAsync(deck.Id);
+                    await LoadAsync();
+                }), IsDestructive: true)))).ToList();
         loaded = true;
     }
 }

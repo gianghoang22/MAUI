@@ -5,13 +5,13 @@
         <controls:CollectionWorkspace.Form>
             <VerticalStackLayout Spacing="20" Padding="0,0,0,20" IsEnabled="{Binding IsNotBusy}">
                 <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
-                <Label Text="{DynamicResource L10n.VImportHeading}" Style="{StaticResource PageHeading}" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Label Text="{DynamicResource L10n.VImportHeading}" Style="{StaticResource PageHeading}" />
+                    <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" AutomationId="ImportActionsButton" />
+                </Grid>
                 <Label Text="{DynamicResource L10n.VImportInstructions}" Style="{StaticResource MutedText}" />
-                <Button Text="{DynamicResource L10n.VChooseFile}" Command="{Binding ChooseCommand}" />
-                <Button Text="{DynamicResource L10n.VExcelTemplate}" Command="{Binding TemplateCommand}" />
                 <Label Text="{Binding SheetName}" FontAttributes="Bold" />
                 <Label Text="{Binding Summary}" Style="{StaticResource SectionHeading}" />
-                <Button Text="{DynamicResource L10n.VImportAction}" Command="{Binding ImportCommand}" IsEnabled="{Binding CanImport}" />
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
             </VerticalStackLayout>
         </controls:CollectionWorkspace.Form>

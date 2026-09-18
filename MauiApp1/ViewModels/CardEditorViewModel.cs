@@ -59,6 +59,9 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
     public ICommand SaveCommand { get; }
     public ICommand DiscardCommand { get; }
     public ICommand DeleteCommand { get; }
+    public ICommand MenuCommand => CreateMenuCommand(() => Localization["VActions"],
+        new("VSaveCard", SaveCommand), new("VDiscardDraft", DiscardCommand),
+        new("VDeleteCard", DeleteCommand, () => IsExisting, IsDestructive: true));
 
     public void SetIds(string? deck, string? card)
     {
