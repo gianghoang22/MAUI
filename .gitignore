@@ -4,3 +4,6 @@ MauiApp1/Properties/
 MauiApp1/Resources/
 MauiApp1/Platforms/
 Docs/
+/.agents/
+MauiApp1.Tests/bin
+MauiApp1.Tests/obj
