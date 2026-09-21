@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MauiApp1.Localization;
 using MauiApp1.Models;
@@ -12,7 +13,8 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
     private bool loaded;
     private string name = "";
     private string newDeckName = "";
-    private IReadOnlyList<NamedRow> decks = [];
+    private string search = "";
+    private IReadOnlyList<NamedRow> allDecks = [];
 
     public ClassViewModel(IVocabularyRepository repository, IUserInteraction interaction, LocalizationService localization) : base(interaction, localization)
     {
@@ -27,6 +29,7 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
             {
                 await repository.SaveDeckAsync(new(Guid.NewGuid(), classId, NewDeckName.Trim(), ""));
                 NewDeckName = "";
+                Search = "";
                 await LoadAsync();
             });
         }, () => CanAddDeck);
@@ -38,6 +41,7 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
             await Interaction.NavigateAsync("..");
         });
         RefreshCommand = CreateCommand(LoadAsync);
+        ClearSearchCommand = new Command(() => Search = "");
         MenuCommand = CreateMenuCommand(() => Name,
             new("VSave", SaveCommand), new("VDeleteClass", DeleteCommand, IsDestructive: true));
     }
@@ -56,7 +60,20 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
         }
     }
     public bool CanAddDeck => !string.IsNullOrWhiteSpace(NewDeckName);
-    public IReadOnlyList<NamedRow> Decks { get => decks; private set => SetProperty(ref decks, value); }
+    public string Search
+    {
+        get => search;
+        set
+        {
+            if (SetProperty(ref search, value ?? "")) FilterDecks();
+        }
+    }
+    public string EmptyMessage => Localization[string.IsNullOrWhiteSpace(Search) ? "VDecksEmpty" : "VNoDecksFound"];
+    public bool HasSearch => !string.IsNullOrWhiteSpace(Search);
+    public bool IsSearchEmpty => Decks.Count == 0;
+    public string SearchSummary => Localization.Format("VSearchResultCount", Decks.Count, allDecks.Count);
+    public ICommand ClearSearchCommand { get; }
+    public ObservableCollection<NamedRow> Decks { get; } = [];
     public ICommand SaveCommand { get; }
     public ICommand AddCommand { get; }
     public ICommand DeleteCommand { get; }
@@ -71,7 +88,7 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
         loaded = false;
         var data = await repository.ReadAsync();
         Name = data.Classes.FirstOrDefault(classroom => classroom.Id == classId)?.Name ?? throw new StudyException("VNotFound");
-        Decks = data.Decks.Where(deck => deck.ClassId == classId).OrderBy(deck => deck.Name).Select(deck => new NamedRow(deck.Name,
+        allDecks = data.Decks.Where(deck => deck.ClassId == classId).OrderBy(deck => deck.Name).Select(deck => new NamedRow(deck.Name,
             data.Cards.Count(card => card.DeckId == deck.Id), "VCardCount",
             CreateCommand(() => Interaction.NavigateAsync($"deck?deckId={deck.Id}")), Localization,
             CreateMenuCommand(() => deck.Name,
@@ -88,6 +105,17 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
                     await repository.DeleteDeckAsync(deck.Id);
                     await LoadAsync();
                 }), IsDestructive: true)))).ToList();
+        FilterDecks();
         loaded = true;
+    }
+
+    private void FilterDecks()
+    {
+        var query = VocabularySearch.Normalize(Search);
+        CollectionUpdates.Apply(Decks, allDecks.Where(deck => VocabularySearch.Normalize(deck.Name).Contains(query, StringComparison.Ordinal)));
+        OnPropertyChanged(nameof(EmptyMessage));
+        OnPropertyChanged(nameof(HasSearch));
+        OnPropertyChanged(nameof(SearchSummary));
+        OnPropertyChanged(nameof(IsSearchEmpty));
     }
 }

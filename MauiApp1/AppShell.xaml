@@ -6,9 +6,12 @@
        Shell.TabBarTitleColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}"
        Shell.TabBarForegroundColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}"
        Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
     <TabBar>
-        <ShellContent x:Name="LibraryContent" Title="{DynamicResource L10n.VLibrary}" Route="library" />
-        <ShellContent x:Name="HistoryContent" Title="{DynamicResource L10n.VHistory}" Route="history" />
-        <ShellContent x:Name="SettingsContent" Title="{DynamicResource L10n.SettingsTitle}" Route="settings" />
+        <ShellContent x:Name="LibraryContent" Title="{DynamicResource L10n.VLibrary}" Icon="nav_library.png" Route="library" />
+        <ShellContent x:Name="HistoryContent" Title="{DynamicResource L10n.VHistory}" Icon="nav_history.png" Route="history" />
+        <ShellContent x:Name="SettingsContent" Title="{DynamicResource L10n.SettingsTitle}" Icon="nav_settings.png" Route="settings" />
     </TabBar>
 </Shell>

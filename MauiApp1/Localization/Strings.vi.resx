@@ -287,10 +287,10 @@
     <value>Thư viện</value>
   </data>
   <data name="VHomeHeading" xml:space="preserve">
-    <value>Từ mới hôm nay. Tự tin ngày mai.</value>
+    <value>Không gian học của bạn</value>
   </data>
   <data name="VHomeIntro" xml:space="preserve">
-    <value>Bộ từ của bạn, cách học của bạn. Import Excel và bắt đầu một lượt học nhỏ.</value>
+    <value>Lớp học, bộ thẻ và những tiến bộ nhỏ mỗi ngày.</value>
   </data>
   <data name="VLocalClassesHint" xml:space="preserve">
     <value>Lớp là nhóm bộ từ trên thiết bị, chưa phải lớp học online.</value>
@@ -321,6 +321,12 @@
   </data>
   <data name="VDecksEmpty" xml:space="preserve">
     <value>Chưa có bộ từ trong lớp này.</value>
+  </data>
+  <data name="VNoDecksFound" xml:space="preserve">
+    <value>Không tìm thấy bộ từ phù hợp. Hãy thử tên khác hoặc xóa nội dung tìm kiếm.</value>
+  </data>
+  <data name="VSearchDecks" xml:space="preserve">
+    <value>Tìm bộ từ</value>
   </data>
   <data name="VDeck" xml:space="preserve">
     <value>Bộ từ vựng</value>
@@ -663,4 +669,34 @@
   <data name="VContinueLearning" xml:space="preserve"><value>Tiếp tục học</value></data>
   <data name="VVocabularyList" xml:space="preserve"><value>Từ vựng trong bộ</value></data>
   <data name="VActions" xml:space="preserve"><value>Thao tác</value></data>
+  <data name="VBrandTagline" xml:space="preserve"><value>Mỗi ngày học một chút.</value></data>
+  <data name="VDailyPractice" xml:space="preserve"><value>DÀNH CHÚT THỜI GIAN ĐỂ HỌC</value></data>
+  <data name="VHeroHeading" xml:space="preserve"><value>Bước nhỏ. Khám phá lớn.</value></data>
+  <data name="VHeroBody" xml:space="preserve"><value>Chọn một lớp, mở bộ thẻ và biến vài phút rảnh thành kiến thức bạn ghi nhớ.</value></data>
+  <data name="VStatClasses" xml:space="preserve"><value>Lớp học</value></data>
+  <data name="VStatDecks" xml:space="preserve"><value>Bộ thẻ</value></data>
+  <data name="VStatCards" xml:space="preserve"><value>Thẻ học</value></data>
+  <data name="VSearchClasses" xml:space="preserve"><value>Tìm lớp học của bạn</value></data>
+  <data name="VNoClassesFound" xml:space="preserve"><value>Không tìm thấy lớp phù hợp. Thử tên khác hoặc xóa nội dung tìm kiếm.</value></data>
+  <data name="VCreateClassHint" xml:space="preserve"><value>Không gian cho môn học, ngôn ngữ hoặc ý tưởng mới. Thêm bộ thẻ vào lớp để bắt đầu.</value></data>
+  <data name="VLocalFooter" xml:space="preserve"><value>Không gian học của bạn. Lưu trên thiết bị này.</value></data>
+  <data name="VStudySets" xml:space="preserve"><value>Bộ thẻ của bạn</value></data>
+  <data name="VStudySetsHint" xml:space="preserve"><value>Chọn một bộ thẻ và tiến bộ từng chút một.</value></data>
+  <data name="VStudyFocus" xml:space="preserve"><value>TẬP TRUNG TỪNG THẺ</value></data>
+  <data name="VHistoryIntro" xml:space="preserve"><value>Mỗi buổi học là một bước tiến. Cùng xem lại những gì bạn đã học.</value></data>
+  <data name="VSettingsIntro" xml:space="preserve"><value>Tùy chỉnh không gian học theo cách của bạn.</value></data>
+  <data name="VAnswerHint" xml:space="preserve"><value>Thử nhớ lại trước khi xem đáp án.</value></data>
+  <data name="VStudySetLabel" xml:space="preserve"><value>BUỔI HỌC TIẾP THEO CỦA BẠN</value></data>
+  <data name="VSetDetails" xml:space="preserve"><value>Sửa thông tin bộ thẻ</value></data>
+  <data name="VHideSetDetails" xml:space="preserve"><value>Ẩn thông tin bộ thẻ</value></data>
+  <data name="VSearchResultCount" xml:space="preserve"><value>Hiển thị {0} / {1}</value></data>
+  <data name="VClearSearch" xml:space="preserve"><value>Xóa tìm kiếm</value></data>
+  <data name="VResetSearchFilters" xml:space="preserve"><value>Đặt lại tìm kiếm và bộ lọc</value></data>
+  <data name="VNoCardsFound" xml:space="preserve"><value>Không có thẻ phù hợp. Thử từ khác hoặc đặt lại tìm kiếm và bộ lọc.</value></data>
+  <data name="VListFilterLabel" xml:space="preserve"><value>Hiển thị thẻ</value></data>
+  <data name="VListFilterHint" xml:space="preserve"><value>Tìm kiếm và bộ lọc này chỉ thay đổi danh sách. Chọn thẻ cho buổi học trong phần Thiết lập học.</value></data>
+  <data name="VStudyEligibleCount" xml:space="preserve"><value>{0} thẻ phù hợp với bộ lọc học. Các thẻ có cùng câu hỏi có thể được gộp lại.</value></data>
+  <data name="VNoStudyMatches" xml:space="preserve"><value>Không có thẻ phù hợp. Chọn tất cả thẻ hoặc thêm thẻ vào bộ này.</value></data>
+  <data name="VUseAllCards" xml:space="preserve"><value>Dùng tất cả thẻ</value></data>
+  <data name="VPendingStudyFilterHint" xml:space="preserve"><value>Thiết lập chỉ áp dụng cho buổi học mới. Buổi học hiện tại không đổi cho đến khi bạn áp dụng và xác nhận. Bấm Hủy để bỏ thay đổi.</value></data>
 </root>

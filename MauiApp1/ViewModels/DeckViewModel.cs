@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MauiApp1.Localization;
 using MauiApp1.Models;
@@ -18,9 +19,11 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     private int directionIndex;
     private bool translating;
     private int filterIndex;
+    private int listFilterIndex = (int)LearningFilter.All;
     private bool canResume;
+    private bool showDetails;
     private List<VocabularyCard> allCards = [];
-    private IReadOnlyList<VocabularyCardRow> cards = [];
+    private IReadOnlyDictionary<Guid, VocabularyCardRow> cardRows = new Dictionary<Guid, VocabularyCardRow>();
 
     public DeckViewModel(IVocabularyRepository repository, LearningEngine engine,
         IUserInteraction interaction, LocalizationService localization) : base(interaction, localization)
@@ -38,6 +41,13 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
         });
         StartCommand = CreateCommand(StartAsync);
         RefreshCommand = CreateCommand(LoadAsync);
+        ToggleDetailsCommand = new Command(() => ShowDetails = !ShowDetails);
+        ResetSearchCommand = new Command(() =>
+        {
+            Search = "";
+            ListFilterIndex = (int)LearningFilter.All;
+        });
+        ResetStudyFilterCommand = new Command(() => FilterIndex = (int)LearningFilter.All);
         DeleteCommand = CreateCommand(async () =>
         {
             RequireDeck();
@@ -52,13 +62,40 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     public string Search { get => search; set { if (SetProperty(ref search, value ?? "")) Filter(); } }
     public int ModeIndex { get => modeIndex; set { if (!translating && value is >= 0 and <= 3) SetProperty(ref modeIndex, value); } }
     public int DirectionIndex { get => directionIndex; set { if (!translating && value is >= 0 and <= 1) SetProperty(ref directionIndex, value); } }
-    public int FilterIndex { get => filterIndex; set { if (!translating && value is >= 0 and <= 2) SetProperty(ref filterIndex, value); } }
+    public int FilterIndex
+    {
+        get => filterIndex;
+        set { if (!translating && value is >= 0 and <= 2 && SetProperty(ref filterIndex, value)) NotifyStudyFilter(); }
+    }
+    public int ListFilterIndex
+    {
+        get => listFilterIndex;
+        set { if (!translating && value is >= 0 and <= 2 && SetProperty(ref listFilterIndex, value)) Filter(); }
+    }
+    public bool HasSearchFilters => !string.IsNullOrWhiteSpace(Search) || ListFilterIndex != (int)LearningFilter.All;
+    public bool IsSearchEmpty => Cards.Count == 0;
+    public string SearchSummary => Localization.Format("VSearchResultCount", Cards.Count, allCards.Count);
+    public string EmptyMessage => Localization[allCards.Count == 0 ? "VCardsEmpty" : "VNoCardsFound"];
+    public int EligibleCardCount => allCards.Count(card => VocabularySearch.MatchesFilter(card, FilterIndex));
+    public bool HasEligibleCards => EligibleCardCount > 0;
+    public string StudyFilterSummary => EligibleCardCount == 0 ? Localization["VNoStudyMatches"] : Localization.Format("VStudyEligibleCount", EligibleCardCount);
+    public ICommand ResetSearchCommand { get; }
+    public ICommand ResetStudyFilterCommand { get; }
     public bool CanResume { get => canResume; private set => SetProperty(ref canResume, value); }
+    public bool ShowDetails
+    {
+        get => showDetails;
+        private set
+        {
+            if (SetProperty(ref showDetails, value)) OnPropertyChanged(nameof(DetailsActionText));
+        }
+    }
+    public string DetailsActionText => Localization[ShowDetails ? "VHideSetDetails" : "VSetDetails"];
     public string MasterySummary => Localization.Format("VMasterySummary", allCards.Count(card => card.IsStarred), allCards.Count);
     public IReadOnlyList<string> Filters => Enumerable.Range(0, 3).Select(index => Localization["VFilter" + index]).ToList();
     public IReadOnlyList<string> Modes => Enumerable.Range(0, 4).Select(index => Localization["VMode" + index]).ToList();
     public IReadOnlyList<string> Directions => [Localization["VDirection0"], Localization["VDirection1"]];
-    public IReadOnlyList<VocabularyCardRow> Cards { get => cards; private set => SetProperty(ref cards, value); }
+    public ObservableCollection<VocabularyCardRow> Cards { get; } = [];
     public ICommand SaveCommand { get; }
     public ICommand AddCommand { get; }
     public ICommand ImportCommand { get; }
@@ -66,13 +103,14 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     public ICommand StartCommand { get; }
     public ICommand RefreshCommand { get; }
     public ICommand DeleteCommand { get; }
+    public ICommand ToggleDetailsCommand { get; }
     public void SetId(string? value) { deckId = Guid.TryParse(value, out var parsed) ? parsed : Guid.Empty; deck = null; }
     public Task RefreshAsync() => RunAsync(LoadAsync);
 
     protected override void OnLanguageChanged(object? sender, EventArgs arguments)
     {
         translating = true;
-        try { base.OnLanguageChanged(sender, arguments); OnPropertyChanged(nameof(ModeIndex)); OnPropertyChanged(nameof(DirectionIndex)); OnPropertyChanged(nameof(FilterIndex)); Filter(); }
+        try { base.OnLanguageChanged(sender, arguments); OnPropertyChanged(nameof(ModeIndex)); OnPropertyChanged(nameof(DirectionIndex)); OnPropertyChanged(nameof(FilterIndex)); OnPropertyChanged(nameof(ListFilterIndex)); Filter(); }
         finally { translating = false; }
     }
 
@@ -85,16 +123,16 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
         Name = deck.Name;
         Description = deck.Description;
         allCards = data.Cards.Where(card => card.DeckId == deckId).ToList();
+        RebuildCardRows();
         CanResume = data.Session is { IsComplete: false } active && active.DeckId == deckId;
         OnPropertyChanged(nameof(MasterySummary));
+        NotifyStudyFilter();
         Filter();
     }
 
-    private void Filter()
+    private void RebuildCardRows()
     {
-        var query = VocabularyRules.Normalize(Search);
-        Cards = allCards.Where(card => VocabularyRules.Normalize(card.Vietnamese).Contains(query) || VocabularyRules.Normalize(card.English).Contains(query))
-            .Select(card => new VocabularyCardRow(card,
+        cardRows = allCards.ToDictionary(card => card.Id, card => new VocabularyCardRow(card,
                 CreateCommand(() => Interaction.NavigateAsync($"card?deckId={deckId}&cardId={card.Id}")),
                 CreateCommand(() => ToggleStarAsync(card.Id)),
                 CreateMenuCommand(() => card.English,
@@ -104,7 +142,19 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
                         if (!await Interaction.ConfirmAsync(Localization["VDeleteCard"], Localization["VDeleteCardWarning"])) return;
                         await repository.DeleteCardAsync(card.Id);
                         await LoadAsync();
-                    }), IsDestructive: true)), Localization)).ToList();
+                    }), IsDestructive: true)), Localization));
+    }
+
+    private void Filter()
+    {
+        var query = VocabularySearch.Normalize(Search);
+        CollectionUpdates.Apply(Cards, allCards.Where(card => VocabularySearch.MatchesFilter(card, ListFilterIndex) &&
+            (VocabularySearch.Normalize(card.Vietnamese).Contains(query, StringComparison.Ordinal) || VocabularySearch.Normalize(card.English).Contains(query, StringComparison.Ordinal)))
+            .Select(card => cardRows[card.Id]));
+        OnPropertyChanged(nameof(HasSearchFilters));
+        OnPropertyChanged(nameof(SearchSummary));
+        OnPropertyChanged(nameof(EmptyMessage));
+        OnPropertyChanged(nameof(IsSearchEmpty));
     }
 
     private async Task ToggleStarAsync(Guid cardId)
@@ -114,8 +164,17 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
         var updated = allCards[index] with { IsStarred = !allCards[index].IsStarred };
         await repository.SetStarredAsync(cardId, updated.IsStarred);
         allCards[index] = updated;
-        Cards.FirstOrDefault(card => card.Id == cardId)?.SetStarred(updated.IsStarred);
+        cardRows[cardId].SetStarred(updated.IsStarred);
         OnPropertyChanged(nameof(MasterySummary));
+        NotifyStudyFilter();
+        if (ListFilterIndex != (int)LearningFilter.All) Filter();
+    }
+
+    private void NotifyStudyFilter()
+    {
+        OnPropertyChanged(nameof(EligibleCardCount));
+        OnPropertyChanged(nameof(HasEligibleCards));
+        OnPropertyChanged(nameof(StudyFilterSummary));
     }
 
     private async Task StartAsync()

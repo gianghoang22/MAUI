@@ -4,6 +4,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="24" MaximumWidthRequest="900">
             <Label Text="{DynamicResource L10n.VSettingsHeading}" Style="{StaticResource PageHeading}" />
+            <Label Text="{DynamicResource L10n.VSettingsIntro}" Style="{StaticResource MutedText}" />
             <controls:AdaptiveColumns>
             <Border Style="{StaticResource Card}" VerticalOptions="Start">
                 <VerticalStackLayout Spacing="16">

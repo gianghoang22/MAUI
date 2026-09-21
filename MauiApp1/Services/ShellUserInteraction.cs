@@ -7,7 +7,23 @@ public sealed class ShellUserInteraction(LocalizationService localization) : IUs
 {
     private readonly SemaphoreSlim dialogGate = new(1, 1);
 
-    public Task NavigateAsync(string route) => Shell.Current.GoToAsync(route);
+    public Task NavigateAsync(string route)
+    {
+        if (route != "..")
+            return Shell.Current.GoToAsync(route);
+
+        return MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            var navigation = Shell.Current.Navigation;
+            if (navigation.NavigationStack.Count > 1)
+            {
+                await navigation.PopAsync();
+                return;
+            }
+
+            await Shell.Current.GoToAsync("//library");
+        });
+    }
 
     public Task AlertAsync(string title, string message) =>
         ShowDialogAsync(() => InteractionDialog.Message(title, message, localization["Close"]));

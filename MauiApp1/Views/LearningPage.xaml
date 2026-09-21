@@ -8,7 +8,8 @@
             <Label Grid.Column="1" Text="{Binding DeckName}" Style="{StaticResource SectionHeading}" VerticalOptions="Center" MaxLines="2" LineBreakMode="TailTruncation" />
         </Grid>
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="24" MaximumWidthRequest="980" HorizontalOptions="Fill" Padding="4,4,4,28">
+            <VerticalStackLayout Spacing="24" MaximumWidthRequest="800" HorizontalOptions="Fill" Padding="4,4,4,28">
+                <Label Text="{DynamicResource L10n.VStudyFocus}" Style="{StaticResource Eyebrow}" HorizontalTextAlignment="Center" />
                 <Button Text="{DynamicResource L10n.VCustomize}" Command="{Binding SetupCommand}" Style="{StaticResource QuietButton}"
                         HorizontalOptions="Start" IsEnabled="{Binding IsNotBusy}" AutomationId="StudySetupButton" x:Name="StudySetupButton" />
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowSetup}">
@@ -19,8 +20,13 @@
                             <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VChooseDirection}" Style="{StaticResource MutedText}" /><Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" AutomationId="StudyDirectionPicker" /></VerticalStackLayout>
                             <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VStudyFilter}" Style="{StaticResource MutedText}" /><Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" AutomationId="StudyFilterPicker" /></VerticalStackLayout>
                         </controls:AdaptiveColumns>
-                        <Button Text="{DynamicResource L10n.VApplySetup}" Command="{Binding ApplySetupCommand}" Style="{StaticResource PrimaryButton}"
-                                IsEnabled="{Binding IsNotBusy}" AutomationId="ApplyStudySetupButton" />
+                        <Label Text="{Binding StudyFilterSummary}" Style="{StaticResource MutedText}" />
+                        <Label Text="{DynamicResource L10n.VPendingStudyFilterHint}" Style="{StaticResource MutedText}" />
+                        <VerticalStackLayout Spacing="8" IsEnabled="{Binding IsNotBusy}">
+                            <Button Text="{DynamicResource L10n.VUseAllCards}" Command="{Binding ResetStudyFilterCommand}" Style="{StaticResource QuietButton}" />
+                            <Button Text="{DynamicResource L10n.VApplySetup}" Command="{Binding ApplySetupCommand}" Style="{StaticResource PrimaryButton}" IsEnabled="{Binding HasEligibleCards}" AutomationId="ApplyStudySetupButton" />
+                            <Button Text="{DynamicResource L10n.Cancel}" Command="{Binding CancelSetupCommand}" Style="{StaticResource QuietButton}" AutomationId="CancelStudySetupButton" />
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="8">
@@ -36,6 +42,7 @@
                     </FlexLayout>
                     <controls:VocabularyFlashcard Prompt="{Binding QuestionText}" Answer="{Binding AnswerText}" IsRevealed="{Binding ShowAnswer}"
                                                   IsTwoSided="{Binding IsFlashcard}" FlipCommand="{Binding FlipCommand}" FrontCaption="{Binding FrontCaption}" BackCaption="{Binding BackCaption}" />
+                    <Label Text="{DynamicResource L10n.VAnswerHint}" Style="{StaticResource MutedText}" HorizontalTextAlignment="Center" IsVisible="{Binding ShowFlip}" />
                     <Button Text="{DynamicResource L10n.VFlip}" Command="{Binding FlipCommand}" IsVisible="{Binding ShowFlip}" IsEnabled="{Binding IsNotBusy}"
                             Style="{StaticResource PrimaryButton}" AutomationId="FlipCardButton" x:Name="FlipCardButton" />
                     <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Center" IsVisible="{Binding ShowRating}" IsEnabled="{Binding IsNotBusy}" Margin="-4,0">

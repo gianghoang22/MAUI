@@ -1,41 +1,76 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.MainPage" Shell.NavBarIsVisible="False" x:DataType="vm:LibraryViewModel" Title="VocabMate">
-    <controls:CollectionWorkspace>
-        <controls:CollectionWorkspace.Form>
-            <VerticalStackLayout Spacing="20" Padding="0,0,0,20">
-                <Label Text="VOCABMATE" FontAttributes="Bold" CharacterSpacing="3" TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" />
-                <Label Text="{DynamicResource L10n.VHomeHeading}" Style="{StaticResource PageHeading}" />
-                <Label Text="{DynamicResource L10n.VHomeIntro}" Style="{StaticResource MutedText}" />
-                <Border Style="{StaticResource Card}">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="{Binding Summary}" Style="{StaticResource SectionHeading}" />
-                        <Label Text="{DynamicResource L10n.VLocalClassesHint}" Style="{StaticResource MutedText}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ResumeCommand}"
-                        IsVisible="{Binding CanResume}" IsEnabled="{Binding IsNotBusy}"
-                        Style="{StaticResource PrimaryButton}" AutomationId="ResumeLearningButton" />
-                <Border Style="{StaticResource Card}">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="{DynamicResource L10n.VAddClass}" Style="{StaticResource SectionHeading}" />
-                        <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding NewName}" MaxLength="80" Placeholder="{DynamicResource L10n.VClassPlaceholder}" AutomationId="NewClassName" ReturnType="Done" ReturnCommand="{Binding AddCommand}" />
-                        <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAdd}" AutomationId="AddClassButton" />
-                    </VerticalStackLayout>
-                </Border>
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+             xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             x:Class="MauiApp1.MainPage" Shell.NavBarIsVisible="False" x:DataType="vm:LibraryViewModel" Title="VocabMate">
+    <Grid x:Name="DashboardLayout" RowDefinitions="Auto,*" Padding="16" RowSpacing="16" MaximumWidthRequest="1600" HorizontalOptions="Fill" SizeChanged="OnDashboardSizeChanged">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Image Source="brand_mark.png" WidthRequest="42" HeightRequest="42" SemanticProperties.Description="VocabMate" />
+            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                <Label Text="VocabMate" FontSize="21" FontAttributes="Bold" />
+                <Label Text="{DynamicResource L10n.VBrandTagline}" Style="{StaticResource MutedText}" FontSize="12" />
             </VerticalStackLayout>
-        </controls:CollectionWorkspace.Form>
-        <controls:CollectionWorkspace.ListHeading>
-            <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" VerticalOptions="Center" Margin="0,0,0,6" />
-        </controls:CollectionWorkspace.ListHeading>
-        <controls:CollectionWorkspace.Collection>
-            <CollectionView ItemsSource="{Binding Classes}" ItemTemplate="{StaticResource NamedRowTemplate}" SelectionMode="None">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.EmptyView><Label Text="{DynamicResource L10n.VClassesEmpty}" Style="{StaticResource MutedText}" /></CollectionView.EmptyView>
-            </CollectionView>
-        </controls:CollectionWorkspace.Collection>
-    </controls:CollectionWorkspace>
+            <ActivityIndicator Grid.Column="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" WidthRequest="28" />
+        </Grid>
+        <controls:AdaptiveCollectionView Grid.Row="1" Source="{Binding Classes}" TileTemplate="{StaticResource NamedRowTemplate}" AutomationId="LibraryClasses">
+            <CollectionView.Header>
+                <VerticalStackLayout x:Name="DashboardHeader" Spacing="20" Padding="0,0,0,16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label x:Name="WelcomeHeading" Text="{DynamicResource L10n.VHomeHeading}" Style="{StaticResource PageHeading}" />
+                        <Label Text="{DynamicResource L10n.VHomeIntro}" Style="{StaticResource MutedText}" />
+                    </VerticalStackLayout>
+                    <Border x:Name="HeroSurface" BackgroundColor="{StaticResource HeroBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="20">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
+                            <VerticalStackLayout Spacing="12" VerticalOptions="Center">
+                                <Label Text="{DynamicResource L10n.VDailyPractice}" Style="{StaticResource Eyebrow}" TextColor="{StaticResource HeroMuted}" />
+                                <Label x:Name="HeroHeading" Text="{DynamicResource L10n.VHeroHeading}" TextColor="White" FontSize="24" FontAttributes="Bold" SemanticProperties.HeadingLevel="Level2" />
+                                <Label Text="{DynamicResource L10n.VHeroBody}" TextColor="{StaticResource HeroMuted}" FontSize="15" MaximumWidthRequest="520" HorizontalOptions="Start" />
+                                <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" IsEnabled="{Binding IsNotBusy}"
+                                        BackgroundColor="White" TextColor="#363088" HorizontalOptions="Start" Margin="0,6,0,0" AutomationId="ResumeLearningButton" />
+                            </VerticalStackLayout>
+                            <Image x:Name="HeroArt" Grid.Column="1" Source="study_hero.png" WidthRequest="170" HeightRequest="136" InputTransparent="True" IsVisible="False" />
+                        </Grid>
+                    </Border>
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource Card}" Padding="14">
+                            <VerticalStackLayout Spacing="4"><Label Text="{Binding ClassCount}" Style="{StaticResource StatNumber}" /><Label Text="{DynamicResource L10n.VStatClasses}" Style="{StaticResource MutedText}" /></VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource Card}" Padding="14">
+                            <VerticalStackLayout Spacing="4"><Label Text="{Binding DeckCount}" Style="{StaticResource StatNumber}" /><Label Text="{DynamicResource L10n.VStatDecks}" Style="{StaticResource MutedText}" /></VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource Card}" Padding="14">
+                            <VerticalStackLayout Spacing="4"><Label Text="{Binding CardCount}" Style="{StaticResource StatNumber}" /><Label Text="{DynamicResource L10n.VStatCards}" Style="{StaticResource MutedText}" /></VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                    <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Center">
+                        <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" Margin="0,8,16,8" />
+                        <Button Text="{Binding CreateActionText}" Command="{Binding ToggleCreateCommand}" Style="{StaticResource PrimaryButton}" AutomationId="ToggleCreateClassButton" />
+                    </FlexLayout>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding ShowCreate}">
+                        <VerticalStackLayout Spacing="12" IsEnabled="{Binding IsNotBusy}">
+                            <Label Text="{DynamicResource L10n.VAddClass}" Style="{StaticResource SectionHeading}" />
+                            <Label Text="{DynamicResource L10n.VCreateClassHint}" Style="{StaticResource MutedText}" />
+                            <Entry Text="{Binding NewName}" MaxLength="80" Placeholder="{DynamicResource L10n.VClassPlaceholder}" SemanticProperties.Description="{DynamicResource L10n.VClassName}" AutomationId="NewClassName" ReturnType="Done" ReturnCommand="{Binding AddCommand}" />
+                            <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAdd}" Style="{StaticResource PrimaryButton}" AutomationId="AddClassButton" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}">
+                        <SearchBar Text="{Binding Search}" Placeholder="{DynamicResource L10n.VSearchClasses}" SemanticProperties.Description="{DynamicResource L10n.VSearchClasses}" AutomationId="SearchClasses" />
+                    </Border>
+                    <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Center">
+                        <Label Text="{Binding SearchSummary}" Style="{StaticResource MutedText}" Margin="0,8,12,8" />
+                        <Button Text="{DynamicResource L10n.VClearSearch}" Command="{Binding ClearSearchCommand}" IsVisible="{Binding HasSearch}" Style="{StaticResource QuietButton}" AutomationId="ClearClassSearch" />
+                    </FlexLayout>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding IsSearchEmpty}" AutomationId="LibraryEmptyState" VerticalOptions="Start">
+                        <VerticalStackLayout Spacing="12">
+                            <Image Source="study_stack.png" WidthRequest="40" HeightRequest="40" />
+                            <Label Text="{Binding EmptyMessage}" Style="{StaticResource MutedText}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <Label Text="{DynamicResource L10n.VLocalFooter}" Style="{StaticResource MutedText}" FontSize="12" Margin="0,16,0,20" HorizontalTextAlignment="Center" />
+            </CollectionView.Footer>
+        </controls:AdaptiveCollectionView>
+    </Grid>
 </ContentPage>

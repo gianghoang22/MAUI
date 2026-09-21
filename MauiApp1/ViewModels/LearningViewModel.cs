@@ -34,7 +34,9 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         SubmitCommand = CreateCommand(() => ChangeAsync(current => engine.Submit(current, Input)));
         NextCommand = CreateCommand(() => ChangeAsync(engine.Next));
         RefreshCommand = CreateCommand(LoadAsync);
-        SetupCommand = CreateCommand(() => { ShowSetup = !ShowSetup; return Task.CompletedTask; });
+        SetupCommand = CreateCommand(() => { if (session is not null) UpdateSetupSelection(session); ShowSetup = !ShowSetup; return Task.CompletedTask; });
+        CancelSetupCommand = CreateCommand(() => { if (session is not null) UpdateSetupSelection(session); ShowSetup = false; return Task.CompletedTask; });
+        ResetStudyFilterCommand = new Command(() => FilterIndex = (int)LearningFilter.All);
         ApplySetupCommand = CreateCommand(() => StartBatchAsync(true));
         ContinueCommand = CreateCommand(() => StartBatchAsync(false));
         StarCommand = CreateCommand(async () =>
@@ -84,7 +86,16 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
     public bool ShowSetup { get => showSetup; set => SetProperty(ref showSetup, value); }
     public int ModeIndex { get => modeIndex; set { if (!translating && value is >= 0 and <= 3) SetProperty(ref modeIndex, value); } }
     public int DirectionIndex { get => directionIndex; set { if (!translating && value is >= 0 and <= 1) SetProperty(ref directionIndex, value); } }
-    public int FilterIndex { get => filterIndex; set { if (!translating && value is >= 0 and <= 2) SetProperty(ref filterIndex, value); } }
+    public int FilterIndex
+    {
+        get => filterIndex;
+        set { if (!translating && value is >= 0 and <= 2 && SetProperty(ref filterIndex, value)) NotifyStudyFilter(); }
+    }
+    public int EligibleCardCount => libraryCards.Count(card => card.DeckId == session?.DeckId && VocabularySearch.MatchesFilter(card, FilterIndex));
+    public bool HasEligibleCards => EligibleCardCount > 0;
+    public string StudyFilterSummary => EligibleCardCount == 0 ? Localization["VNoStudyMatches"] : Localization.Format("VStudyEligibleCount", EligibleCardCount);
+    public ICommand CancelSetupCommand { get; }
+    public ICommand ResetStudyFilterCommand { get; }
     public IReadOnlyList<string> Modes => Enumerable.Range(0, 4).Select(index => Localization["VMode" + index]).ToList();
     public IReadOnlyList<string> Directions => [Localization["VDirection0"], Localization["VDirection1"]];
     public IReadOnlyList<string> Filters => Enumerable.Range(0, 3).Select(index => Localization["VFilter" + index]).ToList();
@@ -167,6 +178,14 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
     {
         libraryCards = (await repository.ReadAsync()).Cards;
         starredIds = libraryCards.Where(card => card.IsStarred).Select(card => card.Id).ToHashSet();
+        NotifyStudyFilter();
+    }
+
+    private void NotifyStudyFilter()
+    {
+        OnPropertyChanged(nameof(EligibleCardCount));
+        OnPropertyChanged(nameof(HasEligibleCards));
+        OnPropertyChanged(nameof(StudyFilterSummary));
     }
 
     private async Task StartBatchAsync(bool changeSettings)

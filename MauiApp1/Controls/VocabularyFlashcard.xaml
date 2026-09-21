@@ -4,17 +4,19 @@
     <ContentView.ControlTemplate>
         <ControlTemplate>
             <Border x:Name="CardSurface" Style="{StaticResource Card}"
-                    Padding="{OnPlatform Default='18,24', WinUI='32'}"
-                    MinimumHeightRequest="{OnPlatform Default=180, WinUI=230}">
-                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="16">
-                    <Label Text="{TemplateBinding FaceCaption}" Style="{StaticResource MutedText}" HorizontalTextAlignment="Center" />
+                    Padding="{OnPlatform Default='24,28', WinUI='40'}"
+                    MinimumHeightRequest="{OnPlatform Default=260, WinUI=320}"
+                    Stroke="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}">
+                <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="24">
+                    <Label Text="{TemplateBinding FaceCaption}" Style="{StaticResource Eyebrow}" HorizontalTextAlignment="Center" />
                     <Label Grid.Row="1" Text="{TemplateBinding FaceText}"
-                           FontSize="{OnPlatform Default=24, WinUI=30}"
+                           FontSize="{OnPlatform Default=28, WinUI=36}"
                            FontAttributes="Bold" HorizontalTextAlignment="Center"
                            VerticalOptions="Center" LineBreakMode="WordWrap" TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" AutomationId="QuestionText" />
                     <Label Grid.Row="2" Text="{TemplateBinding Answer}" IsVisible="{TemplateBinding ShowSecondaryAnswer}"
                            FontSize="{OnPlatform Default=18, WinUI=22}"
                            HorizontalTextAlignment="Center" LineBreakMode="WordWrap" AutomationId="AnswerText" />
+                    <BoxView Grid.Row="3" WidthRequest="40" HeightRequest="4" CornerRadius="2" HorizontalOptions="Center" Color="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}" />
                 </Grid>
             </Border>
         </ControlTemplate>

@@ -287,10 +287,10 @@
     <value>Library</value>
   </data>
   <data name="VHomeHeading" xml:space="preserve">
-    <value>New words today. Confidence tomorrow.</value>
+    <value>Your learning space</value>
   </data>
   <data name="VHomeIntro" xml:space="preserve">
-    <value>Your words, your way. Import Excel and start a short study session.</value>
+    <value>Your classes, your flashcards, your next little breakthrough.</value>
   </data>
   <data name="VLocalClassesHint" xml:space="preserve">
     <value>Classes organize decks on this device; they are not online classrooms.</value>
@@ -321,6 +321,12 @@
   </data>
   <data name="VDecksEmpty" xml:space="preserve">
     <value>No decks in this class yet.</value>
+  </data>
+  <data name="VNoDecksFound" xml:space="preserve">
+    <value>No matching decks. Try a different name or clear your search.</value>
+  </data>
+  <data name="VSearchDecks" xml:space="preserve">
+    <value>Search study sets</value>
   </data>
   <data name="VDeck" xml:space="preserve">
     <value>Vocabulary deck</value>
@@ -663,4 +669,34 @@
   <data name="VContinueLearning" xml:space="preserve"><value>Continue learning</value></data>
   <data name="VVocabularyList" xml:space="preserve"><value>Your vocabulary</value></data>
   <data name="VActions" xml:space="preserve"><value>Actions</value></data>
+  <data name="VBrandTagline" xml:space="preserve"><value>A little learning, every day.</value></data>
+  <data name="VDailyPractice" xml:space="preserve"><value>MAKE ROOM FOR LEARNING</value></data>
+  <data name="VHeroHeading" xml:space="preserve"><value>Small steps. Big discoveries.</value></data>
+  <data name="VHeroBody" xml:space="preserve"><value>Pick a class, explore your flashcards, and turn a few spare minutes into something you remember.</value></data>
+  <data name="VStatClasses" xml:space="preserve"><value>Classes</value></data>
+  <data name="VStatDecks" xml:space="preserve"><value>Study sets</value></data>
+  <data name="VStatCards" xml:space="preserve"><value>Flashcards</value></data>
+  <data name="VSearchClasses" xml:space="preserve"><value>Search your classes</value></data>
+  <data name="VNoClassesFound" xml:space="preserve"><value>No matching classes. Try a different name or clear your search.</value></data>
+  <data name="VCreateClassHint" xml:space="preserve"><value>A space for your subject, language, or next big idea. Add study sets inside to get started.</value></data>
+  <data name="VLocalFooter" xml:space="preserve"><value>Your learning space. Saved on this device.</value></data>
+  <data name="VStudySets" xml:space="preserve"><value>Your study sets</value></data>
+  <data name="VStudySetsHint" xml:space="preserve"><value>Choose a set and make a little progress.</value></data>
+  <data name="VStudyFocus" xml:space="preserve"><value>ONE CARD AT A TIME</value></data>
+  <data name="VHistoryIntro" xml:space="preserve"><value>Every session is a step forward. Revisit what you have learned.</value></data>
+  <data name="VSettingsIntro" xml:space="preserve"><value>Make this space feel like yours.</value></data>
+  <data name="VAnswerHint" xml:space="preserve"><value>Take a moment to recall, then reveal the answer.</value></data>
+  <data name="VStudySetLabel" xml:space="preserve"><value>YOUR NEXT STUDY SESSION</value></data>
+  <data name="VSetDetails" xml:space="preserve"><value>Edit set details</value></data>
+  <data name="VHideSetDetails" xml:space="preserve"><value>Hide set details</value></data>
+  <data name="VSearchResultCount" xml:space="preserve"><value>Showing {0} of {1}</value></data>
+  <data name="VClearSearch" xml:space="preserve"><value>Clear search</value></data>
+  <data name="VResetSearchFilters" xml:space="preserve"><value>Reset search and filters</value></data>
+  <data name="VNoCardsFound" xml:space="preserve"><value>No matching cards. Try another word or reset your search and filters.</value></data>
+  <data name="VListFilterLabel" xml:space="preserve"><value>Show cards</value></data>
+  <data name="VListFilterHint" xml:space="preserve"><value>Search and this filter only change the list. Use Study setup to choose cards for your session.</value></data>
+  <data name="VStudyEligibleCount" xml:space="preserve"><value>{0} cards match this study filter. Similar prompts may be combined into one question.</value></data>
+  <data name="VNoStudyMatches" xml:space="preserve"><value>No cards match this study filter. Choose all cards or add cards to this set.</value></data>
+  <data name="VUseAllCards" xml:space="preserve"><value>Use all cards</value></data>
+  <data name="VPendingStudyFilterHint" xml:space="preserve"><value>These settings apply to a new session only. Your current session stays unchanged until you apply and confirm. Cancel discards these changes.</value></data>
 </root>

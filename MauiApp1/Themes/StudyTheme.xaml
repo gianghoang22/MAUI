@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:vm="clr-namespace:MauiApp1.ViewModels">
-    <Color x:Key="PageBackgroundLight">#FAFAFA</Color>
-    <Color x:Key="PageBackgroundDark">#1E293B</Color>
+    <Color x:Key="PageBackgroundLight">#F7F8FC</Color>
+    <Color x:Key="PageBackgroundDark">#111321</Color>
     <Color x:Key="SurfaceLight">#FFFFFF</Color>
-    <Color x:Key="SurfaceDark">#334155</Color>
-    <Color x:Key="FieldLight">#F1F5F9</Color>
-    <Color x:Key="FieldDark">#0F172A</Color>
-    <Color x:Key="OutlineLight">#E2E8F0</Color>
-    <Color x:Key="OutlineDark">#475569</Color>
-    <Color x:Key="TextPrimaryLight">#334155</Color>
+    <Color x:Key="SurfaceDark">#1C2033</Color>
+    <Color x:Key="FieldLight">#F0F2F8</Color>
+    <Color x:Key="FieldDark">#15192B</Color>
+    <Color x:Key="OutlineLight">#DCE1ED</Color>
+    <Color x:Key="OutlineDark">#373E59</Color>
+    <Color x:Key="TextPrimaryLight">#20243D</Color>
     <Color x:Key="TextPrimaryDark">#F8FAFC</Color>
-    <Color x:Key="TextMutedLight">#64748B</Color>
-    <Color x:Key="TextMutedDark">#94A3B8</Color>
-    <Color x:Key="AccentSubtleLight">#E0F2FE</Color>
-    <Color x:Key="AccentSubtleDark">#0F172A</Color>
-    <Color x:Key="AccentSoftLight">#BAE6FD</Color>
-    <Color x:Key="AccentSoftDark">#1E293B</Color>
-    <Color x:Key="AccentTextLight">#0EA5E9</Color>
-    <Color x:Key="AccentTextDark">#38BDF8</Color>
-    <Color x:Key="AccentOutlineLight">#7DD3FC</Color>
-    <Color x:Key="AccentOutlineDark">#0284C7</Color>
-    <Color x:Key="AccentSelectedLight">#38BDF8</Color>
-    <Color x:Key="AccentSelectedDark">#0369A1</Color>
+    <Color x:Key="TextMutedLight">#626A80</Color>
+    <Color x:Key="TextMutedDark">#B0B8D0</Color>
+    <Color x:Key="AccentSubtleLight">#EEF0FF</Color>
+    <Color x:Key="AccentSubtleDark">#292D50</Color>
+    <Color x:Key="AccentSoftLight">#E1E5FF</Color>
+    <Color x:Key="AccentSoftDark">#353B66</Color>
+    <Color x:Key="AccentTextLight">#4F46C8</Color>
+    <Color x:Key="AccentTextDark">#BBB8FF</Color>
+    <Color x:Key="AccentOutlineLight">#A7A2EF</Color>
+    <Color x:Key="AccentOutlineDark">#817BE0</Color>
+    <Color x:Key="AccentSelectedLight">#5147CF</Color>
+    <Color x:Key="AccentSelectedDark">#5147CF</Color>
+    <Color x:Key="HeroBackground">#363088</Color>
+    <Color x:Key="HeroMuted">#E1DEFF</Color>
     <OnPlatform x:Key="PagePadding" x:TypeArguments="Thickness" Default="16"><On Platform="WinUI" Value="28" /></OnPlatform>
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}" /></Style>
     <Style TargetType="Label"><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="FontSize" Value="16" /><Setter Property="LineBreakMode" Value="WordWrap" /></Style>
     <Style x:Key="BaseButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" />
-        <Setter Property="CornerRadius" Value="10" /><Setter Property="Padding" Value="18,12" />
+        <Setter Property="CornerRadius" Value="14" /><Setter Property="Padding" Value="18,12" />
         <Setter Property="FontSize" Value="15" /><Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="MinimumHeightRequest" Value="48" /><Setter Property="MinimumWidthRequest" Value="44" />
         <Setter Property="BorderWidth" Value="1" /><Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" />
@@ -37,15 +39,17 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList><VisualStateGroup x:Name="CommonStates">
                 <VisualState x:Name="Normal" />
-                <VisualState x:Name="Focused" />
-                <VisualState x:Name="PointerOver" />
-                <VisualState x:Name="Pressed" />
+                <VisualState x:Name="Focused"><VisualState.Setters><Setter Property="BorderWidth" Value="3" /><Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}" /></VisualState.Setters></VisualState>
+                <VisualState x:Name="PointerOver"><VisualState.Setters><Setter Property="Opacity" Value="0.85" /></VisualState.Setters></VisualState>
+                <VisualState x:Name="Pressed"><VisualState.Setters><Setter Property="Opacity" Value="0.7" /></VisualState.Setters></VisualState>
                 <VisualState x:Name="Disabled"><VisualState.Setters><Setter Property="Opacity" Value="0.45" /></VisualState.Setters></VisualState>
             </VisualStateGroup></VisualStateGroupList>
         </Setter>
     </Style>
     <Style TargetType="Button" BasedOn="{StaticResource BaseButton}" />
-    <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSoftLight}, Dark={StaticResource AccentSoftDark}}" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /></Style>
+    <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{StaticResource AccentSelectedLight}" /><Setter Property="TextColor" Value="White" /><Setter Property="BorderColor" Value="Transparent" /></Style>
+    <Style x:Key="Eyebrow" TargetType="Label"><Setter Property="FontSize" Value="12" /><Setter Property="FontAttributes" Value="Bold" /><Setter Property="CharacterSpacing" Value="1.8" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /></Style>
+    <Style x:Key="StatNumber" TargetType="Label"><Setter Property="FontSize" Value="28" /><Setter Property="FontAttributes" Value="Bold" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /></Style>
     <Style x:Key="QuietButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" /><Setter Property="BorderWidth" Value="1" /><Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" /></Style>
     <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FEE2E2, Dark=#7F1D1D}" /><Setter Property="TextColor" Value="{AppThemeBinding Light=#EF4444, Dark=#FCA5A5}" /></Style>
     <Style TargetType="Entry" ApplyToDerivedTypes="True"><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="MinimumHeightRequest" Value="46" /><Setter Property="FontSize" Value="16" /></Style>
@@ -53,21 +57,21 @@
     <Style TargetType="Editor"><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="MinimumHeightRequest" Value="46" /><Setter Property="FontSize" Value="16" /></Style>
     <Style TargetType="SearchBar"><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="CancelButtonColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /><Setter Property="FontSize" Value="16" /></Style>
     <Style TargetType="ActivityIndicator"><Setter Property="Color" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /></Style>
-    <Style TargetType="ProgressBar"><Setter Property="ProgressColor" Value="{AppThemeBinding Light=#4ADE80, Dark=#22C55E}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" /></Style>
+    <Style TargetType="ProgressBar"><Setter Property="ProgressColor" Value="{AppThemeBinding Light={StaticResource AccentSelectedLight}, Dark={StaticResource AccentTextDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" /><Setter Property="HeightRequest" Value="6" /></Style>
     <Style x:Key="Card" TargetType="Border">
         <Setter Property="Padding">
             <OnPlatform x:TypeArguments="Thickness" Default="16">
                 <On Platform="WinUI" Value="20" />
             </OnPlatform>
         </Setter>
-        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
     </Style>
     <Style x:Key="PageHeading" TargetType="Label">
         <Setter Property="FontSize">
-            <OnPlatform x:TypeArguments="x:Double" Default="22">
-                <On Platform="WinUI" Value="26" />
+            <OnPlatform x:TypeArguments="x:Double" Default="28">
+                <On Platform="WinUI" Value="34" />
             </OnPlatform>
         </Setter>
         <Setter Property="FontAttributes" Value="Bold" />
@@ -150,13 +154,16 @@
         </Setter>
     </Style>
     <DataTemplate x:Key="NamedRowTemplate" x:DataType="vm:NamedRow">
-        <Border Style="{StaticResource Card}" Padding="8">
+        <Border Style="{StaticResource Card}" Padding="8" MinimumHeightRequest="174">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
-                    <Button Grid.RowSpan="2" Command="{Binding OpenCommand}" Style="{StaticResource CardOpenButton}"
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                    <Button Grid.RowSpan="3" Command="{Binding OpenCommand}" Style="{StaticResource CardOpenButton}"
                             SemanticProperties.Description="{Binding Name}" ToolTipProperties.Text="{DynamicResource L10n.Open}" AutomationId="NamedRowOpenButton" />
-                    <Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" Margin="12,12,12,0" InputTransparent="True" />
-                    <Label Grid.Row="1" Text="{Binding Summary}" Style="{StaticResource MutedText}" Margin="12,0,12,12" InputTransparent="True" />
+                    <Border Margin="12,12,0,0" Padding="10" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" HorizontalOptions="Start" InputTransparent="True">
+                        <Image Source="study_stack.png" WidthRequest="24" HeightRequest="24" />
+                    </Border>
+                    <Label Grid.Row="1" Text="{Binding Name}" Style="{StaticResource SectionHeading}" Margin="12,0,8,0" InputTransparent="True" />
+                    <Label Grid.Row="2" Text="{Binding Summary}" Style="{StaticResource MutedText}" Margin="12,0,12,12" InputTransparent="True" />
                 </Grid>
                 <Button Grid.Column="1" Command="{Binding MenuCommand}" IsVisible="{Binding HasMenu}" Margin="4,8"
                         Style="{StaticResource ActionMenuButton}" AutomationId="NamedRowActionsButton" />
