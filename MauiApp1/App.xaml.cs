@@ -21,6 +21,7 @@ public partial class App : Application
         ApplyLanguageResources();
         localization.LanguageChanged += OnLanguageChanged;
         ViewModels.SettingsViewModel.ApplyTheme(preferences.Get("vocabmate.theme", preferences.Get("studymate.theme", 0)));
+        RequestedThemeChanged += (_, _) => SystemBarAppearance.Apply();
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
@@ -31,6 +32,7 @@ public partial class App : Application
         window.MinimumHeight = 500;
 #endif
         window.Stopped += OnStopped;
+        window.Activated += (_, _) => SystemBarAppearance.Apply();
         window.Resumed += OnResumed;
         window.Destroying += OnStopped;
         return window;

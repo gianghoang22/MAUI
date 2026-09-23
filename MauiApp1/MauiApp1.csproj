@@ -33,14 +33,16 @@
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<AndroidManifestOverlay Include="PlatformConfiguration\AndroidManifest.xml" />
+		<AndroidResource Remove="Platforms\Android\Resources\values\colors.xml" />
+		<AndroidResource Include="PlatformConfiguration\AndroidColors.xml" LogicalName="values/colors.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-        <MauiIcon Include="Assets\Brand\appicon.svg" ForegroundFile="Assets\Brand\appiconfg.svg" Color="#5147CF" />
+        <MauiIcon Include="Assets\Brand\appicon.svg" ForegroundFile="Assets\Brand\appiconfg.svg" Color="#29332C" />
 
 		<!-- Splash Screen -->
-        <MauiSplashScreen Include="Assets\Brand\splash.svg" Color="#5147CF" BaseSize="128,128" />
+        <MauiSplashScreen Include="Assets\Brand\splash.svg" Color="#29332C" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

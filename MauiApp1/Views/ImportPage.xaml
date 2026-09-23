@@ -10,8 +10,20 @@
                     <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" AutomationId="ImportActionsButton" />
                 </Grid>
                 <Label Text="{DynamicResource L10n.VImportInstructions}" Style="{StaticResource MutedText}" />
-                <Label Text="{Binding SheetName}" FontAttributes="Bold" />
-                <Label Text="{Binding Summary}" Style="{StaticResource SectionHeading}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="{DynamicResource L10n.VChooseFile}" Style="{StaticResource SectionHeading}" />
+                        <Button Text="{DynamicResource L10n.VChooseFile}" Command="{Binding ChooseCommand}" Style="{StaticResource QuietButton}" AutomationId="ChooseWorkbookButton" />
+                        <Button Text="{DynamicResource L10n.VExcelTemplate}" Command="{Binding TemplateCommand}" Style="{StaticResource QuietButton}" AutomationId="WorkbookTemplateButton" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource InsetCard}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding SheetName}" FontFamily="OpenSansSemibold" LineBreakMode="CharacterWrap" />
+                        <Label Text="{Binding Summary}" Style="{StaticResource MutedText}" />
+                        <Button Text="{DynamicResource L10n.VImportAction}" Command="{Binding ImportCommand}" IsEnabled="{Binding CanImport}" Style="{StaticResource PrimaryButton}" AutomationId="ConfirmImportButton" />
+                    </VerticalStackLayout>
+                </Border>
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
             </VerticalStackLayout>
         </controls:CollectionWorkspace.Form>
@@ -21,7 +33,7 @@
                     <DataTemplate x:DataType="vm:ImportRow">
                         <Border Style="{StaticResource Card}" Margin="0,0,0,16">
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding RowNumber}" FontAttributes="Bold" />
+                                <Label Text="{Binding RowNumber}" Style="{StaticResource Eyebrow}" />
                                 <Label Text="{Binding Vietnamese}" MaxLines="3" LineBreakMode="TailTruncation" />
                                 <Label Text="{Binding English}" MaxLines="3" LineBreakMode="TailTruncation" />
                                 <Label Text="{Binding Status}" Style="{StaticResource MutedText}" />

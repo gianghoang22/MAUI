@@ -8,7 +8,7 @@
 2. Chọn project `MauiApp1`, target **Windows Machine** hoặc Android emulator/device.
 3. Chạy Debug. App hiển thị tên **VocabMate**; giữ namespace/project cũ để không đổi cấu trúc không cần thiết.
 4. Tạo lớp, tạo bộ từ, bấm **Import Excel** và dùng `Samples/VocabMate-template.xlsx`.
-5. Trong màn nhập, mở **... → Chọn file**, kiểm tra preview rồi chọn thao tác nhập trong cùng menu. Chọn chế độ, chiều học và bấm **Bắt đầu học** ngay trong bộ từ.
+5. Trong màn nhập, bấm **Chọn file**, kiểm tra preview rồi bấm **Nhập**; tải file mẫu bằng nút riêng. Chọn chế độ, chiều học và bấm **Bắt đầu học** ngay trong bộ từ.
 
 Project hiện dùng **.NET 10**, target **Android + Windows**; chưa cấu hình/kiểm thử iOS.
 
@@ -44,19 +44,22 @@ dotnet run
 - UI Anh/Việt, theme sáng/tối/hệ thống, giữ lựa chọn sau khi khởi động lại.
 - File Excel mẫu và phát âm bằng giọng tiếng Anh của OS; đã bỏ nút xuất/chia sẻ bộ từ.
 - Sao đánh dấu đã thuộc, học riêng nhóm chưa thuộc/đã thuộc/tất cả; tiếp tục ngay trong bộ từ hoặc sau mỗi lượt.
-- Flashcard lật hai mặt bằng nhấn thẻ hoặc nút **Lật thẻ**; bấm **Đã nhớ/Chưa nhớ** một lần rồi tự sang thẻ tiếp theo. Windows dùng phép chiếu 3D để lật hai chiều, tôn trọng cài đặt giảm chuyển động; Android giữ animation xoay thẻ.
-- Đổi chế độ, chiều học và nhóm từ ngay trong màn học. Giao diện trắng chủ đạo, xanh rất nhạt làm điểm nhấn, bề mặt màu đặc và viền mảnh; giữ animation lật thẻ phục vụ thao tác học.
+- Flashcard lật hai mặt bằng nhấn thẻ hoặc nút **Lật thẻ**; bấm **Đã nhớ/Chưa nhớ** một lần rồi tự sang thẻ tiếp theo. Windows dùng phép chiếu 3D, Android dùng animation xoay thẻ; cả hai tôn trọng cài đặt tắt chuyển động của hệ thống.
+- Đổi chế độ, chiều học và nhóm từ ngay trong màn học. Giao diện ngà / than olive, điểm nhấn đồng trầm, bề mặt màu đặc và viền mảnh; giữ animation lật thẻ phục vụ thao tác học.
 
 ## Theme và spacing
 
-- Theme sáng dùng nền/trang/thẻ trắng, input trắng ngả xám và nút xanh rất nhạt. Theme tối vẫn có sẵn, dùng màu đặc thay cho hiệu ứng kính. Không tự đổi lựa chọn theme đã lưu của người dùng.
-- Lề ngoài 20–32 DIP tùy màn hình, khoảng cách giữa vùng 20–28 DIP, padding thẻ 20 DIP; ô nhập và nút có khoảng cách riêng. Flashcard giữ padding 32 DIP và chức năng lật hai mặt.
-- Palette và các style dùng chung nằm trong `MauiApp1/Themes/StudyTheme.xaml`.
-- Menu action, thông báo, xác nhận và nhập tên dùng popup phủ trên trang hiện tại, không điều hướng sang trang modal. Lớp phủ bán trong suốt làm dịu trang phía sau nhưng vẫn nhìn thấy nội dung; bề mặt dialog giữ màu đặc theo theme sáng/tối. Menu rộng tối đa 360 DIP, form/xác nhận 400 DIP; padding 12–16 DIP, cỡ chữ 13–14 DIP và tiêu đề 17–18 DIP theo vùng hiển thị, vẫn giữ font scaling/DPI của hệ thống. Nút Windows cao tối thiểu 36 DIP, Android 44 DIP; nội dung dài cuộn riêng và nút Hủy luôn ở cuối. Xóa tách riêng màu đỏ, vẫn cần xác nhận. Bấm ngoài dialog, Escape (Windows) hoặc Back (Android) để hủy; Tab/Shift+Tab, Enter/Space và Enter lưu tên vẫn được hỗ trợ.
+- Phong cách quiet luxury: nền ngà, chữ than olive, điểm nhấn đồng trầm; không gradient, kính mờ hay hiệu ứng trang trí. Theme tối dùng bề mặt than ấm; giữ lựa chọn sáng/tối/hệ thống đã lưu.
+- Typography Open Sans có sẵn, phân cấp tiêu đề / nội dung / nhãn phụ nhất quán, hỗ trợ tiếng Việt và font scaling. Nút tối thiểu 48 DIP, ô nhập và picker tối thiểu 52 DIP; focus, hover, pressed và disabled có phản hồi riêng.
+- Lề ngoài 20 / 28 / 40 DIP theo chiều rộng, thẻ bo 14 DIP, nút bo 10 DIP. Nội dung dashboard/workspace giới hạn 1360 DIP. Trên màn rộng, banner học và thống kê nằm cạnh nhau để đưa danh sách lên cao hơn.
+- Palette và style dùng chung: `MauiApp1/Themes/StudyTheme.xaml`. Màu Android native: `MauiApp1/PlatformConfiguration/AndroidColors.xml`, được khai báo trong project thay cho màu mặc định của scaffold.
+- Popup rộng tối đa 400 DIP (menu) / 460 DIP (form, xác nhận), padding 20–24 DIP. Nút tối thiểu 48 DIP trên cả hai nền tảng; nội dung dài cuộn riêng, nút Hủy nằm ngoài vùng cuộn. Xóa có màu cảnh báo và xác nhận riêng; giữ Escape, Back, Tab và Enter.
+- Màn sửa thẻ có nút **Lưu thẻ** trực tiếp. Màn nhập có nút chọn file, lấy mẫu, xác nhận nhập; không buộc người dùng tìm thao tác chính trong menu.
+- Quy tắc thiết kế và checklist kiểm tra: `DESIGN.md`. Test `DesignSystemTests` kiểm tra breakpoint, touch target và độ tương phản của các cặp màu chữ/bề mặt trong cả hai theme.
 
 ## Windows: bố cục và bàn phím
 
-- Thư viện, lớp, bộ từ và import dùng form bên trái, danh sách bên phải khi vùng trang rộng từ 900 DIP. Form chiếm khoảng 30% (280–400 DIP), danh sách dùng phần còn lại. Cửa sổ hẹp chuyển thành hai vùng trên/dưới cuộn độc lập; Android vẫn cuộn form cùng danh sách.
+- Lớp, bộ từ và import dùng form bên trái (36%), danh sách bên phải (64%) khi vùng trang đạt ít nhất 1000 × 560 DIP. Cửa sổ hẹp hoặc thấp dùng một luồng cuộn chung, tránh form bị nhốt trong vùng cuộn nhỏ. Quy tắc này áp dụng cả Windows và Android tablet; điện thoại dùng một cột.
 - `Tab` / `Shift+Tab`: di chuyển giữa các điều khiển; `Enter` / `Space`: kích hoạt nút đang focus. Game ghép cặp cũng dùng Tab rồi Enter để chọn từng vế.
 - Ô tạo lớp/bộ từ: `Enter` để tạo. Sửa thẻ: `Enter` ở ô tiếng Việt chuyển sang tiếng Anh; `Enter` ở ô tiếng Anh lưu thẻ.
 - Trắc nghiệm: `1`–`4` chọn theo thứ tự trái sang phải, trên xuống dưới; hỗ trợ cả bàn phím số. Flashcard ở cả hai mặt: `1` đã nhớ, `2` chưa nhớ.

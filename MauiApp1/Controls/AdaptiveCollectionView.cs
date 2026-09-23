@@ -62,7 +62,7 @@ public sealed class AdaptiveCollectionView : CollectionView
     private void UpdateRows()
     {
         if (TileTemplate is null || Width <= 0) return;
-        var columns = Math.Clamp((int)((Width + 16) / 296), 1, 3);
+        var columns = LayoutMetrics.TileColumns(Width);
         var items = Source?.Cast<object>().ToList() ?? [];
         var desired = new List<TileRow>();
         for (var offset = 0; offset < items.Count; offset += columns)

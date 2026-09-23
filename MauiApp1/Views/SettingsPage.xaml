@@ -2,34 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels" x:Class="MauiApp1.Views.SettingsPage" Shell.NavBarIsVisible="False" x:DataType="vm:SettingsViewModel" Title="{DynamicResource L10n.SettingsTitle}">
     <ScrollView>
-        <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="24" MaximumWidthRequest="900">
-            <Label Text="{DynamicResource L10n.VSettingsHeading}" Style="{StaticResource PageHeading}" />
-            <Label Text="{DynamicResource L10n.VSettingsIntro}" Style="{StaticResource MutedText}" />
+        <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="28" MaximumWidthRequest="1080">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="VocabMate" Style="{StaticResource Eyebrow}" />
+                <Label Text="{DynamicResource L10n.VSettingsHeading}" Style="{StaticResource PageHeading}" />
+                <Label Text="{DynamicResource L10n.VSettingsIntro}" Style="{StaticResource MutedText}" />
+            </VerticalStackLayout>
             <controls:AdaptiveColumns>
-            <Border Style="{StaticResource Card}" VerticalOptions="Start">
-                <VerticalStackLayout Spacing="16">
-                    <Label Text="{DynamicResource L10n.Language}" Style="{StaticResource SectionHeading}" />
-                    <Picker Title="{DynamicResource L10n.ChooseLanguage}" ItemsSource="{Binding Languages}" SelectedIndex="{Binding SelectedLanguage}" AutomationId="LanguagePicker" SemanticProperties.Description="{DynamicResource L10n.LanguageDescription}" />
-                    <Label Text="{DynamicResource L10n.LanguageHint}" Style="{StaticResource MutedText}" />
-                </VerticalStackLayout>
-            </Border>
-            <Border Style="{StaticResource Card}" VerticalOptions="Start">
-                <VerticalStackLayout Spacing="16">
-                    <Label Text="{DynamicResource L10n.Appearance}" Style="{StaticResource SectionHeading}" />
-                    <Picker Title="{DynamicResource L10n.ChooseTheme}" ItemsSource="{Binding Themes}" SelectedIndex="{Binding SelectedTheme}" AutomationId="ThemePicker" />
-                </VerticalStackLayout>
-            </Border>
-            <Border Style="{StaticResource Card}" VerticalOptions="Start">
+                <Border Style="{StaticResource Card}" VerticalOptions="Start">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="01" Style="{StaticResource Eyebrow}" AutomationProperties.IsInAccessibleTree="False" />
+                        <Label Text="{DynamicResource L10n.Language}" Style="{StaticResource SectionHeading}" />
+                        <Picker Title="{DynamicResource L10n.ChooseLanguage}" ItemsSource="{Binding Languages}" SelectedIndex="{Binding SelectedLanguage}" AutomationId="LanguagePicker" SemanticProperties.Description="{DynamicResource L10n.LanguageDescription}" />
+                        <Label Text="{DynamicResource L10n.LanguageHint}" Style="{StaticResource MutedText}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" VerticalOptions="Start">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="02" Style="{StaticResource Eyebrow}" AutomationProperties.IsInAccessibleTree="False" />
+                        <Label Text="{DynamicResource L10n.Appearance}" Style="{StaticResource SectionHeading}" />
+                        <Picker Title="{DynamicResource L10n.ChooseTheme}" ItemsSource="{Binding Themes}" SelectedIndex="{Binding SelectedTheme}" AutomationId="ThemePicker" SemanticProperties.Description="{DynamicResource L10n.Appearance}" />
+                        <Border Style="{StaticResource InsetCard}" Padding="16">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="VocabMate" FontFamily="OpenSansSemibold" />
+                                <Label Text="{DynamicResource L10n.VBrandTagline}" Style="{StaticResource MutedText}" />
+                                <BoxView HeightRequest="3" WidthRequest="40" HorizontalOptions="Start" Color="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" AutomationProperties.IsInAccessibleTree="False" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+            </controls:AdaptiveColumns>
+            <Border Style="{StaticResource InsetCard}">
                 <VerticalStackLayout Spacing="16">
                     <Label Text="{DynamicResource L10n.DeviceDataHeading}" Style="{StaticResource SectionHeading}" />
                     <Label Text="{DynamicResource L10n.VDataHint}" Style="{StaticResource MutedText}" />
-                    <Label Text="{Binding DataLocation}" FontSize="12" LineBreakMode="CharacterWrap" />
+                    <Label Text="{Binding DataLocation}" Style="{StaticResource MutedText}" FontSize="12" LineBreakMode="CharacterWrap" />
                     <Label Text="{DynamicResource L10n.PrivacyHint}" Style="{StaticResource MutedText}" />
                 </VerticalStackLayout>
             </Border>
-            </controls:AdaptiveColumns>
-            <Label Text="VocabMate · 1.0" Style="{StaticResource SectionHeading}" />
-            <Label Text="{DynamicResource L10n.VAbout}" Style="{StaticResource MutedText}" />
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" Padding="0,8">
+                <Image Source="brand_mark.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Start" AutomationProperties.IsInAccessibleTree="False" />
+                <VerticalStackLayout Grid.Column="1" Spacing="8">
+                    <Label Text="VocabMate &#xB7; 1.0" Style="{StaticResource SectionHeading}" />
+                    <Label Text="{DynamicResource L10n.VAbout}" Style="{StaticResource MutedText}" />
+                </VerticalStackLayout>
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

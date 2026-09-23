@@ -99,11 +99,11 @@ public partial class InteractionDialog : Microsoft.Maui.Controls.ContentView
         try
         {
             var compact = DialogHost.Width < 600 || DialogHost.Height < 550;
-            var scale = compact ? 0.93 : 1.0;
+            var scale = 1.0;
             var inset = compact ? 16 : 24;
-            var padding = compact ? 12 : 16;
-            var gap = compact ? 10 : 12;
-            var width = Math.Min(isPrompt || hasAccept ? 400 : 360, Math.Max(0, DialogHost.Width - inset * 2));
+            var padding = compact ? 20 : 24;
+            var gap = 16;
+            var width = Math.Min(isPrompt || hasAccept ? 460 : 400, Math.Max(0, DialogHost.Width - inset * 2));
             DialogSurface.WidthRequest = width;
             DialogSurface.Margin = inset;
             DialogSurface.Padding = padding;

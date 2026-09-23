@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\MauiApp1\Controls\LayoutMetrics.cs" Link="Controls\LayoutMetrics.cs" />
+    <None Include="..\MauiApp1\Themes\StudyTheme.xaml" Link="Design\StudyTheme.xaml" CopyToOutputDirectory="PreserveNewest" />
     <Compile Include="..\MauiApp1\Models\*.cs" LinkBase="Models" />
     <Compile Include="..\MauiApp1\Services\JsonVocabularyRepository.cs" Link="Services\JsonVocabularyRepository.cs" />
     <Compile Include="..\MauiApp1\Services\IVocabularyRepository.cs" Link="Services\IVocabularyRepository.cs" />

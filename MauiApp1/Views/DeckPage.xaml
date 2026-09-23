@@ -16,19 +16,22 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowDetails}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VDeckName}" FontAttributes="Bold" />
-                        <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" />
-                        <Editor IsReadOnly="{Binding IsBusy}" Text="{Binding Description}" MaxLength="500" HeightRequest="70" Placeholder="{DynamicResource L10n.VDescription}" />
+                        <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" SemanticProperties.Description="{DynamicResource L10n.VDeckName}" />
+                        <Label Text="{DynamicResource L10n.VDescription}" Style="{StaticResource MutedText}" />
+                        <Editor IsReadOnly="{Binding IsBusy}" Text="{Binding Description}" MaxLength="500" MinimumHeightRequest="96" AutoSize="TextChanges" Placeholder="{DynamicResource L10n.VDescription}" SemanticProperties.Description="{DynamicResource L10n.VDescription}" />
                         <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
                             <Button Text="{DynamicResource L10n.VSave}" Command="{Binding SaveCommand}" Margin="4" AutomationId="SaveDeckButton" />
                             <Button Text="{DynamicResource L10n.VDeleteDeck}" Command="{Binding DeleteCommand}" Margin="4" Style="{StaticResource DangerButton}" AutomationId="DeleteDeckButton" />
                         </FlexLayout>
                     </VerticalStackLayout>
                 </Border>
-                <Border Style="{StaticResource Card}">
+                <Border Style="{StaticResource InsetCard}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
-                        <Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" AutomationId="LearningModePicker" />
-                        <Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" AutomationId="DirectionPicker" />
+                        <Label Text="{DynamicResource L10n.VChooseMode}" Style="{StaticResource MutedText}" />
+                        <Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" SemanticProperties.Description="{DynamicResource L10n.VChooseMode}" AutomationId="LearningModePicker" />
+                        <Label Text="{DynamicResource L10n.VChooseDirection}" Style="{StaticResource MutedText}" />
+                        <Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" SemanticProperties.Description="{DynamicResource L10n.VChooseDirection}" AutomationId="DirectionPicker" />
                         <Label Text="{DynamicResource L10n.VStudyFilter}" Style="{StaticResource MutedText}" />
                         <Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" AutomationId="LearningFilterPicker" />
                         <Label Text="{Binding StudyFilterSummary}" Style="{StaticResource MutedText}" />

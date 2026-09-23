@@ -9,9 +9,11 @@
         </Grid>
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="24" MaximumWidthRequest="800" HorizontalOptions="Fill" Padding="4,4,4,28">
-                <Label Text="{DynamicResource L10n.VStudyFocus}" Style="{StaticResource Eyebrow}" HorizontalTextAlignment="Center" />
-                <Button Text="{DynamicResource L10n.VCustomize}" Command="{Binding SetupCommand}" Style="{StaticResource QuietButton}"
-                        HorizontalOptions="Start" IsEnabled="{Binding IsNotBusy}" AutomationId="StudySetupButton" x:Name="StudySetupButton" />
+                <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Center">
+                    <Label Text="{DynamicResource L10n.VStudyFocus}" Style="{StaticResource Eyebrow}" Margin="0,8,16,8" />
+                    <Button Text="{DynamicResource L10n.VCustomize}" Command="{Binding SetupCommand}" Style="{StaticResource QuietButton}"
+                            IsEnabled="{Binding IsNotBusy}" AutomationId="StudySetupButton" x:Name="StudySetupButton" />
+                </FlexLayout>
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ShowSetup}">
                     <VerticalStackLayout Spacing="16">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
@@ -29,12 +31,14 @@
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
-                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="8">
-                    <Label Text="{Binding ModeName}" Style="{StaticResource SectionHeading}" />
-                    <Label Grid.Column="1" Text="{Binding Position}" VerticalOptions="Center" />
-                    <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DirectionName}" Style="{StaticResource MutedText}" />
-                </Grid>
-                <ProgressBar Progress="{Binding Progress}" />
+                <Border Style="{StaticResource InsetCard}" Padding="20">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="12">
+                        <Label Text="{Binding ModeName}" Style="{StaticResource SectionHeading}" />
+                        <Label Grid.Column="1" Text="{Binding Position}" Style="{StaticResource Eyebrow}" VerticalOptions="Center" />
+                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DirectionName}" Style="{StaticResource MutedText}" />
+                        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Progress="{Binding Progress}" SemanticProperties.Description="{Binding Position}" />
+                    </Grid>
+                </Border>
                 <VerticalStackLayout Spacing="16" IsVisible="{Binding ShowQuestion}">
                     <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="End" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
                         <Button Text="{DynamicResource L10n.VSpeak}" Command="{Binding SpeakCommand}" Style="{StaticResource QuietButton}" Margin="4" AutomationId="SpeakButton" />
@@ -65,7 +69,7 @@
                         <VerticalStackLayout Grid.Column="1" BindableLayout.ItemsSource="{Binding MatchRight}" BindableLayout.ItemTemplate="{StaticResource MatchTemplate}" Spacing="16" />
                     </Grid>
                 </VerticalStackLayout>
-                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowResult}">
+                <Border Style="{StaticResource InsetCard}" IsVisible="{Binding ShowResult}">
                     <VerticalStackLayout Spacing="20" Padding="4">
                         <Label Text="{DynamicResource L10n.VSessionComplete}" Style="{StaticResource SectionHeading}" />
                         <Label Text="{Binding Score}" FontSize="32" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" />

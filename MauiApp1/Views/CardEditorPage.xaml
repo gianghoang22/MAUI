@@ -5,6 +5,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20" MaximumWidthRequest="900" HorizontalOptions="Fill">
             <Button Text="{DynamicResource L10n.VBack}" Command="{Binding BackCommand}" Style="{StaticResource QuietButton}" HorizontalOptions="Start" AutomationId="PageBackButton" />
+            <Label Text="{DynamicResource L10n.VCard}" Style="{StaticResource Eyebrow}" />
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <Label Text="{Binding DeckName}" Style="{StaticResource PageHeading}" />
                 <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" IsEnabled="{Binding IsNotBusy}" AutomationId="CardEditorActionsButton" />
@@ -18,7 +19,7 @@
                                               SemanticProperties.Description="{DynamicResource L10n.VVietnamese}">
                         <Entry.Behaviors><controls:RequiredTermBehavior x:Name="VietnameseValidation" /></Entry.Behaviors>
                     </controls:VocabularyEntry>
-                    <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource MutedText}">
+                    <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource ErrorText}">
                         <Label.Triggers><DataTrigger TargetType="Label" Binding="{Binding IsValid, Source={x:Reference VietnameseValidation}, x:DataType=controls:RequiredTermBehavior}" Value="True"><Setter Property="IsVisible" Value="False" /></DataTrigger></Label.Triggers>
                     </Label>
                     </VerticalStackLayout>
@@ -28,12 +29,13 @@
                                               SemanticProperties.Description="{DynamicResource L10n.VEnglish}">
                         <Entry.Behaviors><controls:RequiredTermBehavior x:Name="EnglishValidation" /></Entry.Behaviors>
                     </controls:VocabularyEntry>
-                    <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource MutedText}">
+                    <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource ErrorText}">
                         <Label.Triggers><DataTrigger TargetType="Label" Binding="{Binding IsValid, Source={x:Reference EnglishValidation}, x:DataType=controls:RequiredTermBehavior}" Value="True"><Setter Property="IsVisible" Value="False" /></DataTrigger></Label.Triggers>
                     </Label>
                     </VerticalStackLayout>
                 </controls:AdaptiveColumns>
             </Border>
+            <Button Text="{DynamicResource L10n.VSaveCard}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" Style="{StaticResource PrimaryButton}" AutomationId="SaveCardButton" />
             <Label Text="{Binding SaveStatus}" Style="{StaticResource MutedText}" />
         </VerticalStackLayout>
     </ScrollView>

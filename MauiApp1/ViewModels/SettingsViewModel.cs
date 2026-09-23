@@ -56,10 +56,14 @@ public sealed class SettingsViewModel : ViewModelBase
         }
     }
 
-    public static void ApplyTheme(int selected) => Application.Current!.UserAppTheme = selected switch
+    public static void ApplyTheme(int selected)
     {
-        1 => AppTheme.Light,
-        2 => AppTheme.Dark,
-        _ => AppTheme.Unspecified
-    };
+        Application.Current!.UserAppTheme = selected switch
+        {
+            1 => AppTheme.Light,
+            2 => AppTheme.Dark,
+            _ => AppTheme.Unspecified
+        };
+        SystemBarAppearance.Apply();
+    }
 }

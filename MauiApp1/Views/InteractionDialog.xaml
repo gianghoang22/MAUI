@@ -28,7 +28,7 @@
                             <controls:VocabularyEntry x:Name="PromptEntry" ReturnType="Done"
                                                       Completed="OnPromptCompleted" AutomationId="DialogInput" />
                         </Border>
-                        <VerticalStackLayout x:Name="ActionList" Spacing="6" IsVisible="False" />
+                        <VerticalStackLayout x:Name="ActionList" Spacing="8" IsVisible="False" />
                         <VerticalStackLayout x:Name="DestructiveActions" Spacing="12" IsVisible="False">
                             <BoxView HeightRequest="1"
                                      Color="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" />

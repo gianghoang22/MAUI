@@ -4,19 +4,19 @@
     <ContentView.ControlTemplate>
         <ControlTemplate>
             <Border x:Name="CardSurface" Style="{StaticResource Card}"
-                    Padding="{OnPlatform Default='24,28', WinUI='40'}"
-                    MinimumHeightRequest="{OnPlatform Default=260, WinUI=320}"
+                    Padding="{OnPlatform Default='24,32', WinUI='48'}"
+                    MinimumHeightRequest="{OnPlatform Default=280, WinUI=340}"
                     Stroke="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}">
                 <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="24">
                     <Label Text="{TemplateBinding FaceCaption}" Style="{StaticResource Eyebrow}" HorizontalTextAlignment="Center" />
                     <Label Grid.Row="1" Text="{TemplateBinding FaceText}"
-                           FontSize="{OnPlatform Default=28, WinUI=36}"
-                           FontAttributes="Bold" HorizontalTextAlignment="Center"
+                           FontSize="{OnPlatform Default=30, WinUI=40}"
+                           FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center"
                            VerticalOptions="Center" LineBreakMode="WordWrap" TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" AutomationId="QuestionText" />
                     <Label Grid.Row="2" Text="{TemplateBinding Answer}" IsVisible="{TemplateBinding ShowSecondaryAnswer}"
                            FontSize="{OnPlatform Default=18, WinUI=22}"
                            HorizontalTextAlignment="Center" LineBreakMode="WordWrap" AutomationId="AnswerText" />
-                    <BoxView Grid.Row="3" WidthRequest="40" HeightRequest="4" CornerRadius="2" HorizontalOptions="Center" Color="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}" />
+                    <BoxView Grid.Row="3" WidthRequest="48" HeightRequest="2" HorizontalOptions="Center" Color="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}" AutomationProperties.IsInAccessibleTree="False" />
                 </Grid>
             </Border>
         </ControlTemplate>

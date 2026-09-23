@@ -16,4 +16,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("import", typeof(ImportPage));
         Routing.RegisterRoute("learn", typeof(LearningPage));
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Services.SystemBarAppearance.Apply();
+    }
 }

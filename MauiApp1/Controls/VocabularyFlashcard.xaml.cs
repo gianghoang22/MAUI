@@ -125,6 +125,11 @@ public partial class VocabularyFlashcard : ContentView
 
 #if WINDOWS
     private static bool MotionEnabled => new Windows.UI.ViewManagement.UISettings().AnimationsEnabled;
+#elif ANDROID
+    private static bool MotionEnabled => OperatingSystem.IsAndroidVersionAtLeast(26)
+        ? Android.Animation.ValueAnimator.AreAnimatorsEnabled()
+        : Android.Provider.Settings.Global.GetFloat(Android.App.Application.Context.ContentResolver,
+            Android.Provider.Settings.Global.AnimatorDurationScale, 1) > 0;
 #else
     private static bool MotionEnabled => true;
 #endif

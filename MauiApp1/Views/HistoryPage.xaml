@@ -4,15 +4,16 @@
     <Grid Padding="{StaticResource PagePadding}" RowDefinitions="Auto,*" RowSpacing="24" MaximumWidthRequest="1000" HorizontalOptions="Fill">
         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
             <VerticalStackLayout Spacing="8">
+                <Label Text="{DynamicResource L10n.VHistory}" Style="{StaticResource Eyebrow}" />
                 <Label Text="{DynamicResource L10n.VHistoryHeading}" Style="{StaticResource PageHeading}" />
                 <Label Text="{DynamicResource L10n.VHistoryIntro}" Style="{StaticResource MutedText}" />
             </VerticalStackLayout>
             <Button Grid.Column="1" Command="{Binding MenuCommand}" Style="{StaticResource ActionMenuButton}" IsEnabled="{Binding IsNotBusy}" AutomationId="HistoryActionsButton" />
         </Grid>
         <ScrollView Grid.Row="1" IsVisible="{Binding IsEmpty}">
-            <Border Style="{StaticResource Card}" VerticalOptions="Start" Padding="28">
+            <Border Style="{StaticResource InsetCard}" VerticalOptions="Start" Padding="28">
                 <VerticalStackLayout Spacing="20">
-                    <Image Source="study_hero.png" HeightRequest="150" HorizontalOptions="Center" />
+                    <Image Source="study_stack.png" HeightRequest="56" WidthRequest="56" HorizontalOptions="Center" AutomationProperties.IsInAccessibleTree="False" />
                     <Label Text="{DynamicResource L10n.VHistoryEmpty}" Style="{StaticResource MutedText}" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
             </Border>
@@ -29,7 +30,9 @@
                                 <Label Text="{Binding Name}" Style="{StaticResource SectionHeading}" />
                                 <Button Grid.Column="1" Command="{Binding MenuCommand}" IsVisible="{Binding CanRetry}" Style="{StaticResource ActionMenuButton}" AutomationId="ResultActionsButton" />
                             </Grid>
-                            <Label Text="{Binding Summary}" />
+                            <Border Style="{StaticResource InsetCard}" Padding="16" StrokeThickness="0">
+                                <Label Text="{Binding Summary}" FontFamily="OpenSansSemibold" />
+                            </Border>
                             <Label Text="{Binding Details}" Style="{StaticResource MutedText}" />
                             <Label Text="{Binding WrongAnswers}" IsVisible="{Binding CanRetry}" />
                         </VerticalStackLayout>
