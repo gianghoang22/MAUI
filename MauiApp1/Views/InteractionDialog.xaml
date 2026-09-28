@@ -19,7 +19,7 @@
                        AutomationId="DialogTitle" />
                 <BoxView Grid.Row="1" HeightRequest="1"
                          Color="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" />
-                <ScrollView x:Name="DialogScroll" Grid.Row="2" MaximumHeightRequest="320" VerticalScrollBarVisibility="Default">
+                <ScrollView x:Name="DialogScroll" Grid.Row="2" MaximumHeightRequest="320">
                     <VerticalStackLayout x:Name="DialogBody" Spacing="12">
                         <Label x:Name="DialogMessage" IsVisible="False" AutomationId="DialogMessage" />
                         <Border x:Name="PromptField" IsVisible="False" StrokeShape="RoundRectangle 10" Padding="12,4"

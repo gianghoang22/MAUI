@@ -61,12 +61,28 @@ public sealed class DesignSystemTests
         Assert.True(Contrast(primaryText, colors["AccentSelected" + theme]) >= 4.5);
     }
 
-    [Fact]
-    public void HeroTextRemainsReadable()
+    [Theory]
+    [InlineData("Light")]
+    [InlineData("Dark")]
+    public void HeroTextRemainsReadable(string theme)
     {
         var colors = ReadColors();
-        Assert.True(Contrast(colors["HeroMuted"], colors["HeroBackground"]) >= 4.5);
-        Assert.True(Contrast("#FFFFFF", colors["HeroBackground"]) >= 4.5);
+        foreach (var foreground in new[] { "HeroText", "HeroMuted" })
+        {
+            var ratio = Contrast(colors[foreground + theme], colors["HeroBackground" + theme]);
+            Assert.True(ratio >= 4.5, $"{foreground}/HeroBackground ({theme}): {ratio:F2}:1");
+        }
+    }
+
+    [Fact]
+    public void LightReadingSurfacesStaySoftAndBright()
+    {
+        var colors = ReadColors();
+        foreach (var surface in new[] { "PageBackgroundLight", "SurfaceLight", "FieldLight", "HeroBackgroundLight" })
+        {
+            Assert.InRange(Luminance(colors[surface]), 0.78, 0.97);
+            Assert.True(Contrast(colors[surface], colors["PageBackgroundLight"]) < 1.2, surface);
+        }
     }
 
     [Fact]
@@ -84,6 +100,34 @@ public sealed class DesignSystemTests
                 (string?)element.Attribute("Property") == "MinimumHeightRequest");
             Assert.True(double.Parse(height.Attribute("Value")!.Value, CultureInfo.InvariantCulture) >= 48);
         }
+    }
+
+    [Theory]
+    [InlineData("ScrollView")]
+    [InlineData("CollectionView")]
+    public void ScrollIndicatorsAreHiddenWithoutDisablingScrolling(string target)
+    {
+        XNamespace maui = "http://schemas.microsoft.com/dotnet/2021/maui";
+        var style = ReadTheme().Root!.Elements(maui + "Style").Single(element =>
+            (string?)element.Attribute("TargetType") == target);
+        Assert.Equal("True", (string?)style.Attribute("ApplyToDerivedTypes"));
+        var setters = style.Elements(maui + "Setter").ToDictionary(
+            element => element.Attribute("Property")!.Value, element => element.Attribute("Value")!.Value);
+        Assert.Equal("Never", setters["VerticalScrollBarVisibility"]);
+        Assert.Equal("Never", setters["HorizontalScrollBarVisibility"]);
+        Assert.DoesNotContain("IsEnabled", setters.Keys);
+        Assert.DoesNotContain("Orientation", setters.Keys);
+        Assert.DoesNotContain("InputTransparent", setters.Keys);
+    }
+
+    [Fact]
+    public void DialogInheritsHiddenScrollIndicators()
+    {
+        XNamespace maui = "http://schemas.microsoft.com/dotnet/2021/maui";
+        var dialog = XDocument.Load(Path.Combine(AppContext.BaseDirectory, "Design", "InteractionDialog.xaml"));
+        var scroll = Assert.Single(dialog.Descendants(maui + "ScrollView"));
+        Assert.Null(scroll.Attribute("VerticalScrollBarVisibility"));
+        Assert.Null(scroll.Attribute("HorizontalScrollBarVisibility"));
     }
 
     private static XDocument ReadTheme() => XDocument.Load(Path.Combine(AppContext.BaseDirectory, "Design", "StudyTheme.xaml"));

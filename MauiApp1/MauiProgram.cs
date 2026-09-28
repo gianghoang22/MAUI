@@ -21,6 +21,7 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
         VocabularyEntryHandler.Configure();
+        EditorScrollBarHandler.Configure();
         builder.Services.AddSingleton<LocalizationService>();
         builder.Services.AddSingleton<IVocabularyRepository>(_ => new JsonVocabularyRepository(FileSystem.AppDataDirectory));
         builder.Services.AddSingleton<IUserInteraction, ShellUserInteraction>();

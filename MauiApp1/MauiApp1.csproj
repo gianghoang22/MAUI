@@ -39,10 +39,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-        <MauiIcon Include="Assets\Brand\appicon.svg" ForegroundFile="Assets\Brand\appiconfg.svg" Color="#29332C" />
+        <MauiIcon Include="Assets\Brand\appicon.svg" ForegroundFile="Assets\Brand\appiconfg.svg" Color="#3F7062" />
 
 		<!-- Splash Screen -->
-        <MauiSplashScreen Include="Assets\Brand\splash.svg" Color="#29332C" BaseSize="128,128" />
+        <MauiSplashScreen Include="Assets\Brand\splash.svg" Color="#F2F6F2" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

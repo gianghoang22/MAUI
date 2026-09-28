@@ -19,12 +19,12 @@
                         <Label Text="{DynamicResource L10n.VHomeIntro}" Style="{StaticResource MutedText}" />
                     </VerticalStackLayout>
                     <Grid x:Name="OverviewLayout" RowDefinitions="Auto,Auto" RowSpacing="16" ColumnSpacing="16">
-                    <Border x:Name="HeroSurface" BackgroundColor="{StaticResource HeroBackground}" Stroke="{StaticResource AccentOutlineLight}" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="24">
+                    <Border x:Name="HeroSurface" BackgroundColor="{AppThemeBinding Light={StaticResource HeroBackgroundLight}, Dark={StaticResource HeroBackgroundDark}}" Stroke="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="24">
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
                             <VerticalStackLayout Spacing="12" VerticalOptions="Center">
-                                <Label Text="{DynamicResource L10n.VDailyPractice}" Style="{StaticResource Eyebrow}" TextColor="{StaticResource HeroMuted}" />
-                                <Label x:Name="HeroHeading" Text="{DynamicResource L10n.VHeroHeading}" TextColor="White" FontSize="26" FontFamily="OpenSansSemibold" SemanticProperties.HeadingLevel="Level2" />
-                                <Label Text="{DynamicResource L10n.VHeroBody}" TextColor="{StaticResource HeroMuted}" FontSize="15" MaximumWidthRequest="520" HorizontalOptions="Start" />
+                                <Label Text="{DynamicResource L10n.VDailyPractice}" Style="{StaticResource Eyebrow}" TextColor="{AppThemeBinding Light={StaticResource HeroMutedLight}, Dark={StaticResource HeroMutedDark}}" />
+                                <Label x:Name="HeroHeading" Text="{DynamicResource L10n.VHeroHeading}" TextColor="{AppThemeBinding Light={StaticResource HeroTextLight}, Dark={StaticResource HeroTextDark}}" FontSize="26" FontFamily="OpenSansSemibold" SemanticProperties.HeadingLevel="Level2" />
+                                <Label Text="{DynamicResource L10n.VHeroBody}" TextColor="{AppThemeBinding Light={StaticResource HeroMutedLight}, Dark={StaticResource HeroMutedDark}}" FontSize="16" MaximumWidthRequest="520" HorizontalOptions="Start" />
                                 <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}" IsEnabled="{Binding IsNotBusy}"
                                         Style="{StaticResource HeroButton}" HorizontalOptions="Start" Margin="0,8,0,0" AutomationId="ResumeLearningButton" />
                             </VerticalStackLayout>

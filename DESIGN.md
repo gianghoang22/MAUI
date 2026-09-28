@@ -2,9 +2,9 @@
 
 ## Direction
 
-Quiet luxury for a focused, offline vocabulary workspace. Warm ivory, olive-charcoal and a restrained bronze accent replace the purple palette. Solid surfaces, fine borders and whitespace do the work; no gradients, blur, decorative motion or external font dependency.
+Sage Paper for a focused, offline vocabulary workspace. Soft off-white reading surfaces, pale sage panels and muted green actions replace the dark olive / bronze direction. The library banner is light in light mode instead of a dark block. Solid surfaces, fine borders and whitespace do the work; no gradients, blur, decorative motion or external font dependency. This aims for a calmer reading experience, not a guarantee against eye fatigue.
 
-The ui-ux-pro-max minimalism guidance informs the direction. Its initial Apple glass / marketing-page recommendation is intentionally not used: this is a Windows and Android learning tool, not a landing page.
+The ui-ux-pro-max education / LMS color guidance informs the direction, with lower saturation and verified text contrast. Its marketing-page pattern is intentionally not used: this is a Windows and Android learning tool, not a landing page. Existing system / light / dark preferences are preserved.
 
 ## Shared foundations
 
@@ -12,21 +12,23 @@ Source of truth: `MauiApp1/Themes/StudyTheme.xaml`.
 
 | Role | Light | Dark |
 | --- | --- | --- |
-| Page | `#F6F4EF` | `#181A18` |
-| Surface | `#FFFFFF` | `#232622` |
-| Field | `#EEECE6` | `#2C302A` |
-| Main text | `#252A25` | `#F3F1EA` |
-| Supporting text | `#616359` | `#BDBFB2` |
-| Bronze text | `#74603B` | `#D9C398` |
-| Primary action | `#303A30` | `#D9C398` |
+| Page | `#F2F6F2` | `#18231F` |
+| Surface | `#FAFBF6` | `#222F29` |
+| Field | `#E8F0EB` | `#2A3931` |
+| Main text | `#293D36` | `#E9F2EB` |
+| Supporting text | `#52675F` | `#B5C9BD` |
+| Sage text | `#356553` | `#A7D3B6` |
+| Primary action | `#3F7062` | `#A7D3B6` |
+| Library banner | `#DDEDE3` | `#243E31` |
 
 - Open Sans Regular / Semibold, already bundled; retain system text scaling.
-- Page headings: 30 DIP mobile, 38 DIP desktop; section headings: 17 / 19; body: 15; supporting text: 14.
+- Page headings: 30 DIP mobile, 38 DIP desktop; section headings: 17 / 19; body: 16; supporting text: 14.
 - Card radius: 14; button radius: 10; dialog radius: 16 DIP.
 - Buttons and popup actions: minimum 48 DIP; input fields / pickers / search: minimum 52 DIP.
 - Primary actions have a filled surface; secondary actions have an outline. Destructive actions remain visually separate and keep confirmation.
 - Both themes have explicit foreground/background pairs. Unit tests verify normal text contrast of at least 4.5:1 across the shared surfaces; this is not a substitute for a full accessibility audit.
 - Focus, pointer-over, pressed and disabled states remain available. Decorative artwork is excluded from the accessibility tree.
+- Scroll indicators are hidden on Windows and Android, including lists, dialogs, workspace panes and multiline editors. Mouse wheel, touchpad, touch and keyboard scrolling remain enabled; only the visual bars are suppressed. Shared styles also apply to derived collection controls.
 
 ## Adaptive layout
 
@@ -50,7 +52,7 @@ Source of truth: `MauiApp1/Controls/LayoutMetrics.cs`.
 - History: compact empty state and grouped result summary.
 - Settings: separate language / appearance cards, live theme sample and a distinct local-data section.
 - Dialogs: larger comfortable actions, more breathing room, separate destructive actions and scrollable body with persistent footer.
-- Brand SVGs, splash and Android native colors follow the same palette. Native colors live in tracked `PlatformConfiguration/AndroidColors.xml`, not the ignored platform scaffold.
+- Brand SVGs and Android native colors follow the same sage palette; the splash uses the light page background. Native colors live in tracked `PlatformConfiguration/AndroidColors.xml`, not the ignored platform scaffold.
 - Windows and Android flashcard motion honors the platform animation setting.
 
 ## Validation

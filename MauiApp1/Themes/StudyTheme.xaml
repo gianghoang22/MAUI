@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:vm="clr-namespace:MauiApp1.ViewModels">
-    <Color x:Key="PageBackgroundLight">#F6F4EF</Color>
-    <Color x:Key="PageBackgroundDark">#181A18</Color>
-    <Color x:Key="SurfaceLight">#FFFFFF</Color>
-    <Color x:Key="SurfaceDark">#232622</Color>
-    <Color x:Key="FieldLight">#EEECE6</Color>
-    <Color x:Key="FieldDark">#2C302A</Color>
-    <Color x:Key="OutlineLight">#DAD7CE</Color>
-    <Color x:Key="OutlineDark">#44483E</Color>
-    <Color x:Key="TextPrimaryLight">#252A25</Color>
-    <Color x:Key="TextPrimaryDark">#F3F1EA</Color>
-    <Color x:Key="TextMutedLight">#616359</Color>
-    <Color x:Key="TextMutedDark">#BDBFB2</Color>
-    <Color x:Key="AccentSubtleLight">#F1EDE4</Color>
-    <Color x:Key="AccentSubtleDark">#30332B</Color>
-    <Color x:Key="AccentSoftLight">#E8E0CF</Color>
-    <Color x:Key="AccentSoftDark">#414335</Color>
-    <Color x:Key="AccentTextLight">#74603B</Color>
-    <Color x:Key="AccentTextDark">#D9C398</Color>
-    <Color x:Key="AccentOutlineLight">#95805A</Color>
-    <Color x:Key="AccentOutlineDark">#B8A077</Color>
-    <Color x:Key="AccentSelectedLight">#303A30</Color>
-    <Color x:Key="AccentSelectedDark">#D9C398</Color>
-    <Color x:Key="HeroBackground">#29332C</Color>
-    <Color x:Key="HeroMuted">#DDD6C5</Color>
+    <Color x:Key="PageBackgroundLight">#F2F6F2</Color>
+    <Color x:Key="PageBackgroundDark">#18231F</Color>
+    <Color x:Key="SurfaceLight">#FAFBF6</Color>
+    <Color x:Key="SurfaceDark">#222F29</Color>
+    <Color x:Key="FieldLight">#E8F0EB</Color>
+    <Color x:Key="FieldDark">#2A3931</Color>
+    <Color x:Key="OutlineLight">#CCDAD2</Color>
+    <Color x:Key="OutlineDark">#455C4F</Color>
+    <Color x:Key="TextPrimaryLight">#293D36</Color>
+    <Color x:Key="TextPrimaryDark">#E9F2EB</Color>
+    <Color x:Key="TextMutedLight">#52675F</Color>
+    <Color x:Key="TextMutedDark">#B5C9BD</Color>
+    <Color x:Key="AccentSubtleLight">#E8F2EC</Color>
+    <Color x:Key="AccentSubtleDark">#293F33</Color>
+    <Color x:Key="AccentSoftLight">#DCECE2</Color>
+    <Color x:Key="AccentSoftDark">#354C3D</Color>
+    <Color x:Key="AccentTextLight">#356553</Color>
+    <Color x:Key="AccentTextDark">#A7D3B6</Color>
+    <Color x:Key="AccentOutlineLight">#648675</Color>
+    <Color x:Key="AccentOutlineDark">#8BB59B</Color>
+    <Color x:Key="AccentSelectedLight">#3F7062</Color>
+    <Color x:Key="AccentSelectedDark">#A7D3B6</Color>
+    <Color x:Key="HeroBackgroundLight">#DDEDE3</Color>
+    <Color x:Key="HeroBackgroundDark">#243E31</Color>
+    <Color x:Key="HeroTextLight">#294D40</Color>
+    <Color x:Key="HeroTextDark">#E9F2EB</Color>
+    <Color x:Key="HeroMutedLight">#4E685B</Color>
+    <Color x:Key="HeroMutedDark">#B9D0C1</Color>
     <Color x:Key="DangerTextLight">#9C3631</Color>
     <Color x:Key="DangerTextDark">#FFB4AB</Color>
     <Color x:Key="DangerSurfaceLight">#F9EDE9</Color>
     <Color x:Key="DangerSurfaceDark">#492C29</Color>
     <OnPlatform x:Key="PagePadding" x:TypeArguments="Thickness" Default="20,20,20,28"><On Platform="WinUI" Value="32,28,32,32" /></OnPlatform>
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True"><Setter Property="SafeAreaEdges" Value="Container" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}" /></Style>
-    <Style TargetType="ScrollView"><Setter Property="SafeAreaEdges" Value="SoftInput" /></Style>
-    <Style x:Key="BodyText" TargetType="Label"><Setter Property="FontFamily" Value="OpenSansRegular" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="FontSize" Value="15" /><Setter Property="LineBreakMode" Value="WordWrap" /></Style>
+    <Style TargetType="ScrollView" ApplyToDerivedTypes="True">
+        <Setter Property="SafeAreaEdges" Value="SoftInput" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+    </Style>
+    <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
+        <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+    </Style>
+    <Style x:Key="BodyText" TargetType="Label"><Setter Property="FontFamily" Value="OpenSansRegular" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="FontSize" Value="16" /><Setter Property="LineBreakMode" Value="WordWrap" /></Style>
     <Style TargetType="Label" BasedOn="{StaticResource BodyText}" />
     <Style x:Key="BaseButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" />
@@ -54,7 +66,7 @@
     </Style>
     <Style TargetType="Button" BasedOn="{StaticResource BaseButton}" />
     <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSelectedLight}, Dark={StaticResource AccentSelectedDark}}" /><Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark={StaticResource PageBackgroundDark}}" /><Setter Property="BorderColor" Value="Transparent" /></Style>
-    <Style x:Key="HeroButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="#F3EBDD" /><Setter Property="TextColor" Value="{StaticResource HeroBackground}" /><Setter Property="BorderColor" Value="{StaticResource HeroMuted}" /></Style>
+    <Style x:Key="HeroButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}" />
     <Style x:Key="Eyebrow" TargetType="Label" BasedOn="{StaticResource BodyText}"><Setter Property="FontSize" Value="11" /><Setter Property="FontFamily" Value="OpenSansSemibold" /><Setter Property="CharacterSpacing" Value="2" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /></Style>
     <Style x:Key="StatNumber" TargetType="Label" BasedOn="{StaticResource BodyText}"><Setter Property="FontSize" Value="30" /><Setter Property="FontFamily" Value="OpenSansSemibold" /></Style>
     <Style x:Key="QuietButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" /><Setter Property="BorderWidth" Value="1" /><Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" /></Style>

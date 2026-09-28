@@ -2,6 +2,10 @@
 
 Ứng dụng .NET MAUI học từ vựng Anh/Việt, lấy cảm hứng từ flashcards: **lớp local → bộ từ → thẻ → học và ôn lại**. Không cần tài khoản hoặc backend.
 
+## Kiểm thử và demo
+
+- `TEST_CASES_DEMO.md`: dữ liệu mẫu, test case thủ công có mức ưu tiên/kết quả mong đợi, kịch bản demo và đề xuất mở rộng chức năng.
+
 ## Chạy ngay
 
 1. Mở `MauiApp1.slnx` bằng Visual Studio có workload .NET MAUI.
