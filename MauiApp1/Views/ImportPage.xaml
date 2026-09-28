@@ -17,9 +17,20 @@
                         <Button Text="{DynamicResource L10n.VExcelTemplate}" Command="{Binding TemplateCommand}" Style="{StaticResource QuietButton}" AutomationId="WorkbookTemplateButton" />
                     </VerticalStackLayout>
                 </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasPreview}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{DynamicResource L10n.VImportLanguagesHint}" Style="{StaticResource MutedText}" />
+                        <Label Text="{DynamicResource L10n.VFirstLanguage}" Style="{StaticResource MutedText}" />
+                        <Entry Text="{Binding FirstLanguage}" MaxLength="80" SemanticProperties.Description="{DynamicResource L10n.VFirstLanguage}" AutomationId="ImportFirstLanguage" />
+                        <Label Text="{DynamicResource L10n.VSecondLanguage}" Style="{StaticResource MutedText}" />
+                        <Entry Text="{Binding SecondLanguage}" MaxLength="80" SemanticProperties.Description="{DynamicResource L10n.VSecondLanguage}" AutomationId="ImportSecondLanguage" />
+                        <Label Text="{Binding LanguageError}" Style="{StaticResource ErrorText}" />
+                    </VerticalStackLayout>
+                </Border>
                 <Border Style="{StaticResource InsetCard}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{Binding SheetName}" FontFamily="OpenSansSemibold" LineBreakMode="CharacterWrap" />
+                        <Label Text="{Binding PreviewLanguages}" Style="{StaticResource SectionHeading}" />
                         <Label Text="{Binding Summary}" Style="{StaticResource MutedText}" />
                         <Button Text="{DynamicResource L10n.VImportAction}" Command="{Binding ImportCommand}" IsEnabled="{Binding CanImport}" Style="{StaticResource PrimaryButton}" AutomationId="ConfirmImportButton" />
                     </VerticalStackLayout>

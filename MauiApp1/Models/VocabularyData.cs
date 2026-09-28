@@ -3,7 +3,11 @@ using System.Text.Json.Serialization;
 namespace MauiApp1.Models;
 
 public sealed record VocabularyClass(Guid Id, string Name);
-public sealed record VocabularyDeck(Guid Id, Guid ClassId, string Name, string Description);
+public sealed record VocabularyDeck(Guid Id, Guid ClassId, string Name, string Description)
+{
+    public string FirstLanguage { get; init; } = "vi";
+    public string SecondLanguage { get; init; } = "en";
+}
 public sealed record VocabularyCard(Guid Id, Guid DeckId, string Vietnamese, string English, bool IsStarred = false);
 public sealed record CardDraft(Guid CardId, Guid DeckId, bool IsNew, string Vietnamese, string English, DateTimeOffset UpdatedAt);
 public enum LearningMode { Flashcards, MultipleChoice, Written, Match }
@@ -19,6 +23,9 @@ public sealed record LearningSession(
     DateTimeOffset StartedAt, DateTimeOffset? FinishedAt)
 {
     public LearningFilter Filter { get; init; } = LearningFilter.All;
+    public List<string> CompletedPrompts { get; init; } = [];
+    public string FirstLanguage { get; init; } = "vi";
+    public string SecondLanguage { get; init; } = "en";
     [JsonIgnore] public bool IsComplete => FinishedAt.HasValue;
     [JsonIgnore] public bool IsAnswered => Attempts.Count > Index;
     [JsonIgnore] public int Correct => Mode == LearningMode.Match ? MatchedIds.Count : Attempts.Count(attempt => attempt.Correct);
@@ -26,7 +33,11 @@ public sealed record LearningSession(
 
 public sealed record LearningResult(Guid Id, Guid DeckId, string DeckName, LearningMode Mode,
     LearningDirection Direction, int Total, int Correct, int Mistakes, int Seconds,
-    DateTimeOffset FinishedAt, List<StudyQuestion> WrongQuestions);
+    DateTimeOffset FinishedAt, List<StudyQuestion> WrongQuestions)
+{
+    public string FirstLanguage { get; init; } = "vi";
+    public string SecondLanguage { get; init; } = "en";
+}
 
 public sealed class VocabularyData
 {

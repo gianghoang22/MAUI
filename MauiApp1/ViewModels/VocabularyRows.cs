@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using MauiApp1.Localization;
 using MauiApp1.Models;
+using MauiApp1.Services;
 
 namespace MauiApp1.ViewModels;
 
@@ -51,7 +52,7 @@ public sealed class ResultRow(LearningResult result, ICommand menuCommand, Local
     public string Name => result.DeckName;
     public string Summary => Localization.Format("VResultSummary", result.Correct, result.Total,
         Localization["VMode" + (int)result.Mode], result.FinishedAt.ToLocalTime().ToString("g", Localization.Culture));
-    public string Details => Localization.Format("VResultTime", result.Seconds, result.Mistakes);
+    public string Details => $"{VocabularyLanguages.Direction(result.FirstLanguage, result.SecondLanguage, result.Direction, Localization.LanguageCode)} · {Localization.Format("VResultTime", result.Seconds, result.Mistakes)}";
     public string WrongAnswers => string.Join(Environment.NewLine, result.WrongQuestions.Select(question => $"{question.Prompt} → {string.Join(" / ", question.AcceptedAnswers)}"));
     public bool CanRetry => result.WrongQuestions.Count > 0;
     public ICommand MenuCommand => menuCommand;

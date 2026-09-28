@@ -359,7 +359,7 @@
     <value>Tiếng Anh</value>
   </data>
   <data name="VSearchCards" xml:space="preserve">
-    <value>Tìm từ tiếng Anh hoặc tiếng Việt</value>
+    <value>Tìm nội dung ở một trong hai mặt</value>
   </data>
   <data name="VCardsEmpty" xml:space="preserve">
     <value>Chưa có từ phù hợp. Thêm từ hoặc import file Excel.</value>
@@ -392,7 +392,7 @@
     <value>Việt → Anh</value>
   </data>
   <data name="VSessionLimitHint" xml:space="preserve">
-    <value>Mỗi lượt tối đa 20 câu; ghép cặp tối đa 6 cặp. Từ trùng câu hỏi được gom nghĩa. Trắc nghiệm cần 3 đáp án sai phân biệt cho mỗi câu.</value>
+    <value>Mỗi lượt tối đa 20 câu; ghép cặp tối đa 6 cặp. Học nhóm tiếp theo không lặp từ trong cùng vòng; nhóm cuối có thể ít hơn. Từ trùng câu hỏi được gom nghĩa. Trắc nghiệm cần 3 đáp án sai phân biệt.</value>
   </data>
   <data name="VStart" xml:space="preserve">
     <value>Bắt đầu học</value>
@@ -416,7 +416,7 @@
     <value>Lưu và thoát</value>
   </data>
   <data name="VSpeak" xml:space="preserve">
-    <value>Nghe phát âm</value>
+    <value>Nghe câu hỏi</value>
   </data>
   <data name="VFlip" xml:space="preserve">
     <value>Lật thẻ</value>
@@ -443,7 +443,7 @@
     <value>Chưa đúng — xem đáp án và thử lại ở lượt ôn.</value>
   </data>
   <data name="VMatchHint" xml:space="preserve">
-    <value>Chọn một ô bên trái, rồi chọn nghĩa bên phải.</value>
+    <value>Chọn một ô ở bên bất kỳ, rồi chọn ô tương ứng ở bên còn lại. Bấm lại để bỏ chọn.</value>
   </data>
   <data name="VTryAgain" xml:space="preserve">
     <value>Chưa khớp. Chọn lại một cặp nhé.</value>
@@ -479,7 +479,7 @@
     <value>Từ vựng, bản nháp và kết quả lưu offline trong vocabmate.json. Dữ liệu StudyMate cũ không bị đổi hoặc xóa. Có thể xuất từng bộ từ ra Excel để sao lưu.</value>
   </data>
   <data name="VAbout" xml:space="preserve">
-    <value>VocabMate hoạt động local, không cần tài khoản. Phát âm dùng giọng tiếng Anh của hệ điều hành; chia sẻ và chọn file dùng giao diện của thiết bị.</value>
+    <value>VocabMate hoạt động local, không cần tài khoản. Phát âm dùng giọng tương ứng với ngôn ngữ của từng mặt trong hệ điều hành; chia sẻ và chọn file dùng giao diện của thiết bị.</value>
   </data>
   <data name="VImportExcel" xml:space="preserve">
     <value>Import Excel</value>
@@ -491,7 +491,7 @@
     <value>Từ bảng tính thành thẻ học</value>
   </data>
   <data name="VImportInstructions" xml:space="preserve">
-    <value>File .xlsx, sheet hiển thị đầu tiên, hai cột A/B. Dòng đầu: Tiếng Việt và English (được đảo thứ tự). Tối đa 2.000 dòng dữ liệu, 10 MB; không nhận công thức. Xem trước và sửa tất cả dòng lỗi trước khi nhập.</value>
+    <value>File .xlsx, sheet hiển thị đầu tiên, hai cột A/B. Dòng đầu là tên ngôn ngữ, ví dụ Japanese / English hoặc Tiếng Việt / English. Tối đa 2.000 dòng dữ liệu, 10 MB; không nhận công thức. Kiểm tra nhãn ngôn ngữ và sửa tất cả dòng lỗi trước khi nhập.</value>
   </data>
   <data name="VChooseFile" xml:space="preserve">
     <value>Chọn file .xlsx</value>
@@ -524,7 +524,7 @@
     <value>File vượt giới hạn: 10 MB, 2.000 dòng dữ liệu hoặc dung lượng giải nén an toàn.</value>
   </data>
   <data name="VHeadersInvalid" xml:space="preserve">
-    <value>Dòng đầu phải có hai tiêu đề Tiếng Việt/Vietnamese và Tiếng Anh/English trong cột A/B.</value>
+    <value>Dòng đầu phải có hai tên ngôn ngữ không trống ở cột A/B, mỗi tên tối đa 80 ký tự.</value>
   </data>
   <data name="VImportEmpty" xml:space="preserve">
     <value>File chưa có dòng từ vựng nào.</value>
@@ -581,7 +581,7 @@
     <value>Chưa có lượt học. Mở một bộ từ để bắt đầu.</value>
   </data>
   <data name="VVoiceUnavailable" xml:space="preserve">
-    <value>Thiết bị chưa có giọng tiếng Anh. Cài giọng trong cài đặt hệ điều hành để dùng phát âm.</value>
+    <value>Thiết bị chưa có giọng cho ngôn ngữ này. Cài giọng tương ứng trong hệ điều hành; bạn vẫn có thể tiếp tục học.</value>
   </data>
   <data name="VDeleteClass" xml:space="preserve">
     <value>Xóa lớp</value>
@@ -699,4 +699,14 @@
   <data name="VNoStudyMatches" xml:space="preserve"><value>Không có thẻ phù hợp. Chọn tất cả thẻ hoặc thêm thẻ vào bộ này.</value></data>
   <data name="VUseAllCards" xml:space="preserve"><value>Dùng tất cả thẻ</value></data>
   <data name="VPendingStudyFilterHint" xml:space="preserve"><value>Thiết lập chỉ áp dụng cho buổi học mới. Buổi học hiện tại không đổi cho đến khi bạn áp dụng và xác nhận. Bấm Hủy để bỏ thay đổi.</value></data>
+  <data name="VFirstLanguage" xml:space="preserve"><value>Ngôn ngữ mặt 1</value></data>
+  <data name="VSecondLanguage" xml:space="preserve"><value>Ngôn ngữ mặt 2</value></data>
+  <data name="VDeckLanguagesHint" xml:space="preserve"><value>Nhập tên hoặc mã ngôn ngữ, ví dụ Nhật / Anh hoặc ja / en. Bấm Lưu trước khi thêm thẻ hay bắt đầu học. Đổi nhãn không tự dịch nội dung.</value></data>
+  <data name="VImportLanguagesHint" xml:space="preserve"><value>Ngôn ngữ được lấy từ tiêu đề, không đoán từ nội dung. Kiểm tra hoặc sửa hai nhãn trước khi nhập. Bộ trống nhận cặp ngôn ngữ này; bộ có dữ liệu chỉ nhận cùng cặp, tự đảo mặt khi cần.</value></data>
+  <data name="VLanguageRequired" xml:space="preserve"><value>Nhập tên hoặc mã ngôn ngữ cho cả hai mặt, tối đa 80 ký tự mỗi tên.</value></data>
+  <data name="VLanguageMismatch" xml:space="preserve"><value>Cặp ngôn ngữ không khớp với bộ có dữ liệu hoặc bản nháp. Sửa nhãn theo đúng nội dung, hoặc nhập vào bộ trống khác.</value></data>
+  <data name="VNextBatch" xml:space="preserve"><value>Học nhóm từ tiếp theo</value></data>
+  <data name="VRestartRound" xml:space="preserve"><value>Học lại từ đầu</value></data>
+  <data name="VRoundComplete" xml:space="preserve"><value>Đã hết từ còn lại trong vòng học theo bộ lọc này. Chọn Học lại từ đầu hoặc đổi nhóm từ để ôn tiếp.</value></data>
+  <data name="VSpeakAnswer" xml:space="preserve"><value>Nghe đáp án</value></data>
 </root>

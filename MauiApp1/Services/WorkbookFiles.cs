@@ -5,7 +5,7 @@ namespace MauiApp1.Services;
 public interface IWorkbookFiles
 {
     Task<WorkbookPreview?> PickAsync();
-    Task ShareAsync(IEnumerable<VocabularyCard> cards);
+    Task ShareAsync(IEnumerable<VocabularyCard> cards, string firstLanguage = "vi", string secondLanguage = "en");
 }
 
 public sealed class WorkbookFiles(XlsxWorkbook workbook) : IWorkbookFiles
@@ -24,10 +24,10 @@ public sealed class WorkbookFiles(XlsxWorkbook workbook) : IWorkbookFiles
         return await workbook.ReadAsync(stream);
     }
 
-    public async Task ShareAsync(IEnumerable<VocabularyCard> cards)
+    public async Task ShareAsync(IEnumerable<VocabularyCard> cards, string firstLanguage = "vi", string secondLanguage = "en")
     {
         var path = Path.Combine(FileSystem.CacheDirectory, $"VocabMate-{Guid.NewGuid():N}.xlsx");
-        await using (var stream = File.Create(path)) workbook.Write(stream, cards);
+        await using (var stream = File.Create(path)) workbook.Write(stream, cards, firstLanguage, secondLanguage);
         await Share.Default.RequestAsync(new ShareFileRequest { Title = "VocabMate", File = new ShareFile(path) });
     }
 }

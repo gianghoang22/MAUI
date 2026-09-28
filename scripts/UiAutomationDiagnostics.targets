@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup Condition="'$(ApplicationId)' == 'com.vocabmate.uia20260928'">
+    <Compile Include="$(MSBuildThisFileDirectory)UiAutomationDiagnostics.cs" />
+  </ItemGroup>
+</Project>

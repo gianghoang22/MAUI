@@ -4,16 +4,19 @@ namespace MauiApp1.Services;
 
 public interface IPronunciation
 {
-    Task SpeakAsync(string english);
+    Task SpeakAsync(string text, string language);
 }
 
 public sealed class Pronunciation : IPronunciation
 {
-    public async Task SpeakAsync(string english)
+    public async Task SpeakAsync(string text, string language)
     {
         var locales = await TextToSpeech.Default.GetLocalesAsync();
-        var locale = locales.FirstOrDefault(item => item.Language.StartsWith("en", StringComparison.OrdinalIgnoreCase))
+        var canonical = VocabularyLanguages.Canonicalize(language);
+        var locale = locales.FirstOrDefault(item => item.Language.Equals(canonical, StringComparison.OrdinalIgnoreCase))
+            ?? locales.FirstOrDefault(item => item.Language.StartsWith(canonical + "-", StringComparison.OrdinalIgnoreCase) ||
+                item.Language.StartsWith(canonical + "_", StringComparison.OrdinalIgnoreCase))
             ?? throw new StudyException("VVoiceUnavailable");
-        await TextToSpeech.Default.SpeakAsync(english, new SpeechOptions { Locale = locale });
+        await TextToSpeech.Default.SpeakAsync(text, new SpeechOptions { Locale = locale });
     }
 }

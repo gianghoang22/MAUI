@@ -24,6 +24,9 @@
     <Compile Include="..\MauiApp1\Services\JsonVocabularyRepository.cs" Link="Services\JsonVocabularyRepository.cs" />
     <Compile Include="..\MauiApp1\Services\IVocabularyRepository.cs" Link="Services\IVocabularyRepository.cs" />
     <Compile Include="..\MauiApp1\Services\LearningEngine.cs" Link="Services\LearningEngine.cs" />
+    <Compile Include="..\MauiApp1\Services\MatchSelection.cs" Link="Services\MatchSelection.cs" />
+    <Compile Include="..\MauiApp1\Services\VocabularyLanguages.cs" Link="Services\VocabularyLanguages.cs" />
+    <Compile Include="..\MauiApp1\Services\VocabularyImport.cs" Link="Services\VocabularyImport.cs" />
     <Compile Include="..\MauiApp1\Services\VocabularyRules.cs" Link="Services\VocabularyRules.cs" />
     <Compile Include="..\MauiApp1\Services\VocabularySearch.cs" Link="Services\VocabularySearch.cs" />
     <Compile Include="..\MauiApp1\Services\XlsxWorkbook.cs" Link="Services\XlsxWorkbook.cs" />

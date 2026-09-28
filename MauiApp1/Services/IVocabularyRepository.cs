@@ -12,7 +12,7 @@ public interface IVocabularyRepository
     Task SaveCardAsync(VocabularyCard card);
     Task SetStarredAsync(Guid cardId, bool starred);
     Task DeleteCardAsync(Guid cardId);
-    Task<int> ImportAsync(Guid deckId, IReadOnlyList<VocabularyCard> cards);
+    Task<int> ImportAsync(Guid deckId, IReadOnlyList<VocabularyCard> cards, string? firstLanguage = null, string? secondLanguage = null);
     Task SaveDraftAsync(CardDraft draft);
     Task DeleteDraftAsync(Guid cardId);
     Task SaveSessionAsync(LearningSession session);

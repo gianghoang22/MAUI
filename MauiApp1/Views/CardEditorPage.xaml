@@ -14,9 +14,9 @@
             <Border Style="{StaticResource Card}">
                 <controls:AdaptiveColumns>
                     <VerticalStackLayout Spacing="12">
-                    <Label Text="{DynamicResource L10n.VVietnamese}" Style="{StaticResource SectionHeading}" />
+                    <Label Text="{Binding FirstLanguageLabel}" Style="{StaticResource SectionHeading}" />
                     <controls:VocabularyEntry IsReadOnly="{Binding IsBusy}" Text="{Binding Vietnamese}" MaxLength="200" AutomationId="VietnameseEntry" ReturnType="Next" Completed="OnVietnameseCompleted"
-                                              SemanticProperties.Description="{DynamicResource L10n.VVietnamese}">
+                                              SemanticProperties.Description="{Binding FirstLanguageLabel}">
                         <Entry.Behaviors><controls:RequiredTermBehavior x:Name="VietnameseValidation" /></Entry.Behaviors>
                     </controls:VocabularyEntry>
                     <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource ErrorText}">
@@ -24,9 +24,9 @@
                     </Label>
                     </VerticalStackLayout>
                     <VerticalStackLayout Spacing="12">
-                    <Label Text="{DynamicResource L10n.VEnglish}" Style="{StaticResource SectionHeading}" />
+                    <Label Text="{Binding SecondLanguageLabel}" Style="{StaticResource SectionHeading}" />
                     <controls:VocabularyEntry IsReadOnly="{Binding IsBusy}" Text="{Binding English}" MaxLength="200" AutomationId="EnglishEntry" x:Name="EnglishField" ReturnType="Done" ReturnCommand="{Binding SaveCommand}"
-                                              SemanticProperties.Description="{DynamicResource L10n.VEnglish}">
+                                              SemanticProperties.Description="{Binding SecondLanguageLabel}">
                         <Entry.Behaviors><controls:RequiredTermBehavior x:Name="EnglishValidation" /></Entry.Behaviors>
                     </controls:VocabularyEntry>
                     <Label Text="{DynamicResource L10n.VTermInvalid}" Style="{StaticResource ErrorText}">

@@ -22,6 +22,9 @@ public static class MauiProgram
 #endif
         VocabularyEntryHandler.Configure();
         EditorScrollBarHandler.Configure();
+#if WINDOWS
+        builder.ConfigureMauiHandlers(handlers => handlers.AddHandler<Button, StudyButtonHandler>());
+#endif
         builder.Services.AddSingleton<LocalizationService>();
         builder.Services.AddSingleton<IVocabularyRepository>(_ => new JsonVocabularyRepository(FileSystem.AppDataDirectory));
         builder.Services.AddSingleton<IUserInteraction, ShellUserInteraction>();

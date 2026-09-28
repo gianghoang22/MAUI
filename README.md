@@ -1,6 +1,6 @@
 # VocabMate
 
-Ứng dụng .NET MAUI học từ vựng Anh/Việt, lấy cảm hứng từ flashcards: **lớp local → bộ từ → thẻ → học và ôn lại**. Không cần tài khoản hoặc backend.
+Ứng dụng .NET MAUI học từ vựng theo cặp ngôn ngữ tùy chọn (mặc định Việt/Anh), lấy cảm hứng từ flashcards: **lớp local → bộ từ → thẻ → học và ôn lại**. Không cần tài khoản hoặc backend.
 
 ## Kiểm thử và demo
 
@@ -40,16 +40,48 @@ dotnet run
 - Bộ từ hiển thị trực tiếp nút thêm từ, import Excel, lưu, xóa, bắt đầu/tiếp tục học; sao đánh dấu đã thuộc nằm ngoài menu trên từng từ. Màn học không dùng menu action: nghe phát âm, đánh dấu đã thuộc, lật, đã nhớ/chưa nhớ, kiểm tra/tiếp theo, tùy chỉnh và học tiếp đều có nút riêng theo trạng thái. Các nhóm nút tự xuống dòng khi màn hình hẹp; xóa và thay phiên học vẫn cần xác nhận.
 
 - Tạo/sửa/xóa lớp, bộ từ, thẻ; tìm kiếm hai mặt; xác nhận xóa liên đới.
-- Import `.xlsx`, tự nhận thứ tự cột Việt/Anh, xem trước lỗi và bỏ cặp trùng.
-- Flashcards, trắc nghiệm, viết đáp án; chọn Anh → Việt hoặc Việt → Anh.
-- Game ghép cặp, tính số lần sai và thời gian, lưu tiến độ.
+- Import `.xlsx`, nhận cặp ngôn ngữ từ tiêu đề, cho sửa nhãn/xem trước lỗi và bỏ cặp trùng.
+- Flashcards, trắc nghiệm, viết đáp án; chọn chiều học giữa hai ngôn ngữ của bộ.
+- Game ghép cặp chọn bên nào trước cũng được; nhóm tiếp theo không lặp câu trong cùng vòng; lưu số lần sai và tiến độ.
 - Kết quả, ôn lại câu chưa nhớ, tiếp tục phiên đang dở.
 - Autosave bản nháp thẻ/câu đang gõ, khôi phục sau khi mở lại app.
 - UI Anh/Việt, theme sáng/tối/hệ thống, giữ lựa chọn sau khi khởi động lại.
-- File Excel mẫu và phát âm bằng giọng tiếng Anh của OS; đã bỏ nút xuất/chia sẻ bộ từ.
+- File Excel mẫu theo ngôn ngữ của bộ và phát âm theo ngôn ngữ từng mặt bằng giọng OS; đã bỏ nút xuất/chia sẻ bộ từ.
 - Sao đánh dấu đã thuộc, học riêng nhóm chưa thuộc/đã thuộc/tất cả; tiếp tục ngay trong bộ từ hoặc sau mỗi lượt.
 - Flashcard lật hai mặt bằng nhấn thẻ hoặc nút **Lật thẻ**; bấm **Đã nhớ/Chưa nhớ** một lần rồi tự sang thẻ tiếp theo. Windows dùng phép chiếu 3D, Android dùng animation xoay thẻ; cả hai tôn trọng cài đặt tắt chuyển động của hệ thống.
 - Đổi chế độ, chiều học và nhóm từ ngay trong màn học. Giao diện ngà / than olive, điểm nhấn đồng trầm, bề mặt màu đặc và viền mảnh; giữ animation lật thẻ phục vụ thao tác học.
+
+## Ghép cặp theo vòng và bộ từ đa ngôn ngữ
+
+- Ghép cặp cho phép chọn **trái hoặc phải trước**. Chạm lại ô đang chọn để bỏ chọn; chọn ô khác cùng bên để đổi lựa chọn. Chỉ chấm khi đã chọn cả hai bên.
+- Kết thúc một nhóm, bấm **Học nhóm từ tiếp theo** để lấy những câu hỏi chưa xuất hiện trong vòng hiện tại. Ví dụ 13 từ phân biệt: **6 → 6 → 1**, không xáo lại 6 từ cũ. Phần dư một cặp được cho phép ở cuối vòng, nhưng bắt đầu một game mới vẫn cần ít nhất hai cặp.
+- Tiến độ vòng được lưu cùng phiên, không phụ thuộc 100 kết quả lịch sử. Hết vòng thì dừng; chỉ lặp khi bấm **Học lại từ đầu** hoặc bắt đầu phiên mới. Đổi chế độ/chiều/bộ lọc cũng bắt đầu một vòng mới sau xác nhận nếu đang học dở.
+- Quy tắc không lặp trong vòng cũng áp dụng cho lượt 20 câu Flashcards/Trắc nghiệm/Viết. Câu sai có thể ôn riêng bằng **Ôn lại câu sai**; ghép sai không tự đổi sao.
+- Mỗi bộ có hai nhãn ngôn ngữ: vào **Thông tin bộ từ**, nhập tên/mã mặt 1 và mặt 2, rồi **Lưu** trước khi thêm thẻ/học. Ví dụ `Japanese` / `English`, `Nhật` / `Anh` hoặc `ja` / `en`. Đổi nhãn không tự dịch dữ liệu.
+- Excel có hai cột, hàng đầu là tên ngôn ngữ. App nhận nhãn từ tiêu đề và cho chỉnh trước khi nhập; **không tự suy đoán chắc chắn ngôn ngữ từ nội dung từ ngắn**. Ngôn ngữ ngoài danh sách nhận diện vẫn được dùng dưới dạng nhãn tùy chỉnh.
+- Bộ trống tự nhận cặp ngôn ngữ từ file sau xác nhận nhập. Bộ đã có thẻ/nháp chỉ nhận cùng cặp, tự đảo mặt nếu thứ tự cột ngược. Cặp khác bị chặn để tránh trộn ngôn ngữ; có thể tạo bộ mới.
+- **Nghe câu hỏi** đọc ngôn ngữ của mặt hỏi; **Nghe đáp án** xuất hiện khi đáp án đã mở. Cần giọng tương ứng của OS; không có giọng thì báo lỗi rõ ràng, không tự dùng giọng Anh đọc tiếng Nhật.
+- UI vẫn có hai ngôn ngữ Việt/Anh; ngôn ngữ **nội dung học** là tùy chọn. Dữ liệu cũ mặc định Việt/Anh, không cần chuyển file thủ công. Tên trường JSON `Vietnamese`/`English` và giá trị enum chiều học được giữ để tương thích; trong bộ đa ngôn ngữ chúng là mặt 1/mặt 2. Nhãn ngôn ngữ được lưu bổ sung trên bộ/phiên/kết quả.
+
+### Ví dụ file Nhật–Anh để thử nhóm 6 → 6 → 1
+
+Tạo workbook `.xlsx` với bảng sau ở hai cột A/B của sheet hiển thị đầu tiên. Nhập vào **bộ trống**, chọn Ghép cặp và bộ lọc Tất cả.
+
+| Japanese | English |
+| --- | --- |
+| 猫 | cat |
+| 犬 | dog |
+| 水 | water |
+| 本 | book |
+| 学校 | school |
+| 太陽 | sun |
+| 月 | moon |
+| 花 | flower |
+| 山 | mountain |
+| 川 | river |
+| 友達 | friend |
+| 車 | car |
+| 電車 | train |
 
 ## Theme và spacing
 
@@ -79,9 +111,9 @@ dotnet run
 | quyển sách | book |
 | ngôi nhà | house |
 
-File thực tế ở `Samples/VocabMate-template.xlsx` có 6 cặp từ. Có thể dùng thao tác chia sẻ file mẫu trong menu **...** của màn nhập để lấy một mẫu khác gồm 4 cặp.
+File tham khảo ở `Samples/VocabMate-template.xlsx`. Nút File Excel mẫu tạo tiêu đề theo ngôn ngữ của bộ; bộ Việt/Anh mặc định có thêm 4 cặp minh họa, cặp ngôn ngữ khác tạo mẫu chỉ có tiêu đề để người dùng điền nội dung.
 
-- Hai cột A/B, hàng tiêu đề `Tiếng Việt`/`Vietnamese` và `Tiếng Anh`/`English`; đảo thứ tự cột được.
+- Hai cột A/B, hàng tiêu đề là hai tên ngôn ngữ, ví dụ `Japanese`/`English` hoặc `Tiếng Việt`/`English`. Nhãn được kiểm tra/sửa ở preview; bộ đã có dữ liệu tự đổi mặt khi file có cùng cặp nhưng ngược thứ tự.
 - Chỉ đọc sheet hiển thị đầu tiên. Tối đa 2.000 dòng dữ liệu, file 10 MB và giới hạn giải nén an toàn.
 - Không hỗ trợ `.xls`, CSV, file mã hóa hoặc công thức; nên lưu các ô dạng Text.
 - Dòng thiếu mặt/quá dài/có công thức phải được sửa trước khi commit. Dòng trùng được bỏ qua, không ghi đè từ cũ.
@@ -89,12 +121,12 @@ File thực tế ở `Samples/VocabMate-template.xlsx` có 6 cặp từ. Có th�
 
 ## Quy tắc học cần biết
 
-- Tối đa 20 câu/lượt, ghép cặp tối đa 6 cặp. Nhóm **Chưa thuộc** bỏ qua các từ có sao; từ chưa nhớ vẫn có thể lặp để luyện tiếp.
+- Tối đa 20 câu/lượt, ghép cặp tối đa 6 cặp. Nhóm **Chưa thuộc** bỏ qua các từ có sao. Nhóm kế tiếp chỉ lấy prompt chưa xuất hiện trong vòng; ôn từ sai bằng Ôn lại câu sai hoặc chủ động bắt đầu vòng mới.
 - Cùng một prompt có nhiều nghĩa sẽ được gom thành một câu chấp nhận các nghĩa đã khai báo trong bộ từ.
 - Trắc nghiệm cần 3 distractor phân biệt cho từng câu; bộ quá ít từ nên dùng Flashcards hoặc Viết đáp án.
 - Chấm viết bỏ qua hoa/thường, khoảng trắng thừa và khác biệt Unicode NFC/NFD, **không bỏ dấu tiếng Việt hoặc tự đoán từ đồng nghĩa**.
 - Flashcards là tự đánh giá: **Đã nhớ** đánh dấu sao, **Chưa nhớ** bỏ sao; cả hai lưu tiến độ và tự chuyển câu trong cùng lần ghi. Trắc nghiệm/viết không tự đánh dấu đã thuộc.
-- **Tiếp tục phiên** giữ đúng câu/mặt/chế độ/chiều/input cũ. **Tiếp tục học** sau kết quả tạo lượt mới theo bộ lọc hiện hành, không lặp từ đã thuộc khi chọn Chưa thuộc.
+- **Tiếp tục phiên** giữ đúng câu/mặt/chế độ/chiều/input cũ. **Học nhóm từ tiếp theo** sau kết quả giữ bộ lọc và loại các prompt đã xuất hiện trong vòng; không tự quay lại đầu bộ khi hết từ.
 - Sao có thể bật/tắt trong danh sách hoặc trên thẻ. Đổi chế độ trong Tùy chỉnh bắt đầu phiên mới có xác nhận nếu đang học dở; không xóa sao.
 - Thời gian session tính cả thời gian tạm nghỉ. Đã bỏ toàn bộ gradient, translucency và shadow của theme kính cũ.
 - Chỉ giữ một session đang dở. Bắt đầu session mới có xác nhận thay thế; giữ tối đa 100 kết quả đã hoàn thành.
@@ -130,3 +162,9 @@ JSON chưa mã hóa, không hỗ trợ nhiều tiến trình ghi chung file ho�
 ## Lưu ý trước khi đưa repo lên Git
 
 `.gitignore` hiện bỏ qua `Docs/`, `MauiApp1/Resources/`, `MauiApp1/Platforms/`, `MauiApp1/Properties/`. Quy tắc này đang do người dùng chỉnh nên không bị thay đổi. Một clone thiếu platform bootstrap/tài nguyên template sẽ không build; cần rà lại các file scaffold và tài liệu trong `MauiApp1/Docs/` muốn đưa vào Git trước khi chia sẻ repo.
+
+## UI automation ngày 28/09/2026
+
+- Báo cáo chạy thật, lỗi phát hiện và phạm vi còn chưa kiểm tra: `UI_AUTOMATION_REPORT.md`.
+- Hướng dẫn build bản cô lập, chạy Windows UIA/Android touchscreen automation và xem ảnh/log: `scripts/README.md`.
+- Không chạy trên dữ liệu chính; runner dùng ApplicationId riêng `com.vocabmate.uia20260928`.

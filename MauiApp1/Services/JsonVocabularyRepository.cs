@@ -35,6 +35,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
     public Task SaveDeckAsync(VocabularyDeck deck) => UpdateAsync(data =>
     {
         VocabularyRules.RequireName(deck.Name);
+        deck = deck with { FirstLanguage = VocabularyLanguages.Canonicalize(deck.FirstLanguage), SecondLanguage = VocabularyLanguages.Canonicalize(deck.SecondLanguage) };
         if (!data.Classes.Any(classroom => classroom.Id == deck.ClassId)) throw new StudyException("VNotFound");
         if (deck.Description.Length > 500) throw new StudyException("VDescriptionInvalid");
         if (data.Decks.Any(existing => existing.Id != deck.Id && existing.ClassId == deck.ClassId && VocabularyRules.Normalize(existing.Name) == VocabularyRules.Normalize(deck.Name)))
@@ -71,13 +72,24 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         data.Cards[index] = data.Cards[index] with { IsStarred = starred };
     });
 
-    public async Task<int> ImportAsync(Guid deckId, IReadOnlyList<VocabularyCard> cards)
+    public async Task<int> ImportAsync(Guid deckId, IReadOnlyList<VocabularyCard> cards, string? firstLanguage = null, string? secondLanguage = null)
     {
         var added = 0;
         await UpdateAsync(data =>
         {
             RequireDeck(data, deckId);
             if (cards.Count > 2000) throw new StudyException("VImportLimit");
+            if (firstLanguage is not null || secondLanguage is not null)
+            {
+                var deckIndex = data.Decks.FindIndex(deck => deck.Id == deckId);
+                var deck = data.Decks[deckIndex];
+                var first = VocabularyLanguages.Canonicalize(firstLanguage ?? "");
+                var second = VocabularyLanguages.Canonicalize(secondLanguage ?? "");
+                if ((data.Cards.Any(card => card.DeckId == deckId) || data.Drafts.Any(draft => draft.DeckId == deckId)) &&
+                    (!VocabularyLanguages.Same(first, deck.FirstLanguage) || !VocabularyLanguages.Same(second, deck.SecondLanguage)))
+                    throw new StudyException("VLanguageMismatch");
+                data.Decks[deckIndex] = deck with { FirstLanguage = first, SecondLanguage = second };
+            }
             var existing = data.Cards.Where(card => card.DeckId == deckId)
                 .Select(card => VocabularyRules.PairKey(card.Vietnamese, card.English)).ToHashSet();
             foreach (var card in cards)
@@ -115,6 +127,8 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         if (data.Session is not { } current || current.Id != session.Id || current.Index > session.Index ||
             current.Attempts.Count > session.Attempts.Count || current.MatchedIds.Count > session.MatchedIds.Count ||
             current.DeckId != session.DeckId || current.MatchMistakes > session.MatchMistakes ||
+            current.FirstLanguage != session.FirstLanguage || current.SecondLanguage != session.SecondLanguage ||
+            !current.CompletedPrompts.SequenceEqual(session.CompletedPrompts) ||
             current.MatchedIds.Except(session.MatchedIds).Any() ||
             !current.Attempts.SequenceEqual(session.Attempts.Take(current.Attempts.Count)) ||
             (current.Mode != LearningMode.Flashcards && current.Index == session.Index && current.Revealed && !session.Revealed)) throw new StudyException("VSessionChanged");
@@ -139,7 +153,8 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         data.Results.Add(new LearningResult(session.Id, session.DeckId, session.DeckName, session.Mode, session.Direction,
             session.Questions.Count, session.Correct, session.MatchMistakes,
             (int)Math.Clamp((session.FinishedAt!.Value - session.StartedAt).TotalSeconds, 0, int.MaxValue), session.FinishedAt.Value,
-            session.Questions.Where(question => wrongIds.Contains(question.CardId)).ToList()));
+            session.Questions.Where(question => wrongIds.Contains(question.CardId)).ToList())
+        { FirstLanguage = session.FirstLanguage, SecondLanguage = session.SecondLanguage });
         if (data.Results.Count > 100) data.Results.RemoveRange(0, data.Results.Count - 100);
     });
 
@@ -201,10 +216,10 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         if (data is null || data.SchemaVersion != 1 || data.Classes is null || data.Decks is null || data.Cards is null || data.Drafts is null || data.Results is null)
             throw new StudyException("VDataInvalid");
         if (data.Classes.Any(item => item is null || item.Id == Guid.Empty || string.IsNullOrWhiteSpace(item.Name) || item.Name.Length > 80) ||
-            data.Decks.Any(item => item is null || item.Id == Guid.Empty || string.IsNullOrWhiteSpace(item.Name) || item.Name.Length > 80 || item.Description is null || item.Description.Length > 500 || !data.Classes.Any(parent => parent.Id == item.ClassId)) ||
+            data.Decks.Any(item => item is null || item.Id == Guid.Empty || string.IsNullOrWhiteSpace(item.Name) || item.Name.Length > 80 || item.Description is null || item.Description.Length > 500 || !VocabularyLanguages.IsValid(item.FirstLanguage) || !VocabularyLanguages.IsValid(item.SecondLanguage) || !data.Classes.Any(parent => parent.Id == item.ClassId)) ||
             data.Cards.Any(item => item is null || item.Id == Guid.Empty || !VocabularyRules.IsValidTerm(item.Vietnamese) || !VocabularyRules.IsValidTerm(item.English) || !data.Decks.Any(parent => parent.Id == item.DeckId)) ||
             data.Drafts.Any(item => item is null || item.CardId == Guid.Empty || item.Vietnamese is null || item.English is null || item.Vietnamese.Length > 200 || item.English.Length > 200 || !data.Decks.Any(parent => parent.Id == item.DeckId)) ||
-            data.Results.Any(item => item is null || item.Id == Guid.Empty || item.DeckName is null || item.WrongQuestions is null || item.WrongQuestions.Any(InvalidQuestion) ||
+            data.Results.Any(item => item is null || item.Id == Guid.Empty || item.DeckName is null || !VocabularyLanguages.IsValid(item.FirstLanguage) || !VocabularyLanguages.IsValid(item.SecondLanguage) || item.WrongQuestions is null || item.WrongQuestions.Any(InvalidQuestion) ||
                 !Enum.IsDefined(item.Mode) || !Enum.IsDefined(item.Direction) || item.Seconds < 0 || item.Mistakes < 0 ||
                 item.Total < 1 || item.Correct < 0 || item.Correct > item.Total || !data.Decks.Any(parent => parent.Id == item.DeckId)) ||
             data.Classes.Select(item => item.Id).Distinct().Count() != data.Classes.Count ||
@@ -221,6 +236,8 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
             var session = data.Session;
             if (!data.Decks.Any(deck => deck.Id == session.DeckId) || session.Id == Guid.Empty || session.DeckName is null ||
                 session.Questions is null || session.Questions.Count == 0 || session.Attempts is null || session.MatchedIds is null || session.MatchOrder is null ||
+                !VocabularyLanguages.IsValid(session.FirstLanguage) || !VocabularyLanguages.IsValid(session.SecondLanguage) ||
+                session.CompletedPrompts is null || session.CompletedPrompts.Any(prompt => !VocabularyRules.IsValidTerm(prompt)) ||
                 session.Input is null || session.Input.Length > 200 || !Enum.IsDefined(session.Mode) || !Enum.IsDefined(session.Direction) || !Enum.IsDefined(session.Filter) ||
                 session.Index < 0 || session.Index > session.Questions.Count || session.Attempts.Count > session.Questions.Count ||
                 session.Questions.Any(InvalidQuestion) ||

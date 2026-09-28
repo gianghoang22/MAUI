@@ -6,12 +6,19 @@ public sealed class LearningEngine
 {
     public LearningSession Create(VocabularyDeck deck, IReadOnlyList<VocabularyCard> cards, LearningMode mode, LearningDirection direction,
         LearningFilter filter = LearningFilter.All)
+        => CreateBatch(deck, cards, mode, direction, filter, []);
+
+    private LearningSession CreateBatch(VocabularyDeck deck, IReadOnlyList<VocabularyCard> cards, LearningMode mode,
+        LearningDirection direction, LearningFilter filter, List<string> completedPrompts)
     {
         if (!Enum.IsDefined(mode) || !Enum.IsDefined(direction) || !Enum.IsDefined(filter)) throw new StudyException("VInvalidSession");
-        var eligible = cards.Where(card => filter == LearningFilter.All || card.IsStarred == (filter == LearningFilter.Starred));
+        var completed = completedPrompts.ToHashSet(StringComparer.Ordinal);
+        var eligible = cards.Where(card => card.DeckId == deck.Id &&
+            (filter == LearningFilter.All || card.IsStarred == (filter == LearningFilter.Starred)) &&
+            !completed.Contains(VocabularyRules.Normalize(Prompt(card, direction))));
         var groups = eligible.GroupBy(card => VocabularyRules.Normalize(Prompt(card, direction))).ToList();
         if (groups.Count == 0) throw new StudyException(cards.Count == 0 ? "VNoCards" : "VNoFilteredCards");
-        var allAnswers = cards.Select(card => Answer(card, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
+        var allAnswers = cards.Where(card => card.DeckId == deck.Id).Select(card => Answer(card, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
         var questions = new List<StudyQuestion>();
         var usedMatchAnswers = new HashSet<string>();
         var orderedGroups = Shuffle(groups);
@@ -20,7 +27,7 @@ public sealed class LearningEngine
         foreach (var group in orderedGroups)
         {
             var card = group.First();
-            var accepted = cards.Where(item => VocabularyRules.Normalize(Prompt(item, direction)) == group.Key)
+            var accepted = cards.Where(item => item.DeckId == deck.Id && VocabularyRules.Normalize(Prompt(item, direction)) == group.Key)
                 .Select(item => Answer(item, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
             var answer = Answer(card, direction);
             if (mode == LearningMode.Match)
@@ -41,14 +48,38 @@ public sealed class LearningEngine
             questions.Add(new StudyQuestion(card.Id, Prompt(card, direction), answer, accepted, choices));
             if (questions.Count == (mode == LearningMode.Match ? 6 : 20)) break;
         }
-        if (mode == LearningMode.Match && questions.Count < 2) throw new StudyException("VNeedPairs");
-        return NewSession(deck.Id, deck.Name, mode, direction, questions) with { Filter = filter };
+        if (mode == LearningMode.Match && questions.Count < 2 && completedPrompts.Count == 0) throw new StudyException("VNeedPairs");
+        return NewSession(deck.Id, deck.Name, mode, direction, questions) with
+        {
+            Filter = filter, CompletedPrompts = completedPrompts,
+            FirstLanguage = deck.FirstLanguage, SecondLanguage = deck.SecondLanguage
+        };
     }
+
+    public bool HasNextBatch(LearningSession session, IReadOnlyList<VocabularyCard> cards)
+    {
+        var completed = CompletedPrompts(session).ToHashSet(StringComparer.Ordinal);
+        return cards.Any(card => card.DeckId == session.DeckId &&
+            (session.Filter == LearningFilter.All || card.IsStarred == (session.Filter == LearningFilter.Starred)) &&
+            !completed.Contains(VocabularyRules.Normalize(Prompt(card, session.Direction))));
+    }
+
+    public LearningSession Continue(VocabularyDeck deck, IReadOnlyList<VocabularyCard> cards, LearningSession session)
+    {
+        if (!session.IsComplete || deck.Id != session.DeckId) throw new StudyException("VInvalidSession");
+        if (!HasNextBatch(session, cards)) throw new StudyException("VRoundComplete");
+        return CreateBatch(deck with { FirstLanguage = session.FirstLanguage, SecondLanguage = session.SecondLanguage },
+            cards, session.Mode, session.Direction, session.Filter, CompletedPrompts(session));
+    }
+
+    private static List<string> CompletedPrompts(LearningSession session) => session.CompletedPrompts
+        .Concat(session.Questions.Select(question => VocabularyRules.Normalize(question.Prompt))).Distinct().ToList();
 
     public LearningSession Retry(LearningResult result)
     {
         if (result.WrongQuestions.Count == 0) throw new StudyException("VNoWrongAnswers");
-        return NewSession(result.DeckId, result.DeckName, result.Mode, result.Direction, Shuffle(result.WrongQuestions));
+        return NewSession(result.DeckId, result.DeckName, result.Mode, result.Direction, Shuffle(result.WrongQuestions)) with
+        { FirstLanguage = result.FirstLanguage, SecondLanguage = result.SecondLanguage };
     }
 
     public LearningSession Submit(LearningSession session, string answer)

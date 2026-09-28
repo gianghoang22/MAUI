@@ -42,6 +42,7 @@
                 <VerticalStackLayout Spacing="16" IsVisible="{Binding ShowQuestion}">
                     <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="End" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
                         <Button Text="{DynamicResource L10n.VSpeak}" Command="{Binding SpeakCommand}" Style="{StaticResource QuietButton}" Margin="4" AutomationId="SpeakButton" />
+                        <Button Text="{DynamicResource L10n.VSpeakAnswer}" Command="{Binding SpeakAnswerCommand}" IsVisible="{Binding ShowAnswer}" Style="{StaticResource QuietButton}" Margin="4" AutomationId="SpeakAnswerButton" />
                         <Button Text="{Binding StarDescription}" Command="{Binding StarCommand}" Style="{StaticResource QuietButton}" Margin="4" AutomationId="StudyStarButton" />
                     </FlexLayout>
                     <controls:VocabularyFlashcard Prompt="{Binding QuestionText}" Answer="{Binding AnswerText}" IsRevealed="{Binding ShowAnswer}"
@@ -75,8 +76,9 @@
                         <Label Text="{Binding Score}" FontSize="32" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" />
                         <Label Text="{Binding ResultDetails}" Style="{StaticResource MutedText}" />
                         <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
-                            <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ContinueCommand}" IsVisible="{Binding CanContinue}" Margin="4" Style="{StaticResource PrimaryButton}" AutomationId="ContinueLearningButton" />
+                            <Button Text="{DynamicResource L10n.VNextBatch}" Command="{Binding ContinueCommand}" IsVisible="{Binding CanContinue}" Margin="4" Style="{StaticResource PrimaryButton}" AutomationId="ContinueLearningButton" />
                             <Button Text="{DynamicResource L10n.VRetryWrong}" Command="{Binding RetryCommand}" IsVisible="{Binding CanRetry}" Margin="4" AutomationId="RetryWrongButton" />
+                            <Button Text="{DynamicResource L10n.VRestartRound}" Command="{Binding RestartRoundCommand}" IsVisible="{Binding CanRestartRound}" Margin="4" Style="{StaticResource QuietButton}" AutomationId="RestartRoundButton" />
                             <Button Text="{DynamicResource L10n.VBackToDeck}" Command="{Binding ExitCommand}" Margin="4" Style="{StaticResource QuietButton}" AutomationId="BackToDeckButton" />
                         </FlexLayout>
                         <Border Style="{StaticResource Card}" BackgroundColor="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" IsVisible="{Binding CanRetry}" Padding="16">
@@ -85,7 +87,7 @@
                                 <Label Text="{Binding WrongAnswers}" LineBreakMode="WordWrap" />
                             </VerticalStackLayout>
                         </Border>
-                        <Label Text="{DynamicResource L10n.VNoFilteredCards}" IsVisible="{Binding NoRemainingCards}" Style="{StaticResource MutedText}" />
+                        <Label Text="{DynamicResource L10n.VRoundComplete}" IsVisible="{Binding NoRemainingCards}" Style="{StaticResource MutedText}" />
                     </VerticalStackLayout>
                 </Border>
                 <Label Text="{Binding SaveStatus}" Style="{StaticResource MutedText}" />

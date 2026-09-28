@@ -8,6 +8,7 @@
                 <Label Text="{DynamicResource L10n.VStudySetLabel}" Style="{StaticResource Eyebrow}" />
                 <Label Text="{Binding Name}" Style="{StaticResource PageHeading}" />
                 <Label Text="{Binding Description}" Style="{StaticResource MutedText}" />
+                <Label Text="{Binding LanguageSummary}" Style="{StaticResource MutedText}" />
                 <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
                     <Button Text="{DynamicResource L10n.VAddCard}" Command="{Binding AddCommand}" Margin="4" Style="{StaticResource QuietButton}" AutomationId="AddCardButton" />
                     <Button Text="{DynamicResource L10n.VImportExcel}" Command="{Binding ImportCommand}" Margin="4" Style="{StaticResource QuietButton}" AutomationId="ImportExcelButton" />
@@ -17,6 +18,17 @@
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VDeckName}" FontAttributes="Bold" />
                         <Entry IsReadOnly="{Binding IsBusy}" Text="{Binding Name}" MaxLength="80" ReturnType="Done" ReturnCommand="{Binding SaveCommand}" SemanticProperties.Description="{DynamicResource L10n.VDeckName}" />
+                        <controls:AdaptiveColumns>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{DynamicResource L10n.VFirstLanguage}" Style="{StaticResource MutedText}" />
+                                <Entry Text="{Binding FirstLanguage}" IsReadOnly="{Binding IsBusy}" MaxLength="80" SemanticProperties.Description="{DynamicResource L10n.VFirstLanguage}" AutomationId="FirstLanguageEntry" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{DynamicResource L10n.VSecondLanguage}" Style="{StaticResource MutedText}" />
+                                <Entry Text="{Binding SecondLanguage}" IsReadOnly="{Binding IsBusy}" MaxLength="80" SemanticProperties.Description="{DynamicResource L10n.VSecondLanguage}" AutomationId="SecondLanguageEntry" />
+                            </VerticalStackLayout>
+                        </controls:AdaptiveColumns>
+                        <Label Text="{DynamicResource L10n.VDeckLanguagesHint}" Style="{StaticResource MutedText}" />
                         <Label Text="{DynamicResource L10n.VDescription}" Style="{StaticResource MutedText}" />
                         <Editor IsReadOnly="{Binding IsBusy}" Text="{Binding Description}" MaxLength="500" MinimumHeightRequest="96" AutoSize="TextChanges" Placeholder="{DynamicResource L10n.VDescription}" SemanticProperties.Description="{DynamicResource L10n.VDescription}" />
                         <FlexLayout Wrap="Wrap" Direction="Row" Margin="-4,0" IsEnabled="{Binding IsNotBusy}">
@@ -28,9 +40,7 @@
                 <Border Style="{StaticResource InsetCard}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
-                        <Label Text="{DynamicResource L10n.VChooseMode}" Style="{StaticResource MutedText}" />
                         <Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" SemanticProperties.Description="{DynamicResource L10n.VChooseMode}" AutomationId="LearningModePicker" />
-                        <Label Text="{DynamicResource L10n.VChooseDirection}" Style="{StaticResource MutedText}" />
                         <Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" SemanticProperties.Description="{DynamicResource L10n.VChooseDirection}" AutomationId="DirectionPicker" />
                         <Label Text="{DynamicResource L10n.VStudyFilter}" Style="{StaticResource MutedText}" />
                         <Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" AutomationId="LearningFilterPicker" />

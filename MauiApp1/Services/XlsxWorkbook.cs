@@ -53,10 +53,11 @@ public sealed class XlsxWorkbook
         if (rows.Count > 2001) throw new StudyException("VImportLimit");
         if (rows.Count == 0) throw new StudyException("VHeadersInvalid");
         var header = ReadCells(rows[0], strings);
-        var first = VocabularyRules.Normalize(header.First);
-        var second = VocabularyRules.Normalize(header.Second);
-        var reversed = IsEnglish(first) && IsVietnamese(second);
-        if (header.Error is not null || !(reversed || (IsVietnamese(first) && IsEnglish(second)))) throw new StudyException("VHeadersInvalid");
+        if (header.Error is not null || !VocabularyLanguages.IsValid(header.First) || !VocabularyLanguages.IsValid(header.Second))
+            throw new StudyException("VHeadersInvalid");
+        var first = VocabularyLanguages.Canonicalize(header.First);
+        var second = VocabularyLanguages.Canonicalize(header.Second);
+        var reversed = first == "en" && second == "vi";
         var result = new List<WorkbookRow>();
         for (var index = 1; index < rows.Count; index++)
         {
@@ -69,11 +70,9 @@ public sealed class XlsxWorkbook
             result.Add(new WorkbookRow(rowNumber, vietnamese.Trim(), english.Trim(), error));
         }
         if (result.Count == 0) throw new StudyException("VImportEmpty");
-        return new WorkbookPreview((string?)sheet.Attribute("name") ?? "Sheet1", result);
+        return new WorkbookPreview((string?)sheet.Attribute("name") ?? "Sheet1", result)
+        { FirstLanguage = reversed ? second : first, SecondLanguage = reversed ? first : second };
     }
-
-    private static bool IsVietnamese(string value) => value is "TIẾNG VIỆT" or "VIETNAMESE" or "VI";
-    private static bool IsEnglish(string value) => value is "TIẾNG ANH" or "ENGLISH" or "EN";
 
     private static (string First, string Second, string? Error) ReadCells(XElement row, IReadOnlyList<string> sharedStrings)
     {
@@ -116,7 +115,7 @@ public sealed class XlsxWorkbook
         return XDocument.Load(reader);
     }
 
-    public void Write(Stream output, IEnumerable<VocabularyCard> cards)
+    public void Write(Stream output, IEnumerable<VocabularyCard> cards, string firstLanguage = "vi", string secondLanguage = "en")
     {
         XNamespace spreadsheet = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
         XNamespace relations = "http://schemas.openxmlformats.org/package/2006/relationships";
@@ -137,7 +136,7 @@ public sealed class XlsxWorkbook
         Add("_rels/.rels", new XDocument(new XElement(relations + "Relationships", new XElement(relations + "Relationship", new XAttribute("Id", "rId1"), new XAttribute("Type", documentRelations.NamespaceName + "/officeDocument"), new XAttribute("Target", "xl/workbook.xml")))));
         Add("xl/workbook.xml", new XDocument(new XElement(spreadsheet + "workbook", new XElement(spreadsheet + "sheets", new XElement(spreadsheet + "sheet", new XAttribute("name", "Vocabulary"), new XAttribute("sheetId", "1"), new XAttribute(documentRelations + "id", "rId1"))))));
         Add("xl/_rels/workbook.xml.rels", new XDocument(new XElement(relations + "Relationships", new XElement(relations + "Relationship", new XAttribute("Id", "rId1"), new XAttribute("Type", documentRelations.NamespaceName + "/worksheet"), new XAttribute("Target", "worksheets/sheet1.xml")))));
-        var values = new[] { (Vietnamese: "Tiếng Việt", English: "English") }.Concat(cards.Select(card => (card.Vietnamese, card.English)));
+        var values = new[] { (Vietnamese: VocabularyLanguages.DisplayName(firstLanguage, "en"), English: VocabularyLanguages.DisplayName(secondLanguage, "en")) }.Concat(cards.Select(card => (card.Vietnamese, card.English)));
         var rows = values.Select((pair, index) => new XElement(spreadsheet + "row", new XAttribute("r", index + 1),
             new XElement(spreadsheet + "c", new XAttribute("r", $"A{index + 1}"), new XAttribute("t", "inlineStr"), new XElement(spreadsheet + "is", new XElement(spreadsheet + "t", pair.Vietnamese))),
             new XElement(spreadsheet + "c", new XAttribute("r", $"B{index + 1}"), new XAttribute("t", "inlineStr"), new XElement(spreadsheet + "is", new XElement(spreadsheet + "t", pair.English)))));

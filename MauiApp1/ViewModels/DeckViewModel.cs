@@ -14,6 +14,8 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     private VocabularyDeck? deck;
     private string name = "";
     private string description = "";
+    private string firstLanguage = "vi";
+    private string secondLanguage = "en";
     private string search = "";
     private int modeIndex;
     private int directionIndex;
@@ -30,7 +32,7 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     {
         this.repository = repository;
         this.engine = engine;
-        SaveCommand = CreateCommand(async () => { RequireDeck(); await repository.SaveDeckAsync(deck! with { Name = Name, Description = Description }); await LoadAsync(); });
+        SaveCommand = CreateCommand(async () => { RequireDeck(); await repository.SaveDeckAsync(deck! with { Name = Name, Description = Description, FirstLanguage = FirstLanguage, SecondLanguage = SecondLanguage }); await LoadAsync(); });
         AddCommand = CreateCommand(async () => { RequireDeck(); await Interaction.NavigateAsync($"card?deckId={deckId}"); });
         ImportCommand = CreateCommand(async () => { RequireDeck(); await Interaction.NavigateAsync($"import?deckId={deckId}"); });
         ResumeCommand = CreateCommand(async () =>
@@ -59,6 +61,17 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
 
     public string Name { get => name; set => SetProperty(ref name, value ?? ""); }
     public string Description { get => description; set => SetProperty(ref description, value ?? ""); }
+    public string LanguageSummary => deck is null ? "" : $"{VocabularyLanguages.DisplayName(deck.FirstLanguage, Localization.LanguageCode)} / {VocabularyLanguages.DisplayName(deck.SecondLanguage, Localization.LanguageCode)}";
+    public string FirstLanguage
+    {
+        get => firstLanguage;
+        set { if (SetProperty(ref firstLanguage, value ?? "")) OnPropertyChanged(nameof(Directions)); }
+    }
+    public string SecondLanguage
+    {
+        get => secondLanguage;
+        set { if (SetProperty(ref secondLanguage, value ?? "")) OnPropertyChanged(nameof(Directions)); }
+    }
     public string Search { get => search; set { if (SetProperty(ref search, value ?? "")) Filter(); } }
     public int ModeIndex { get => modeIndex; set { if (!translating && value is >= 0 and <= 3) SetProperty(ref modeIndex, value); } }
     public int DirectionIndex { get => directionIndex; set { if (!translating && value is >= 0 and <= 1) SetProperty(ref directionIndex, value); } }
@@ -94,7 +107,9 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     public string MasterySummary => Localization.Format("VMasterySummary", allCards.Count(card => card.IsStarred), allCards.Count);
     public IReadOnlyList<string> Filters => Enumerable.Range(0, 3).Select(index => Localization["VFilter" + index]).ToList();
     public IReadOnlyList<string> Modes => Enumerable.Range(0, 4).Select(index => Localization["VMode" + index]).ToList();
-    public IReadOnlyList<string> Directions => [Localization["VDirection0"], Localization["VDirection1"]];
+    public IReadOnlyList<string> Directions => [
+        VocabularyLanguages.Direction(FirstLanguage, SecondLanguage, LearningDirection.EnglishToVietnamese, Localization.LanguageCode),
+        VocabularyLanguages.Direction(FirstLanguage, SecondLanguage, LearningDirection.VietnameseToEnglish, Localization.LanguageCode)];
     public ObservableCollection<VocabularyCardRow> Cards { get; } = [];
     public ICommand SaveCommand { get; }
     public ICommand AddCommand { get; }
@@ -122,6 +137,9 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
         deck = data.Decks.FirstOrDefault(item => item.Id == deckId) ?? throw new StudyException("VNotFound");
         Name = deck.Name;
         Description = deck.Description;
+        FirstLanguage = VocabularyLanguages.DisplayName(deck.FirstLanguage, Localization.LanguageCode);
+        SecondLanguage = VocabularyLanguages.DisplayName(deck.SecondLanguage, Localization.LanguageCode);
+        OnPropertyChanged(nameof(LanguageSummary));
         allCards = data.Cards.Where(card => card.DeckId == deckId).ToList();
         RebuildCardRows();
         CanResume = data.Session is { IsComplete: false } active && active.DeckId == deckId;

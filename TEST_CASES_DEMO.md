@@ -29,7 +29,7 @@
 2. Nếu có dữ liệu cần giữ: đóng app, sao lưu thủ công `vocabmate.json`; đường dẫn nằm trong Cài đặt. Không xóa toàn bộ dữ liệu để làm trống màn demo.
 3. Chạy cùng bản build trên Windows và Android, ghi kết quả riêng. Môi trường mới dùng để kiểm tra trạng thái rỗng.
 4. Chuẩn bị bàn phím/chuột trên Windows; bàn phím mềm, Back hệ thống và xoay màn hình trên Android.
-5. Kiểm tra trước giọng tiếng Anh và âm lượng OS. Phát âm phụ thuộc thiết bị, không phải dịch vụ riêng của app.
+5. Kiểm tra trước giọng OS cho các ngôn ngữ của bộ và âm lượng. Phát âm phụ thuộc thiết bị, không phải dịch vụ riêng của app.
 6. Demo dùng theme Sáng; kiểm tra thêm Tối/Hệ thống ở nhóm cài đặt.
 7. Autosave: chờ ít nhất **1 giây** sau khi ngừng gõ, rồi Back hoặc đưa app về nền trước khi đóng/mở. Force-kill tức thì không phải trường hợp app đảm bảo lưu.
 8. Mỗi case có tiền điều kiện độc lập. Khôi phục bộ mẫu hoặc tạo lại thủ công nếu case trước đã sửa/xóa/đánh sao. App chưa có nút nhân bản bộ từ.
@@ -79,11 +79,11 @@ Chỉ hai cột A/B; dòng đầu là tiêu đề; lưu `.xlsx` thật, không �
 | X05-formula.xlsx | Một ô dữ liệu dùng công thức, ví dụ `="apple"` | Không hỗ trợ công thức |
 | X06-extra-column.xlsx | Hai cột hợp lệ, thêm `ghi chú` ở C2 | Lỗi cấu trúc hai cột |
 | X07-empty.xlsx | Chỉ tiêu đề hợp lệ | Không có dữ liệu |
-| X08-bad-header.xlsx | Tiêu đề `Từ`, `Nghĩa`; nội dung D01 | Tiêu đề không hợp lệ |
+| X08-bad-header.xlsx | Tiêu đề cột A là `Vietnamese`, cột B trống; nội dung D01 | Tiêu đề không hợp lệ |
 | X09-blank-rows.xlsx | D01 xen hai dòng hoàn toàn trống | Bỏ qua dòng trống, vẫn có 8 thẻ |
 | X10-multi-sheet.xlsx | Sheet hiển thị đầu có 2 thẻ; sheet hiển thị sau có 8 thẻ khác | Chỉ đọc sheet hiển thị đầu tiên |
 
-Tiêu đề hỗ trợ: `Tiếng Việt`/`Vietnamese`/`VI` và `Tiếng Anh`/`English`/`EN`, không phân biệt hoa thường, có thể đảo thứ tự cột.
+Tiêu đề là tên/mã ngôn ngữ của hai mặt: ví dụ `Japanese`/`English`, `日本語`/`en`, `Tiếng Việt`/`English`. Có thể chỉnh nhãn ở preview; nhãn lạ được giữ tùy chỉnh, không tự đoán từ nội dung. Bộ đã có dữ liệu chỉ nhận cùng cặp ngôn ngữ (tự đảo mặt nếu ngược).
 
 ## 4. Test case chức năng
 
@@ -166,8 +166,8 @@ Trong cột thao tác, thực hiện theo thứ tự đánh số. `KQ` để ng�
 | FLA-01 | P0 | Flashcards D01 | 1. Chạm thẻ để lật. 2. Bấm Lật thẻ để lật lại. | Đúng hai mặt; lật không tăng chỉ số/tự chấm. | NT |
 | FLA-02 | P0 | Flashcards D01 | 1. Ghi từ hiện tại, bấm Đã nhớ. 2. Từ tiếp theo bấm Chưa nhớ. 3. Xem sao trong bộ. | Mỗi lần tự chuyển đúng một câu; Đã nhớ bật sao, Chưa nhớ bỏ sao; kết quả theo tự đánh giá. | NT |
 | FLA-03 | P0 | Flashcards, Chưa thuộc | 1. Đánh Đã nhớ mọi câu. 2. Xem kết quả. 3. Tiếp tục nếu còn từ đủ điều kiện. | Lượt mới không lấy thẻ đã sao; hết nhóm chưa thuộc thì báo hết/không cho tiếp tục nhóm rỗng. | NT |
-| FLA-04 | P1 | Giọng Anh OS sẵn sàng, có âm lượng | 1. Nghe ở từng chiều học. 2. Lật thẻ và nghe lại. | Luôn đọc phần tiếng Anh của câu tương ứng. | NT |
-| FLA-05 | P2 | Thiết bị thử riêng không có giọng Anh | 1. Bấm nghe. 2. Đóng phản hồi, học tiếp. | Thông báo không có giọng; vẫn học được, không mất tiến độ. | NT |
+| FLA-04 | P1 | Giọng OS của hai mặt sẵn sàng | 1. Nghe câu hỏi ở từng chiều. 2. Lật thẻ rồi Nghe đáp án. | Đọc đúng nội dung/ngôn ngữ mặt hỏi và mặt đáp; không mặc định luôn đọc tiếng Anh. | NT |
+| FLA-05 | P2 | Thiết bị thử riêng không có giọng của mặt đang nghe | 1. Bấm nghe. 2. Đóng phản hồi, học tiếp. | Thông báo không có giọng; vẫn học được, không mất tiến độ. | NT |
 
 ### 4.7. Trắc nghiệm
 
@@ -193,8 +193,29 @@ Trong cột thao tác, thực hiện theo thứ tự đánh số. `KQ` để ng�
 | --- | --- | --- | --- | --- | --- |
 | MAT-01 | P0 | D01, Ghép cặp, Tất cả | 1. Chọn trái rồi phải đúng. 2. Hoàn tất các cặp. | Tăng tiến độ; cặp đã ghép không ghép lại; xong có kết quả/thời gian/số lần sai. | NT |
 | MAT-02 | P0 | Ghép cặp đang dở | 1. Ghép sai một lần. 2. Xem đếm sai. 3. Ghép lại đúng. | Sai tăng đúng 1, chưa hoàn tất cặp; vẫn sửa được ở lần ghép sau. | NT |
-| MAT-03 | P0 | Đã ghép đúng 1 cặp và sai 1 lần | 1. Thoát/nền sau thao tác hoàn tất. 2. Mở lại, tiếp tục. | Giữ cặp đã ghép, thứ tự cột phải, đếm sai; không yêu cầu giữ ô trái chọn dở chưa ghép. | NT |
+| MAT-03 | P0 | Đã ghép đúng 1 cặp và sai 1 lần | 1. Thoát/nền sau thao tác hoàn tất. 2. Mở lại, tiếp tục. | Giữ cặp đã ghép, thứ tự cột phải, đếm sai; không yêu cầu giữ ô trái/phải chọn dở chưa ghép. | NT |
 | MAT-04 | P1 | DEMO-One hoặc không đủ 2 cặp phân biệt | 1. Bắt đầu Ghép cặp. | Báo không đủ cặp, không tạo game rỗng; đổi mode khác được. | NT |
+
+### 4.9b. Ghép hai chiều, vòng học và đa ngôn ngữ
+
+Dùng bảng 13 từ Nhật–Anh trong `README.md` cho các case dưới đây. Mỗi case tạo bộ riêng hoặc bắt đầu vòng mới, chọn Tất cả nếu không ghi khác. Các case vẫn là kế hoạch manual, chưa đánh dấu PASS thay cho kiểm tra trên thiết bị.
+
+| ID | Ưu tiên | Tiền điều kiện | Thao tác | Kết quả mong đợi | KQ |
+| --- | --- | --- | --- | --- | --- |
+| MAT-05 | P0 | Ghép cặp đang dở | 1. Chọn bên phải trước. 2. Chọn đúng ô trái. 3. Lặp lại theo thứ tự trái trước. | Cả hai chiều đều ghép được, không báo phải chọn trái trước. | NT |
+| MAT-06 | P1 | Ghép cặp đang dở | 1. Chọn ô phải, bấm lại bỏ chọn. 2. Chọn ô khác cùng bên. 3. Ghép sai rồi thử lại đúng. | Highlight cập nhật cả hai bên; bỏ chọn không tính sai; cặp sai chỉ tăng một lần. | NT |
+| MAT-07 | P0 | Bộ 13 từ khác nhau, Tất cả | 1. Hoàn tất 6 cặp. 2. Học nhóm từ tiếp theo. 3. Hoàn tất và tiếp tục. | Kích thước 6/6/1; không có câu hỏi lặp giữa các nhóm. | NT |
+| MAT-08 | P0 | Đang ở nhóm 2 của bộ 13 từ | 1. Ghép 1 cặp, thoát và mở lại app. 2. Resume, hoàn tất nhóm. 3. Nhóm tiếp. | Giữ tiến độ nhóm hiện tại và danh sách đã học của nhóm 1; cuối còn đúng 1 cặp mới. | NT |
+| MAT-09 | P0 | Đã học hết vòng 13 từ | 1. Xem kết quả. 2. Bấm Học lại từ đầu. | Hết vòng không tự lặp, không có Nhóm tiếp; chỉ sau chủ động học lại mới lấy từ đã xuất hiện. | NT |
+| LANG-01 | P0 | Bộ mới | 1. Mở thông tin bộ, nhập Nhật/Anh và Lưu. 2. Thêm 猫/cat. 3. Mở lại app. | Nhãn mặt 1/2 đúng, nội dung Unicode và ngôn ngữ lưu bền; không bị gọi cố định Việt/Anh. | NT |
+| LANG-02 | P0 | Bộ trống, Excel Japanese/English | 1. Chọn file. 2. Xem/sửa nhãn. 3. Xác nhận nhập. | Bộ nhận ja/en, 13 thẻ đúng mặt; chưa xác nhận thì không đổi ngôn ngữ bộ. | NT |
+| LANG-03 | P0 | Bộ ja/en có dữ liệu | 1. Nhập file English/Japanese ngược thứ tự. 2. Thử file French/English. | File ngược tự đổi mặt, bỏ duplicate đúng; cặp khác bị chặn, bộ gốc không bị đổi nhãn. | NT |
+| LANG-04 | P1 | Bộ ja/en | 1. Học Viết cả hai chiều. 2. Tạo câu sai, hoàn tất và ôn sai từ lịch sử. | Caption/chiều/đáp án đúng theo Nhật–Anh; lịch sử và lượt ôn giữ cặp ngôn ngữ. | NT |
+| LANG-05 | P1 | File có nhãn ngôn ngữ tùy chỉnh, có nội dung hai cột | 1. Xem preview. 2. Chỉnh nhãn nếu cần. 3. Nhập bộ trống. | Giữ nhãn được người dùng xác nhận; không tuyên bố đã nhận diện từ nội dung; vẫn học/so khớp được. | NT |
+| LANG-06 | P1 | Bộ trống và file sai một dòng | 1. Chọn cặp Nhật–Anh. 2. Thử nhập khi còn lỗi. | Không ghi thẻ hoặc đổi metadata ngôn ngữ một phần. | NT |
+| LANG-07 | P1 | Bộ có nháp Việt–Anh nhưng chưa có thẻ chính | 1. Chọn file Nhật–Anh. | Không tự đổi nhãn bộ làm sai nghĩa của nháp; yêu cầu sửa nhãn đúng hoặc dùng bộ trống khác. | NT |
+| LANG-08 | P1 | Có giọng Nhật hoặc thiết bị thiếu giọng Nhật | 1. Chọn chiều Nhật → Anh. 2. Nghe câu hỏi; lật rồi nghe đáp án. | Có giọng thì đọc đúng; thiếu giọng thì báo không khả dụng, không dùng giọng Anh thay thế âm thầm. | NT |
+| LANG-09 | P0 | Bản sao JSON cũ trước khi có metadata ngôn ngữ/vòng | 1. Mở app mới bằng dữ liệu thử này. 2. Mở bộ, resume phiên cũ. | Mặc định Việt/Anh, không mất thẻ/sao/nháp; không yêu cầu chỉnh file thủ công. | NT |
 
 ### 4.10. Kết quả, ôn sai và lịch sử
 
@@ -356,7 +377,7 @@ Build/test core không thay thế kiểm tra picker, giọng đọc, bàn phím,
 - Một phiên dở duy nhất; bắt đầu phiên mới thay phiên trước sau xác nhận.
 - Chấm viết không tự bỏ dấu hoặc đoán mọi từ đồng nghĩa.
 - Phát âm dùng giọng OS, không phải chấm chất lượng phát âm của người học.
-- Import đọc sheet hiển thị đầu tiên, không gộp nhiều sheet; file có dòng lỗi bị chặn cả lô.
+- Import đọc sheet hiển thị đầu tiên, không gộp nhiều sheet; file có dòng lỗi bị chặn cả lô. Cặp ngôn ngữ lấy từ tiêu đề/nhãn do người dùng xác nhận, không tự dịch hoặc đoán nội dung.
 - Nháp không đồng nghĩa thẻ chính đã lưu; lifecycle là best effort khi force-kill/lỗi ghi.
 
 ## 8. Điểm đối chiếu mã nguồn

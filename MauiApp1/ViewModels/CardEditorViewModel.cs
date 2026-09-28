@@ -14,6 +14,7 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
     private bool loaded;
     private bool restored;
     private string deckName = "";
+    private VocabularyDeck? deck;
     private string vietnamese = "";
     private string english = "";
 
@@ -53,6 +54,8 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
 
     public string Vietnamese { get => vietnamese; set { if (SetProperty(ref vietnamese, value ?? "")) MarkDirty(); } }
     public string English { get => english; set { if (SetProperty(ref english, value ?? "")) MarkDirty(); } }
+    public string FirstLanguageLabel => VocabularyLanguages.DisplayName(deck?.FirstLanguage ?? "vi", Localization.LanguageCode);
+    public string SecondLanguageLabel => VocabularyLanguages.DisplayName(deck?.SecondLanguage ?? "en", Localization.LanguageCode);
     public string DeckName { get => deckName; private set => SetProperty(ref deckName, value); }
     public bool IsExisting => !isNew;
     public bool Restored { get => restored; private set => SetProperty(ref restored, value); }
@@ -76,7 +79,10 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
     private async Task LoadAsync()
     {
         var data = await repository.ReadAsync();
-        DeckName = data.Decks.FirstOrDefault(deck => deck.Id == deckId)?.Name ?? throw new StudyException("VNotFound");
+        deck = data.Decks.FirstOrDefault(item => item.Id == deckId) ?? throw new StudyException("VNotFound");
+        DeckName = deck.Name;
+        OnPropertyChanged(nameof(FirstLanguageLabel));
+        OnPropertyChanged(nameof(SecondLanguageLabel));
         var draft = data.Drafts.FirstOrDefault(item => item.DeckId == deckId && (isNew ? item.IsNew : item.CardId == cardId));
         var card = data.Cards.FirstOrDefault(item => item.DeckId == deckId && item.Id == cardId);
         if (!isNew && card is null) throw new StudyException("VNotFound");

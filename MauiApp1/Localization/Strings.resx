@@ -359,7 +359,7 @@
     <value>English</value>
   </data>
   <data name="VSearchCards" xml:space="preserve">
-    <value>Search English or Vietnamese words</value>
+    <value>Search either side of a card</value>
   </data>
   <data name="VCardsEmpty" xml:space="preserve">
     <value>No matching words. Add a word or import an Excel file.</value>
@@ -392,7 +392,7 @@
     <value>Vietnamese → English</value>
   </data>
   <data name="VSessionLimitHint" xml:space="preserve">
-    <value>Up to 20 questions per session or 6 matching pairs. Repeated prompts share accepted meanings. Each multiple-choice question needs 3 distinct wrong answers.</value>
+    <value>Up to 20 questions or 6 matching pairs per batch. The next batch does not repeat prompts within a round; the last batch may be smaller. Identical prompts share accepted answers. Multiple choice needs 3 distinct wrong answers.</value>
   </data>
   <data name="VStart" xml:space="preserve">
     <value>Start learning</value>
@@ -416,7 +416,7 @@
     <value>Save and exit</value>
   </data>
   <data name="VSpeak" xml:space="preserve">
-    <value>Hear pronunciation</value>
+    <value>Listen to prompt</value>
   </data>
   <data name="VFlip" xml:space="preserve">
     <value>Flip card</value>
@@ -443,7 +443,7 @@
     <value>Not quite — check the answer and review it later.</value>
   </data>
   <data name="VMatchHint" xml:space="preserve">
-    <value>Choose a tile on the left, then its match on the right.</value>
+    <value>Choose a tile on either side, then its match on the other side. Tap again to deselect.</value>
   </data>
   <data name="VTryAgain" xml:space="preserve">
     <value>Not a match. Choose another pair.</value>
@@ -479,7 +479,7 @@
     <value>Vocabulary, drafts, and results are stored offline in vocabmate.json. Old StudyMate data is untouched. Export individual decks to Excel for backup.</value>
   </data>
   <data name="VAbout" xml:space="preserve">
-    <value>VocabMate works locally without an account. Pronunciation uses an installed English system voice; sharing and file selection use system interfaces.</value>
+    <value>VocabMate works locally without an account. Pronunciation uses an installed system voice for each side’s language; sharing and file selection use system interfaces.</value>
   </data>
   <data name="VImportExcel" xml:space="preserve">
     <value>Import Excel</value>
@@ -491,7 +491,7 @@
     <value>From spreadsheet to flashcards</value>
   </data>
   <data name="VImportInstructions" xml:space="preserve">
-    <value>Use .xlsx and the first visible worksheet, columns A/B only. Header: Vietnamese and English (either order). Up to 2,000 data rows and 10 MB; formulas are not supported. Preview and fix all invalid rows before importing.</value>
+    <value>Use .xlsx, the first visible worksheet, and columns A/B. The first row names the languages, e.g. Japanese / English or Vietnamese / English. Up to 2,000 data rows and 10 MB; no formulas. Review language labels and fix all invalid rows before importing.</value>
   </data>
   <data name="VChooseFile" xml:space="preserve">
     <value>Choose .xlsx file</value>
@@ -524,7 +524,7 @@
     <value>The workbook exceeds the 10 MB, 2,000-row, or safe decompression limit.</value>
   </data>
   <data name="VHeadersInvalid" xml:space="preserve">
-    <value>The first row must contain Vietnamese/Tiếng Việt and English/Tiếng Anh headers in columns A/B.</value>
+    <value>The first row must contain two non-empty language labels in columns A/B, up to 80 characters each.</value>
   </data>
   <data name="VImportEmpty" xml:space="preserve">
     <value>The workbook contains no vocabulary rows.</value>
@@ -581,7 +581,7 @@
     <value>No study session yet. Open a deck to get started.</value>
   </data>
   <data name="VVoiceUnavailable" xml:space="preserve">
-    <value>No English voice is available. Install a voice in system settings to use pronunciation.</value>
+    <value>No system voice is available for this language. Install the matching voice in system settings; you can still continue studying.</value>
   </data>
   <data name="VDeleteClass" xml:space="preserve">
     <value>Delete class</value>
@@ -699,4 +699,14 @@
   <data name="VNoStudyMatches" xml:space="preserve"><value>No cards match this study filter. Choose all cards or add cards to this set.</value></data>
   <data name="VUseAllCards" xml:space="preserve"><value>Use all cards</value></data>
   <data name="VPendingStudyFilterHint" xml:space="preserve"><value>These settings apply to a new session only. Your current session stays unchanged until you apply and confirm. Cancel discards these changes.</value></data>
+  <data name="VFirstLanguage" xml:space="preserve"><value>Side 1 language</value></data>
+  <data name="VSecondLanguage" xml:space="preserve"><value>Side 2 language</value></data>
+  <data name="VDeckLanguagesHint" xml:space="preserve"><value>Enter language names or codes, e.g. Japanese / English or ja / en. Save before adding cards or studying. Changing labels does not translate content.</value></data>
+  <data name="VImportLanguagesHint" xml:space="preserve"><value>Languages come from headers, not guesses about cell contents. Review or edit both labels before importing. Empty decks adopt this pair; populated decks require the same pair and reverse sides when needed.</value></data>
+  <data name="VLanguageRequired" xml:space="preserve"><value>Enter a language name or code for both sides, up to 80 characters each.</value></data>
+  <data name="VLanguageMismatch" xml:space="preserve"><value>The language pair does not match this deck with existing cards or drafts. Correct the labels to match the content, or import into another empty deck.</value></data>
+  <data name="VNextBatch" xml:space="preserve"><value>Study next batch</value></data>
+  <data name="VRestartRound" xml:space="preserve"><value>Start a new round</value></data>
+  <data name="VRoundComplete" xml:space="preserve"><value>No words remain in this round for the selected filter. Start a new round or change the filter to study again.</value></data>
+  <data name="VSpeakAnswer" xml:space="preserve"><value>Listen to answer</value></data>
 </root>
