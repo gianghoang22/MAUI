@@ -91,7 +91,7 @@ public sealed class DesignSystemTests
         var document = ReadTheme();
         XNamespace maui = "http://schemas.microsoft.com/dotnet/2021/maui";
         XNamespace xaml = "http://schemas.microsoft.com/winfx/2009/xaml";
-        foreach (var target in new[] { "Entry", "Picker", "Editor", "SearchBar", "BaseButton", "DialogActionButton" })
+        foreach (var target in new[] { "Entry", "Editor", "SearchBar", "BaseButton", "DialogActionButton" })
         {
             var style = document.Root!.Elements(maui + "Style").Single(element =>
                 target.EndsWith("Button", StringComparison.Ordinal) ? (string?)element.Attribute(xaml + "Key") == target :
@@ -128,6 +128,48 @@ public sealed class DesignSystemTests
         var scroll = Assert.Single(dialog.Descendants(maui + "ScrollView"));
         Assert.Null(scroll.Attribute("VerticalScrollBarVisibility"));
         Assert.Null(scroll.Attribute("HorizontalScrollBarVisibility"));
+    }
+
+    [Theory]
+    [InlineData("SettingsPage.xaml", 2)]
+    [InlineData("DeckPage.xaml", 4)]
+    [InlineData("LearningPage.xaml", 3)]
+    public void SelectorsUseThemedControlWithAccessibleTitleAndExistingBindings(string page, int expectedCount)
+    {
+        var document = XDocument.Load(Path.Combine(AppContext.BaseDirectory, "Design", page));
+        Assert.DoesNotContain(document.Descendants(), element => element.Name.LocalName == "Picker");
+        var pickers = document.Descendants().Where(element => element.Name.LocalName == "ThemedPicker").ToList();
+        Assert.Equal(expectedCount, pickers.Count);
+        foreach (var picker in pickers)
+        {
+            Assert.NotNull(picker.Attribute("Title"));
+            Assert.NotNull(picker.Attribute("ItemsSource"));
+            Assert.NotNull(picker.Attribute("SelectedIndex"));
+            Assert.NotNull(picker.Attribute("AutomationId"));
+        }
+    }
+
+    [Theory]
+    [InlineData("ThemedPickerStyle")]
+    [InlineData("PickerOption")]
+    public void ThemedPickerHasTouchSizedControls(string key)
+    {
+        XNamespace xaml = "http://schemas.microsoft.com/winfx/2009/xaml";
+        var style = ReadTheme().Root!.Elements().Single(element => (string?)element.Attribute(xaml + "Key") == key);
+        var height = style.Elements().Single(element => (string?)element.Attribute("Property") == "MinimumHeightRequest");
+        Assert.True(double.Parse(height.Attribute("Value")!.Value, CultureInfo.InvariantCulture) >= 48);
+    }
+
+    [Fact]
+    public void SelectedPickerOptionUsesThemeAwareSemanticColors()
+    {
+        XNamespace xaml = "http://schemas.microsoft.com/winfx/2009/xaml";
+        var style = ReadTheme().Root!.Elements().Single(element => (string?)element.Attribute(xaml + "Key") == "PickerSelectedOption");
+        foreach (var property in new[] { "BackgroundColor", "TextColor", "BorderColor" })
+        {
+            var setter = style.Elements().Single(element => (string?)element.Attribute("Property") == property);
+            Assert.Contains("AppThemeBinding", setter.Attribute("Value")!.Value);
+        }
     }
 
     private static XDocument ReadTheme() => XDocument.Load(Path.Combine(AppContext.BaseDirectory, "Design", "StudyTheme.xaml"));

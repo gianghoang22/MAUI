@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:vm="clr-namespace:MauiApp1.ViewModels">
+                    xmlns:vm="clr-namespace:MauiApp1.ViewModels" xmlns:controls="clr-namespace:MauiApp1.Controls">
     <Color x:Key="PageBackgroundLight">#F2F6F2</Color>
     <Color x:Key="PageBackgroundDark">#18231F</Color>
     <Color x:Key="SurfaceLight">#FAFBF6</Color>
@@ -72,7 +72,15 @@
     <Style x:Key="QuietButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" /><Setter Property="BorderWidth" Value="1" /><Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" /></Style>
     <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource BaseButton}"><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource DangerSurfaceLight}, Dark={StaticResource DangerSurfaceDark}}" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DangerTextLight}, Dark={StaticResource DangerTextDark}}" /></Style>
     <Style TargetType="Entry" ApplyToDerivedTypes="True"><Setter Property="FontFamily" Value="OpenSansRegular" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="MinimumHeightRequest" Value="52" /><Setter Property="FontSize" Value="16" /></Style>
-    <Style TargetType="Picker"><Setter Property="FontFamily" Value="OpenSansRegular" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="MinimumHeightRequest" Value="52" /><Setter Property="FontSize" Value="15" /></Style>
+    <Style x:Key="ThemedPickerStyle" TargetType="controls:ThemedPicker" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="MinimumHeightRequest" Value="52" />
+        <Setter Property="Padding" Value="16,12" />
+    </Style>
     <Style TargetType="Editor"><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="MinimumHeightRequest" Value="52" /><Setter Property="FontSize" Value="16" /></Style>
     <Style TargetType="SearchBar"><Setter Property="MinimumHeightRequest" Value="52" /><Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" /><Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}" /><Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}" /><Setter Property="CancelButtonColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /><Setter Property="FontSize" Value="16" /></Style>
     <Style TargetType="ActivityIndicator"><Setter Property="Color" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" /></Style>
@@ -134,6 +142,16 @@
     </Style>
     <Style x:Key="DialogCancelButton" TargetType="Button" BasedOn="{StaticResource DialogActionButton}">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
+    </Style>
+    <Style x:Key="PickerOption" TargetType="Button" BasedOn="{StaticResource DialogActionButton}">
+        <Setter Property="MinimumHeightRequest" Value="52" />
+        <Setter Property="Padding" Value="16,12" />
+    </Style>
+    <Style x:Key="PickerSelectedOption" TargetType="Button" BasedOn="{StaticResource PickerOption}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource AccentTextDark}}" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource AccentOutlineLight}, Dark={StaticResource AccentOutlineDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
     </Style>
     <Style x:Key="DialogDangerButton" TargetType="Button" BasedOn="{StaticResource DialogActionButton}">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource DangerSurfaceLight}, Dark={StaticResource DangerSurfaceDark}}" />

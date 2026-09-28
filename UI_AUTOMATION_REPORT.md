@@ -2,6 +2,28 @@
 
 Ngày chạy: **28/09/2026**. Đây là kết quả chạy thực tế, khác checklist thủ công trong `TEST_CASES_DEMO.md`.
 
+## Cập nhật: picker theo theme app
+
+**Thay đổi sau lượt test dưới đây:** đã bỏ icon dropdown và dấu tick theo yêu cầu, giữ màu nhấn của mục đang chọn. Không chạy lại test/build cho thay đổi bỏ icon; ảnh và kết quả dưới đây thuộc bản trước khi bỏ icon.
+
+Sau khi thay cả chín picker bằng `ThemedPicker`, đã chạy lại ngày **28/09/2026**:
+
+| Kiểm tra bản picker mới | Kết quả | Evidence trong `MauiApp1/obj/UiAutomationEvidence/` |
+| --- | --- | --- |
+| Toàn bộ suite học Windows, dùng popup mới | **13/13 PASS** | `ThemedPickerWindowsFinal/summary.json` |
+| Windows: dấu chọn/accessibility hint, cancel, chọn lại, dark/light, tiếng Việt, cửa sổ hẹp, reopen | **3/3 PASS** | `ThemedPickerWindowsSmoke/results.json` |
+| Android: popup theo theme, cancel/Back, persistence và cả chín picker settings/deck/phiên học/list | **2/2 PASS** | `ThemedPickerAndroid/results.json` |
+| Unit/design test Release sau thay picker | **74/74 PASS** | `UnitTests/themed-picker.trx` |
+| Build Release Windows và Android | **PASS**, 0 warning / 0 error | Build thường, không chỉ package cô lập |
+
+Đã xem ảnh popup sáng/tối thực tế trên Windows và Android. Các lần chạy UI dùng package test riêng; dữ liệu app thật không bị sửa. Windows dùng InvokePattern vào button và option của popup thật; Android dùng tap vào control thật. Đây là **popup chọn theo theme ở giữa cửa sổ**, không phải dropdown native được đổi màu.
+
+Ảnh mẫu: `ThemedPickerWindowsSmoke/01-light-options.png`, `ThemedPickerWindowsSmoke/02-dark-options.png`, `ThemedPickerWindowsSmoke/03-compact-vietnamese.png`, `ThemedPickerAndroid/01-light-options.png`, `ThemedPickerAndroid/02-dark-options.png`.
+
+Phím lên/xuống/Home/End và Escape được hỗ trợ trong code Windows; lượt smoke này dùng UIA để chọn/hủy, **chưa tự động xác minh phím vật lý hoặc screen reader thực tế**. Android Back đã được gửi bằng keyevent và xác nhận không đổi lựa chọn.
+
+Các kết quả trong phần tiếp theo là đợt full test trước khi đổi picker; không cộng lại các lượt regression thành số test case chức năng mới.
+
 ## 1. Kết quả
 
 | Bộ kiểm tra | Kết quả | Evidence |

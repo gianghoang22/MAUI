@@ -19,6 +19,9 @@
   <ItemGroup>
     <Compile Include="..\MauiApp1\Controls\LayoutMetrics.cs" Link="Controls\LayoutMetrics.cs" />
     <None Include="..\MauiApp1\Themes\StudyTheme.xaml" Link="Design\StudyTheme.xaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\MauiApp1\Views\SettingsPage.xaml" Link="Design\SettingsPage.xaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\MauiApp1\Views\DeckPage.xaml" Link="Design\DeckPage.xaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\MauiApp1\Views\LearningPage.xaml" Link="Design\LearningPage.xaml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\MauiApp1\Views\InteractionDialog.xaml" Link="Design\InteractionDialog.xaml" CopyToOutputDirectory="PreserveNewest" />
     <Compile Include="..\MauiApp1\Models\*.cs" LinkBase="Models" />
     <Compile Include="..\MauiApp1\Services\JsonVocabularyRepository.cs" Link="Services\JsonVocabularyRepository.cs" />

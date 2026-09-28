@@ -165,6 +165,8 @@ JSON chưa mã hóa, không hỗ trợ nhiều tiến trình ghi chung file ho�
 
 ## UI automation ngày 28/09/2026
 
+- Các ô chọn ngôn ngữ, theme, chế độ học, chiều học và bộ lọc dùng `ThemedPicker`: nút bo góc mở popup theo theme app trên Windows/Android, không mở danh sách native của hệ điều hành. Không hiển thị icon dropdown hoặc dấu tick; mục hiện tại được nhấn bằng màu nền, viền và chữ; chọn áp dụng ngay, Hủy/Back/Escape không đổi giá trị. Windows hỗ trợ Tab, phím lên/xuống, Home/End và Enter/Space.
+
 - Báo cáo chạy thật, lỗi phát hiện và phạm vi còn chưa kiểm tra: `UI_AUTOMATION_REPORT.md`.
 - Hướng dẫn build bản cô lập, chạy Windows UIA/Android touchscreen automation và xem ảnh/log: `scripts/README.md`.
 - Không chạy trên dữ liệu chính; runner dùng ApplicationId riêng `com.vocabmate.uia20260928`.

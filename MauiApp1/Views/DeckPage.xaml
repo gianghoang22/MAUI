@@ -40,10 +40,10 @@
                 <Border Style="{StaticResource InsetCard}">
                     <VerticalStackLayout Spacing="12">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
-                        <Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" SemanticProperties.Description="{DynamicResource L10n.VChooseMode}" AutomationId="LearningModePicker" />
-                        <Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" SemanticProperties.Description="{DynamicResource L10n.VChooseDirection}" AutomationId="DirectionPicker" />
+                        <controls:ThemedPicker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" AutomationId="LearningModePicker" />
+                        <controls:ThemedPicker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" AutomationId="DirectionPicker" />
                         <Label Text="{DynamicResource L10n.VStudyFilter}" Style="{StaticResource MutedText}" />
-                        <Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" AutomationId="LearningFilterPicker" />
+                        <controls:ThemedPicker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" Title="{DynamicResource L10n.VStudyFilter}" AutomationId="LearningFilterPicker" />
                         <Label Text="{Binding StudyFilterSummary}" Style="{StaticResource MutedText}" />
                         <Button Text="{DynamicResource L10n.VUseAllCards}" Command="{Binding ResetStudyFilterCommand}" Style="{StaticResource QuietButton}" IsEnabled="{Binding IsNotBusy}" />
                         <Label Text="{DynamicResource L10n.VStarHint}" Style="{StaticResource MutedText}" />
@@ -62,7 +62,7 @@
                 <Label Text="{DynamicResource L10n.VVocabularyList}" Style="{StaticResource SectionHeading}" />
                 <Label Text="{Binding MasterySummary}" Style="{StaticResource MutedText}" />
                 <SearchBar Text="{Binding Search}" Placeholder="{DynamicResource L10n.VSearchCards}" SemanticProperties.Description="{DynamicResource L10n.VSearchCards}" AutomationId="SearchCards" />
-                <Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding ListFilterIndex}" Title="{DynamicResource L10n.VListFilterLabel}" AutomationId="CardListFilterPicker" />
+                <controls:ThemedPicker ItemsSource="{Binding Filters}" SelectedIndex="{Binding ListFilterIndex}" Title="{DynamicResource L10n.VListFilterLabel}" AutomationId="CardListFilterPicker" />
                 <Label Text="{DynamicResource L10n.VListFilterHint}" Style="{StaticResource MutedText}" />
                 <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Center">
                     <Label Text="{Binding SearchSummary}" Style="{StaticResource MutedText}" Margin="0,8,12,8" />

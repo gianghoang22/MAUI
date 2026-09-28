@@ -86,6 +86,19 @@ $env:VOCABMATE_UIA_DIAGNOSTICS = [IO.Path]::GetFullPath('MauiApp1/obj/UiAutomati
 
 Target chỉ thêm `UiAutomationDiagnostics.cs` khi ApplicationId là package test. Build thường không chứa module này. Log first-chance bao gồm cả lỗi validation đã được xử lý; không coi mọi dòng exception là một test thất bại.
 
+## Kiểm tra picker theo theme
+
+Sau khi build/cài lại bản test bằng lệnh phía trên:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/RunThemedPickerWindows.ps1
+python scripts/RunThemedPickerAndroid.py
+```
+
+Windows kiểm tra dấu chọn/accessibility hint, hủy, chọn lại cùng giá trị, theme tối, tiếng Việt, cửa sổ hẹp và persistence. Android kiểm tra popup custom thay dialog hệ thống, Hủy/Back, theme/ngôn ngữ, toàn bộ picker của deck/phiên học/danh sách, hủy hoặc áp dụng setup. Android smoke cần bộ 13 từ Nhật–Anh trong package test, được tạo bởi `RunAndroidUiRegression.py`; không dùng dữ liệu app thật. Evidence riêng ở `ThemedPickerWindowsSmoke/` và `ThemedPickerAndroid/`, trong `MauiApp1/obj/UiAutomationEvidence/`.
+
+Windows helper hỗ trợ cả picker native cũ và nút mở popup custom mới. Nếu desktop capture không khả dụng, helper thử chụp riêng cửa sổ test bằng PrintWindow; không mở khóa desktop hoặc tương tác với cửa sổ app thật.
+
 ## Những gì vẫn cần kiểm tra riêng
 
 Chất lượng/âm thanh TTS thực tế; native share/export end-to-end; thiết bị Android vật lý và phiên bản OS khác; TalkBack/Narrator; font hệ thống lớn; landscape; 2.000 thẻ/10 MB; độ bền nhiều giờ, cạn pin/disk và interruption đặc biệt. Ảnh theme không chứng minh việc dùng nhiều giờ sẽ không mỏi mắt.

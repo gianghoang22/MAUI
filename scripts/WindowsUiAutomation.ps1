@@ -20,6 +20,7 @@ public static class VocabMateUiWindow {
     [DllImport("user32.dll")] public static extern bool PostMessage(IntPtr handle, uint message, IntPtr word, IntPtr value);
     [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr handle);
     [DllImport("user32.dll")] public static extern bool MoveWindow(IntPtr handle, int left, int top, int width, int height, bool repaint);
+    [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr handle, IntPtr deviceContext, uint flags);
 }
 "@
 }
@@ -107,6 +108,15 @@ function Get-UiValue([string]$Id) {
 }
 function Choose-Ui([string]$Id, [string]$Text) {
     $element = Wait-Ui $Id
+    if ($element.Current.ControlType -eq [System.Windows.Automation.ControlType]::Button) {
+        Click-Ui $element
+        Wait-Ui 'PickerOption0' | Out-Null
+        $dialog = Wait-Ui 'Popup' $false
+        $option = Find-Ui $Text $false $true $dialog
+        Assert-Ui ($null -ne $option) "Themed picker option exists: $Text"
+        Click-Ui $option
+        return
+    }
     $pattern = [System.Windows.Automation.ExpandCollapsePattern]$element.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern)
     $pattern.Expand()
     Start-Sleep -Milliseconds 250
@@ -147,7 +157,14 @@ function Save-UiEvidence([string]$Name) {
     $bitmap = [System.Drawing.Bitmap]::new([int]$bounds.Width, [int]$bounds.Height)
     $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
     try {
-        $graphics.CopyFromScreen([int]$bounds.X, [int]$bounds.Y, 0, 0, $bitmap.Size)
+        try {
+            $graphics.CopyFromScreen([int]$bounds.X, [int]$bounds.Y, 0, 0, $bitmap.Size)
+        } catch {
+            $deviceContext = $graphics.GetHdc()
+            try {
+                if (-not [VocabMateUiWindow]::PrintWindow($script:Process.MainWindowHandle, $deviceContext, 2)) { throw 'Unable to capture the isolated app window' }
+            } finally { $graphics.ReleaseHdc($deviceContext) }
+        }
         $bitmap.Save((Join-Path $script:Artifacts "$Name.png"), [System.Drawing.Imaging.ImageFormat]::Png)
     } finally { $graphics.Dispose(); $bitmap.Dispose() }
 }

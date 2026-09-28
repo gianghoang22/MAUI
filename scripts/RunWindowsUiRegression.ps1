@@ -276,8 +276,7 @@ try {
         Open-TestApp
         Assert-Ui ($null -ne (Find-Ui 'Thư viện' $false)) 'Vietnamese UI preference survives reopening'
         Click-Name 'Cài đặt'
-        $selectedTheme = ([System.Windows.Automation.SelectionPattern](Wait-Ui 'ThemePicker').GetCurrentPattern([System.Windows.Automation.SelectionPattern]::Pattern)).Current.GetSelection()
-        Assert-Ui ($selectedTheme[0].Current.Name -eq 'Sáng') 'Light theme preference survives restart'
+        Assert-Ui ((Get-UiValue 'ThemePicker') -match 'Sáng') 'Light theme preference survives restart'
         Choose-Ui 'LanguagePicker' 'English'
         Click-Name 'Library'
         Save-UiEvidence '13-final-library'

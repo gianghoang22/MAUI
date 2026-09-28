@@ -18,9 +18,9 @@
                     <VerticalStackLayout Spacing="16">
                         <Label Text="{DynamicResource L10n.VStudySetup}" Style="{StaticResource SectionHeading}" />
                         <controls:AdaptiveColumns>
-                            <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VChooseMode}" Style="{StaticResource MutedText}" /><Picker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" AutomationId="StudyModePicker" /></VerticalStackLayout>
-                            <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VChooseDirection}" Style="{StaticResource MutedText}" /><Picker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" AutomationId="StudyDirectionPicker" /></VerticalStackLayout>
-                            <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VStudyFilter}" Style="{StaticResource MutedText}" /><Picker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" AutomationId="StudyFilterPicker" /></VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VChooseMode}" Style="{StaticResource MutedText}" /><controls:ThemedPicker ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" Title="{DynamicResource L10n.VChooseMode}" AutomationId="StudyModePicker" /></VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VChooseDirection}" Style="{StaticResource MutedText}" /><controls:ThemedPicker ItemsSource="{Binding Directions}" SelectedIndex="{Binding DirectionIndex}" Title="{DynamicResource L10n.VChooseDirection}" AutomationId="StudyDirectionPicker" /></VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6"><Label Text="{DynamicResource L10n.VStudyFilter}" Style="{StaticResource MutedText}" /><controls:ThemedPicker ItemsSource="{Binding Filters}" SelectedIndex="{Binding FilterIndex}" Title="{DynamicResource L10n.VStudyFilter}" AutomationId="StudyFilterPicker" /></VerticalStackLayout>
                         </controls:AdaptiveColumns>
                         <Label Text="{Binding StudyFilterSummary}" Style="{StaticResource MutedText}" />
                         <Label Text="{DynamicResource L10n.VPendingStudyFilterHint}" Style="{StaticResource MutedText}" />

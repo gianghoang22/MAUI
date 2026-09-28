@@ -3,6 +3,8 @@ namespace MauiApp1.Views;
 public partial class InteractionDialog : Microsoft.Maui.Controls.ContentView
 {
     private readonly TaskCompletionSource<string?> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private bool IsSelection { get; set; }
+    private Button? selectedOption;
     private bool isPrompt;
     private bool hasAccept;
     private bool updatingLayout;
@@ -54,6 +56,31 @@ public partial class InteractionDialog : Microsoft.Maui.Controls.ContentView
         return dialog;
     }
 
+    public static InteractionDialog Selection(string title, string cancel, IReadOnlyList<string> items, int selectedIndex, string selectedHint)
+    {
+        var dialog = new InteractionDialog(title, cancel) { IsSelection = true };
+        for (var index = 0; index < items.Count; index++)
+        {
+            var result = index.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var selected = index == selectedIndex;
+            var button = new Button
+            {
+                Text = items[index],
+                Style = (Style)Application.Current!.Resources[selected ? "PickerSelectedOption" : "PickerOption"],
+                AutomationId = $"PickerOption{index}"
+            };
+            if (selected)
+            {
+                SemanticProperties.SetHint(button, selectedHint);
+                dialog.selectedOption = button;
+            }
+            button.Clicked += (_, _) => dialog.Complete(result);
+            dialog.ActionList.Children.Add(button);
+        }
+        dialog.ActionList.IsVisible = true;
+        return dialog;
+    }
+
     public static InteractionDialog Message(string title, string message, string cancel, string? accept = null, bool destructive = false)
     {
         var dialog = new InteractionDialog(title, cancel);
@@ -85,6 +112,7 @@ public partial class InteractionDialog : Microsoft.Maui.Controls.ContentView
         {
             if (completion.Task.IsCompleted) return;
             if (isPrompt) PromptEntry.Focus();
+            else if (selectedOption is not null) selectedOption.Focus();
             else if (ActionList.Children.FirstOrDefault() is Button firstAction) firstAction.Focus();
             else CancelButton.Focus();
         });

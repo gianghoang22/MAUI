@@ -709,4 +709,5 @@
   <data name="VRestartRound" xml:space="preserve"><value>Học lại từ đầu</value></data>
   <data name="VRoundComplete" xml:space="preserve"><value>Đã hết từ còn lại trong vòng học theo bộ lọc này. Chọn Học lại từ đầu hoặc đổi nhóm từ để ôn tiếp.</value></data>
   <data name="VSpeakAnswer" xml:space="preserve"><value>Nghe đáp án</value></data>
+  <data name="VSelectedOption" xml:space="preserve"><value>Đang được chọn</value></data>
 </root>

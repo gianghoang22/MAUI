@@ -709,4 +709,5 @@
   <data name="VRestartRound" xml:space="preserve"><value>Start a new round</value></data>
   <data name="VRoundComplete" xml:space="preserve"><value>No words remain in this round for the selected filter. Start a new round or change the filter to study again.</value></data>
   <data name="VSpeakAnswer" xml:space="preserve"><value>Listen to answer</value></data>
+  <data name="VSelectedOption" xml:space="preserve"><value>Currently selected</value></data>
 </root>

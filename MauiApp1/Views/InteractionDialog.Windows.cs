@@ -82,6 +82,23 @@ public partial class InteractionDialog : Microsoft.Maui.Controls.ContentView
 
     private void OnDialogKeyDown(object sender, KeyRoutedEventArgs arguments)
     {
+        if (IsSelection && arguments.Key is VirtualKey.Up or VirtualKey.Down or VirtualKey.Home or VirtualKey.End)
+        {
+            var options = ActionList.Children.OfType<Microsoft.Maui.Controls.Button>().ToList();
+            if (options.Count == 0) return;
+            var focusedIndex = options.FindIndex(option => option.IsFocused);
+            var nextIndex = arguments.Key switch
+            {
+                VirtualKey.Home => 0,
+                VirtualKey.End => options.Count - 1,
+                VirtualKey.Up => Math.Max(0, focusedIndex - 1),
+                _ => Math.Min(options.Count - 1, focusedIndex + 1)
+            };
+            options[nextIndex].Focus();
+            _ = DialogScroll.ScrollToAsync(options[nextIndex], ScrollToPosition.MakeVisible, false);
+            arguments.Handled = true;
+            return;
+        }
         if (arguments.Key != VirtualKey.Escape) return;
         arguments.Handled = true;
         Complete(null);
