@@ -40,6 +40,7 @@ public sealed class HistoryViewModel : ViewModelBase, IRefreshable
             {
                 var data = await repository.ReadAsync();
                 if (data.Session is { IsComplete: false } && !await Interaction.ConfirmAsync(Localization["VReplaceSession"], Localization["VReplaceSessionWarning"], "VStartNew")) return;
+                // Ôn lại tạo phiên mới chỉ gồm câu sai, không sửa kết quả của lần học trước.
                 await repository.StartSessionAsync(engine.Retry(result));
                 await Interaction.NavigateAsync("learn");
             }), () => result.WrongQuestions.Count > 0)), Localization)).ToList();

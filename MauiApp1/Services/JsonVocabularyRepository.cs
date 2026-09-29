@@ -90,6 +90,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
                     throw new StudyException("VLanguageMismatch");
                 data.Decks[deckIndex] = deck with { FirstLanguage = first, SecondLanguage = second };
             }
+            // Kiểm tra trùng cả với thẻ đã lưu lẫn các dòng vừa thêm trong lần import này.
             var existing = data.Cards.Where(card => card.DeckId == deckId)
                 .Select(card => VocabularyRules.PairKey(card.Vietnamese, card.English)).ToHashSet();
             foreach (var card in cards)
@@ -124,6 +125,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
     public Task SaveSessionAsync(LearningSession session) => UpdateAsync(data =>
     {
         RequireDeck(data, session.DeckId);
+        // Từ chối bản lưu cũ nếu phiên đã đổi hoặc tiến độ mới hơn đã được ghi xuống file.
         if (data.Session is not { } current || current.Id != session.Id || current.Index > session.Index ||
             current.Attempts.Count > session.Attempts.Count || current.MatchedIds.Count > session.MatchedIds.Count ||
             current.DeckId != session.DeckId || current.MatchMistakes > session.MatchMistakes ||
@@ -132,6 +134,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
             current.MatchedIds.Except(session.MatchedIds).Any() ||
             !current.Attempts.SequenceEqual(session.Attempts.Take(current.Attempts.Count)) ||
             (current.Mode != LearningMode.Flashcards && current.Index == session.Index && current.Revealed && !session.Revealed)) throw new StudyException("VSessionChanged");
+        // Flashcard: Đã nhớ/Chưa nhớ cập nhật sao, nhưng chỉ khi thẻ vẫn khớp câu đã học.
         if (session.Mode == LearningMode.Flashcards)
         {
             foreach (var attempt in session.Attempts.Skip(current.Attempts.Count))
@@ -148,6 +151,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
             }
         }
         data.Session = session;
+        // Chỉ ghi lịch sử khi hoàn tất, mỗi phiên một kết quả dù được lưu nhiều lần.
         if (!session.IsComplete || data.Results.Any(result => result.Id == session.Id)) return;
         var wrongIds = session.Attempts.Where(attempt => !attempt.Correct).Select(attempt => attempt.CardId).ToHashSet();
         data.Results.Add(new LearningResult(session.Id, session.DeckId, session.DeckName, session.Mode, session.Direction,
@@ -163,6 +167,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         if (!data.Decks.Any(deck => deck.Id == deckId)) throw new StudyException("VNotFound");
     }
 
+    // Xóa bộ từ kéo theo thẻ, nháp, lịch sử và phiên học liên quan, tránh dữ liệu mồ côi.
     private static void RemoveDecks(VocabularyData data, HashSet<Guid> deckIds)
     {
         data.Decks.RemoveAll(deck => deckIds.Contains(deck.Id));
@@ -172,6 +177,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
         if (data.Session is not null && deckIds.Contains(data.Session.DeckId)) data.Session = null;
     }
 
+    // Mọi thao tác ghi đều đi qua đây: khóa -> đọc -> sửa -> kiểm tra -> ghi file.
     private async Task UpdateAsync(Action<VocabularyData> change)
     {
         await gate.WaitAsync();
@@ -182,6 +188,7 @@ public sealed class JsonVocabularyRepository(string directory) : IVocabularyRepo
             change(data);
             Validate(data);
             Directory.CreateDirectory(directory);
+            // Ghi xong file tạm mới thay file chính, tránh để lại JSON viết dở nếu bước ghi lỗi.
             temporary = Path.Combine(directory, $"vocabmate-{Guid.NewGuid():N}.tmp");
             await using (var stream = File.Create(temporary))
             {

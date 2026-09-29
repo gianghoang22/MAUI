@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\azureuser\\source\\Prod\\MAUI\\Project\\MauiApp1\\",
+  "WorkspaceRootPath": "E:\\Projects\\MAUI\\Project\\MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FAA40553-6E6D-4D4E-A9C4-46477FC1E90D}|MauiApp1\\MauiApp1.csproj|c:\\users\\azureuser\\source\\prod\\maui\\project\\mauiapp1\\mauiapp1\\mauiapp1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{FAA40553-6E6D-4D4E-A9C4-46477FC1E90D}|MauiApp1\\MauiApp1.csproj|solutionrelative:mauiapp1\\mauiapp1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{DBB709D5-80F0-EE7D-A2D1-7D84BC5D452F}|MauiApp1\\MauiApp1.csproj|e:\\projects\\maui\\project\\maui\\mauiapp1\\mauiapp1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{DBB709D5-80F0-EE7D-A2D1-7D84BC5D452F}|MauiApp1\\MauiApp1.csproj|solutionrelative:mauiapp1\\mauiapp1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,12 +19,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MauiApp1",
-              "DocumentMoniker": "C:\\Users\\azureuser\\source\\Prod\\MAUI\\Project\\MauiApp1\\MauiApp1\\MauiApp1.csproj",
+              "Title": "MauiApp1.csproj",
+              "DocumentMoniker": "E:\\Projects\\MAUI\\Project\\MAUI\\MauiApp1\\MauiApp1.csproj",
               "RelativeDocumentMoniker": "MauiApp1\\MauiApp1.csproj",
-              "ToolTip": "C:\\Users\\azureuser\\source\\Prod\\MAUI\\Project\\MauiApp1\\MauiApp1\\MauiApp1.csproj",
+              "ToolTip": "E:\\Projects\\MAUI\\Project\\MAUI\\MauiApp1\\MauiApp1.csproj",
               "RelativeToolTip": "MauiApp1\\MauiApp1.csproj",
-              "ViewState": "AgIAAAwAAAAAAAAAAAArwBQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAArwB8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-09-16T03:27:48.965Z",
               "EditorCaption": ""

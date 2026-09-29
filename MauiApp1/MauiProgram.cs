@@ -25,6 +25,7 @@ public static class MauiProgram
 #if WINDOWS
         builder.ConfigureMauiHandlers(handlers => handlers.AddHandler<Button, StudyButtonHandler>());
 #endif
+        // Dùng chung các service để mọi màn hình đọc/ghi cùng một nguồn dữ liệu.
         builder.Services.AddSingleton<LocalizationService>();
         builder.Services.AddSingleton<IVocabularyRepository>(_ => new JsonVocabularyRepository(FileSystem.AppDataDirectory));
         builder.Services.AddSingleton<IUserInteraction, ShellUserInteraction>();
@@ -37,6 +38,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<LibraryViewModel>();
         builder.Services.AddSingleton<HistoryViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
+        // Màn chi tiết tạo mới mỗi lần mở, tránh giữ dữ liệu của lớp/bộ từ trước đó.
         builder.Services.AddTransient<ClassViewModel>();
         builder.Services.AddTransient<DeckViewModel>();
         builder.Services.AddTransient<CardEditorViewModel>();

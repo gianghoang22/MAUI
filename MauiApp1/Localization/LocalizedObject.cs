@@ -14,6 +14,7 @@ public abstract class LocalizedObject : INotifyPropertyChanged
     protected LocalizationService Localization { get; }
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    // null báo giao diện đọc lại mọi thuộc tính, gồm cả các chuỗi vừa đổi ngôn ngữ.
     protected virtual void OnLanguageChanged(object? sender, EventArgs arguments) => OnPropertyChanged(null);
 
     protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null)

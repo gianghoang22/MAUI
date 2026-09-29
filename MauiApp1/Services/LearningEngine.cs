@@ -2,6 +2,7 @@ using MauiApp1.Models;
 
 namespace MauiApp1.Services;
 
+// Chỉ tạo câu hỏi và tính trạng thái học; ViewModel lo lưu dữ liệu và cập nhật màn hình.
 public sealed class LearningEngine
 {
     public LearningSession Create(VocabularyDeck deck, IReadOnlyList<VocabularyCard> cards, LearningMode mode, LearningDirection direction,
@@ -16,6 +17,7 @@ public sealed class LearningEngine
         var eligible = cards.Where(card => card.DeckId == deck.Id &&
             (filter == LearningFilter.All || card.IsStarred == (filter == LearningFilter.Starred)) &&
             !completed.Contains(VocabularyRules.Normalize(Prompt(card, direction))));
+        // Cùng một từ hỏi thì gom thành một câu, chấp nhận các nghĩa đã khai báo trong bộ.
         var groups = eligible.GroupBy(card => VocabularyRules.Normalize(Prompt(card, direction))).ToList();
         if (groups.Count == 0) throw new StudyException(cards.Count == 0 ? "VNoCards" : "VNoFilteredCards");
         var allAnswers = cards.Where(card => card.DeckId == deck.Id).Select(card => Answer(card, direction)).DistinctBy(VocabularyRules.Normalize).ToList();
@@ -32,6 +34,7 @@ public sealed class LearningEngine
             var answer = Answer(card, direction);
             if (mode == LearningMode.Match)
             {
+                // Mỗi đáp án bên phải chỉ dùng một lần để ghép cặp không bị mơ hồ.
                 var available = accepted.FirstOrDefault(candidate => !usedMatchAnswers.Contains(VocabularyRules.Normalize(candidate)));
                 if (available is null) continue;
                 answer = available;
@@ -40,6 +43,7 @@ public sealed class LearningEngine
             var choices = new List<string>();
             if (mode == LearningMode.MultipleChoice)
             {
+                // Ba đáp án nhiễu phải khác mọi nghĩa đúng, không chỉ khác đáp án đang hiển thị.
                 var acceptedKeys = accepted.Select(VocabularyRules.Normalize).ToHashSet();
                 var wrong = Shuffle(allAnswers.Where(answer => !acceptedKeys.Contains(VocabularyRules.Normalize(answer)))).Take(3).ToList();
                 if (wrong.Count < 3) throw new StudyException("VNeedFourAnswers");
@@ -82,6 +86,7 @@ public sealed class LearningEngine
         { FirstLanguage = result.FirstLanguage, SecondLanguage = result.SecondLanguage };
     }
 
+    // Chấm và hiện đáp án trước; chỉ khi bấm Tiếp theo mới chuyển câu.
     public LearningSession Submit(LearningSession session, string answer)
     {
         RequireAnswerable(session);

@@ -15,6 +15,7 @@ public partial class App : Application
         this.services = services;
         this.localization = localization;
         this.lifecycle = lifecycle;
+        // Khôi phục ngôn ngữ trước khi dựng giao diện; vẫn đọc được thiết lập từ tên app cũ.
         var language = preferences.Get("vocabmate.language", preferences.Get("studymate.language", "vi"));
         localization.SetLanguage(language == "en" ? "en" : "vi");
         InitializeComponent();
@@ -31,6 +32,7 @@ public partial class App : Application
         window.MinimumWidth = 360;
         window.MinimumHeight = 500;
 #endif
+        // Khi app xuống nền hoặc đóng cửa sổ, lưu ngay nội dung đang gõ.
         window.Stopped += OnStopped;
         window.Activated += (_, _) => SystemBarAppearance.Apply();
         window.Resumed += OnResumed;
@@ -43,6 +45,7 @@ public partial class App : Application
     private async void OnResumed(object? sender, EventArgs arguments)
     {
         await lifecycle.FlushAsync();
+        // Không tải đè màn đang nhập liệu; chỉ làm mới các màn xem dữ liệu.
         if (Shell.Current.CurrentPage.BindingContext is IRefreshable refreshable && refreshable is not IEditorCheckpoint)
             await refreshable.RefreshAsync();
     }

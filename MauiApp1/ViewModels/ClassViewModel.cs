@@ -83,6 +83,7 @@ public sealed class ClassViewModel : ViewModelBase, IRefreshable
     public Task RefreshAsync() => RunAsync(LoadAsync);
     private void RequireLoaded() { if (!loaded) throw new StudyException("VNotFound"); }
 
+    // Chỉ lấy bộ từ thuộc lớp đang mở; bấm một bộ sẽ truyền deckId sang màn bộ từ.
     private async Task LoadAsync()
     {
         loaded = false;

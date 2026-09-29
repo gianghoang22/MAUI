@@ -15,6 +15,7 @@ public partial class CardEditorPage : ContentPage, IQueryAttributable
         this.lifecycle = lifecycle;
     }
 
+    // Có cardId thì sửa thẻ cũ; chỉ có deckId thì thêm thẻ vào bộ từ đó.
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (!query.TryGetValue("deckId", out var deck)) return;

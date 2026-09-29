@@ -21,6 +21,7 @@ public sealed class ImportViewModel : ViewModelBase, IRefreshable
     public ImportViewModel(IVocabularyRepository repository, IWorkbookFiles files, IUserInteraction interaction, LocalizationService localization) : base(interaction, localization)
     {
         this.repository = repository;
+        // Chọn file chỉ dựng bản xem trước, chưa thêm thẻ vào bộ từ.
         ChooseCommand = CreateCommand(async () =>
         {
             workbook = null;
@@ -41,6 +42,7 @@ public sealed class ImportViewModel : ViewModelBase, IRefreshable
             RebuildPreview();
             OnPropertyChanged(nameof(HasPreview));
         });
+        // Chỉ ghi sau khi hết lỗi và người dùng xác nhận; dòng trùng được bỏ qua.
         ImportCommand = CreateCommand(async () =>
         {
             if (!CanImport || prepared is null) throw new StudyException("VFixImport");
@@ -97,6 +99,7 @@ public sealed class ImportViewModel : ViewModelBase, IRefreshable
         RebuildPreview();
     });
 
+    // Đổi nhãn ngôn ngữ cũng phải kiểm tra lại thứ tự hai mặt và các cặp trùng.
     private void RebuildPreview()
     {
         if (workbook is null || data is null) return;

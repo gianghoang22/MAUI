@@ -21,6 +21,7 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
     private int directionIndex;
     private bool translating;
     private int filterIndex;
+    // Bộ lọc danh sách chỉ đổi các thẻ đang hiện, không đổi nhóm từ được chọn để học.
     private int listFilterIndex = (int)LearningFilter.All;
     private bool canResume;
     private bool showDetails;
@@ -195,6 +196,7 @@ public sealed class DeckViewModel : ViewModelBase, IRefreshable
         OnPropertyChanged(nameof(StudyFilterSummary));
     }
 
+    // Tạo câu hỏi từ dữ liệu đã lưu -> xác nhận thay phiên cũ -> lưu phiên mới -> mở màn học.
     private async Task StartAsync()
     {
         RequireDeck();

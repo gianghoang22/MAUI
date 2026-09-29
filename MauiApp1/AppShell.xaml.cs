@@ -10,6 +10,8 @@ public partial class AppShell : Shell
         LibraryContent.Content = library;
         HistoryContent.Content = history;
         SettingsContent.Content = settings;
+        // Luồng mở màn: thư viện -> lớp -> bộ từ -> sửa thẻ / import / học.
+        // ID đi trong query của route; màn đích nhận ID rồi tự tải dữ liệu.
         Routing.RegisterRoute("class", typeof(ClassPage));
         Routing.RegisterRoute("deck", typeof(DeckPage));
         Routing.RegisterRoute("card", typeof(CardEditorPage));

@@ -176,6 +176,7 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
     public ICommand RetryCommand { get; }
     public Task RefreshAsync() => RunAsync(LoadAsync);
 
+    // Màn học lấy phiên đã lưu, nên mở từ bộ từ hay Tiếp tục học đều dùng cùng luồng.
     private async Task LoadAsync()
     {
         await FlushAsync();
@@ -217,6 +218,7 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         var data = await repository.ReadAsync();
         var deck = data.Decks.FirstOrDefault(item => item.Id == session.DeckId) ?? throw new StudyException("VNotFound");
         var cards = data.Cards.Where(card => card.DeckId == deck.Id).ToList();
+        // Đổi thiết lập thì bắt đầu vòng mới; học tiếp thì giữ vòng và bỏ các câu đã xuất hiện.
         var next = changeSettings
             ? engine.Create(deck, cards, (LearningMode)ModeIndex, (LearningDirection)DirectionIndex, (LearningFilter)FilterIndex)
             : engine.Continue(deck, cards, session);
@@ -238,6 +240,7 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         FilterIndex = (int)current.Filter;
     }
 
+    // Đưa phiên lên giao diện; tạm tắt autosave để việc khôi phục Input không bị coi là gõ mới.
     private void Apply(LearningSession current)
     {
         AutosaveEnabled = false;
@@ -255,6 +258,7 @@ public sealed class LearningViewModel : AutosaveViewModel, IRefreshable
         session = updated;
     }
 
+    // Lưu phần đang gõ -> xử lý đáp án/chuyển câu -> lưu phiên -> cập nhật giao diện.
     private async Task ChangeAsync(Func<LearningSession, LearningSession> change)
     {
         await FlushAsync();

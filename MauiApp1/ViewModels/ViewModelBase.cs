@@ -44,6 +44,7 @@ public abstract class ViewModelBase(IUserInteraction interaction, LocalizationSe
             selected.Command.Execute(null);
     });
 
+    // Các command đi qua đây để chặn bấm liên tục và hiển thị lỗi bằng ngôn ngữ đang chọn.
     public async Task RunAsync(Func<Task> action)
     {
         if (IsBusy)

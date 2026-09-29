@@ -12,6 +12,7 @@ public sealed class ShellUserInteraction(LocalizationService localization) : IUs
         if (route != "..")
             return Shell.Current.GoToAsync(route);
 
+        // Quay lại màn trước; nếu không còn màn trước thì về thư viện.
         return MainThread.InvokeOnMainThreadAsync(async () =>
         {
             var navigation = Shell.Current.Navigation;

@@ -25,6 +25,7 @@ public sealed class SettingsViewModel : ViewModelBase
             if (isRefreshingLanguage || value is < 0 or > 1 || value == SelectedLanguage)
                 return;
             var languageCode = value == 1 ? "en" : "vi";
+            // Lưu lựa chọn cho lần mở app sau, rồi phát sự kiện để đổi chữ ngay trên các màn.
             preferences.Set("vocabmate.language", languageCode);
             Localization.SetLanguage(languageCode);
         }
@@ -44,6 +45,7 @@ public sealed class SettingsViewModel : ViewModelBase
 
     protected override void OnLanguageChanged(object? sender, EventArgs arguments)
     {
+        // Đổi ngôn ngữ làm danh sách chọn dựng lại; không coi việc đó là người dùng đổi thiết lập.
         isRefreshingLanguage = true;
         try
         {

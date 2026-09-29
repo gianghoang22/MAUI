@@ -86,6 +86,7 @@ public sealed class LibraryViewModel : ViewModelBase, IRefreshable
     public ICommand ToggleCreateCommand { get; }
     public Task RefreshAsync() => RunAsync(LoadAsync);
 
+    // Đọc dữ liệu -> tính thống kê -> tạo danh sách lớp kèm lệnh mở/sửa/xóa.
     private async Task LoadAsync()
     {
         var data = await repository.ReadAsync();

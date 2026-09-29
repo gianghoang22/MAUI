@@ -25,6 +25,7 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
         {
             RequireLoaded();
             await FlushAsync();
+            // Lưu thành thẻ thật sẽ xóa bản nháp; tắt autosave để không tạo lại nháp khi rời màn.
             await repository.SaveCardAsync(new VocabularyCard(cardId, deckId, Vietnamese, English));
             AutosaveEnabled = false;
             ResetAutosave();
@@ -74,6 +75,7 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
         cardId = card is null ? Guid.NewGuid() : Guid.TryParse(card, out var parsedCard) ? parsedCard : Guid.Empty;
     }
 
+    // Chỉ nạp lần đầu, tránh ghi đè nội dung đang sửa khi màn xuất hiện lại.
     public Task RefreshAsync() => loaded ? Task.CompletedTask : RunAsync(LoadAsync);
 
     private async Task LoadAsync()
@@ -87,6 +89,7 @@ public sealed class CardEditorViewModel : AutosaveViewModel, IRefreshable
         var card = data.Cards.FirstOrDefault(item => item.DeckId == deckId && item.Id == cardId);
         if (!isNew && card is null) throw new StudyException("VNotFound");
         AutosaveEnabled = false;
+        // Ưu tiên bản nháp để khôi phục phần đang gõ, kể cả thẻ mới chưa bấm Lưu.
         if (draft is not null)
         {
             cardId = draft.CardId;

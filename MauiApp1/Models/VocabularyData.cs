@@ -8,6 +8,7 @@ public sealed record VocabularyDeck(Guid Id, Guid ClassId, string Name, string D
     public string FirstLanguage { get; init; } = "vi";
     public string SecondLanguage { get; init; } = "en";
 }
+// Vietnamese/English là tên cũ của mặt 1/mặt 2; ngôn ngữ thực tế nằm trong bộ từ.
 public sealed record VocabularyCard(Guid Id, Guid DeckId, string Vietnamese, string English, bool IsStarred = false);
 public sealed record CardDraft(Guid CardId, Guid DeckId, bool IsNew, string Vietnamese, string English, DateTimeOffset UpdatedAt);
 public enum LearningMode { Flashcards, MultipleChoice, Written, Match }
@@ -23,6 +24,7 @@ public sealed record LearningSession(
     DateTimeOffset StartedAt, DateTimeOffset? FinishedAt)
 {
     public LearningFilter Filter { get; init; } = LearningFilter.All;
+    // Các câu đã xuất hiện ở lượt trước trong cùng vòng, để lượt tiếp theo không lặp lại.
     public List<string> CompletedPrompts { get; init; } = [];
     public string FirstLanguage { get; init; } = "vi";
     public string SecondLanguage { get; init; } = "en";
@@ -39,6 +41,7 @@ public sealed record LearningResult(Guid Id, Guid DeckId, string DeckName, Learn
     public string SecondLanguage { get; init; } = "en";
 }
 
+// Toàn bộ dữ liệu lưu trong một file JSON; app chỉ giữ một phiên học hiện tại.
 public sealed class VocabularyData
 {
     [JsonRequired] public int SchemaVersion { get; set; } = 1;

@@ -23,6 +23,7 @@ public abstract class AutosaveViewModel(IUserInteraction interaction, Localizati
         revision++;
         saveError = null;
         OnPropertyChanged(nameof(SaveStatus));
+        // Mỗi lần gõ sẽ hẹn lại; ngừng gõ 400 ms mới lưu, không ghi file theo từng ký tự.
         debounce?.Cancel();
         debounce?.Dispose();
         debounce = new CancellationTokenSource();
@@ -52,12 +53,14 @@ public abstract class AutosaveViewModel(IUserInteraction interaction, Localizati
 
     public async Task FlushAsync()
     {
+        // Autosave và thao tác rời màn phải chờ nhau, không được ghi cùng lúc.
         await saveGate.WaitAsync();
         try
         {
             if (!dirty) return;
             var savingRevision = revision;
             await PersistDraftAsync();
+            // Nếu người dùng gõ thêm trong lúc lưu, phần mới vẫn cần được lưu tiếp.
             if (savingRevision == revision) dirty = false;
             saveError = null;
             OnPropertyChanged(nameof(SaveStatus));

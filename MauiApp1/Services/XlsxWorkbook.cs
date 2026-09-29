@@ -31,11 +31,13 @@ public sealed class XlsxWorkbook
     private static WorkbookPreview Parse(Stream source)
     {
         using var archive = new ZipArchive(source, ZipArchiveMode.Read, true);
+        // XLSX là file ZIP; giới hạn cả dữ liệu sau giải nén để tránh file nhỏ làm tràn bộ nhớ.
         if (archive.Entries.Count > 2000 || archive.Entries.Sum(entry => entry.Length) > 32L * 1024 * 1024 ||
             archive.Entries.Any(entry => entry.Length > 8L * 1024 * 1024) ||
             archive.Entries.Select(entry => entry.FullName).Distinct().Count() != archive.Entries.Count)
             throw new StudyException("VImportLimit");
         var workbook = ReadXml(archive, "xl/workbook.xml");
+        // Chỉ đọc sheet hiển thị đầu tiên; dòng đầu là nhãn ngôn ngữ của hai cột A/B.
         var sheet = workbook.Descendants().FirstOrDefault(element => element.Name.LocalName == "sheet" &&
             (string?)element.Attribute("state") is not ("hidden" or "veryHidden")) ?? throw new StudyException("VImportInvalid");
         var relationshipId = sheet.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "id")?.Value;
@@ -67,6 +69,7 @@ public sealed class XlsxWorkbook
             var english = reversed ? cells.First : cells.Second;
             var rowNumber = int.TryParse((string?)rows[index].Attribute("r"), out var parsed) ? parsed : index + 1;
             var error = cells.Error ?? (!VocabularyRules.IsValidTerm(vietnamese) || !VocabularyRules.IsValidTerm(english) ? "VTermInvalid" : null);
+            // Giữ cả dòng lỗi và số dòng gốc để preview chỉ ra chỗ cần sửa trong Excel.
             result.Add(new WorkbookRow(rowNumber, vietnamese.Trim(), english.Trim(), error));
         }
         if (result.Count == 0) throw new StudyException("VImportEmpty");
