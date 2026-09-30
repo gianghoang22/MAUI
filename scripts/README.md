@@ -42,6 +42,7 @@ $adb = "$env:LOCALAPPDATA/Android/Sdk/platform-tools/adb.exe"
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/RunWindowsUiRegression.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/RunWindowsCrudRegression.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/RunHomeSearchWindows.ps1
 $env:PYTHONUTF8 = '1'
 python scripts/RunAndroidUiRegression.py
 

@@ -12,6 +12,7 @@ public sealed class HomeViewModel : ViewModelBase, IRefreshable
     private LearningSession? session;
     private string resumeName = "";
     private string search = "";
+    private IReadOnlyList<NamedRow> allClasses = [];
 
     public HomeViewModel(IVocabularyRepository repository, IUserInteraction interaction, LocalizationService localization)
         : base(interaction, localization)
@@ -19,20 +20,30 @@ public sealed class HomeViewModel : ViewModelBase, IRefreshable
         this.repository = repository;
         LibraryCommand = CreateCommand(() => Interaction.NavigateAsync("//library"));
         CreateClassCommand = CreateCommand(() => Interaction.NavigateAsync("//library?create=class"));
-        SearchCommand = CreateCommand(() => Interaction.NavigateAsync($"//library?search={Uri.EscapeDataString(Search.Trim())}"));
+        SearchCommand = new Command(ApplySearch);
         ResumeCommand = CreateCommand(() => Interaction.NavigateAsync("learn"));
     }
 
     public ObservableCollection<NamedRow> RecentDecks { get; } = [];
     public ObservableCollection<NamedRow> Classes { get; } = [];
-    public bool HasRecent => RecentDecks.Count > 0;
+    public bool HasSearch => !string.IsNullOrWhiteSpace(Search);
+    public bool HasRecent => !HasSearch && RecentDecks.Count > 0;
     public bool HasClasses => Classes.Count > 0;
     public bool IsEmpty => !HasClasses;
-    public bool CanResume => session is not null;
+    public bool CanResume => !HasSearch && session is not null;
+    public string EmptyHeading => Localization[HasSearch ? "VNoClassesFound" : "VHomeEmptyHeading"];
+    public string EmptyBody => Localization[HasSearch ? "VSearchClasses" : "VHomeEmptyBody"];
     public string ResumeName => resumeName;
     public string ResumeSummary => session is null ? "" : Localization.Format("VHomeProgress", HomeOverview.CompletedQuestions(session), session.Questions.Count);
     public double ResumeProgress => session is null ? 0 : (double)HomeOverview.CompletedQuestions(session) / session.Questions.Count;
-    public string Search { get => search; set => SetProperty(ref search, value ?? ""); }
+    public string Search
+    {
+        get => search;
+        set
+        {
+            if (SetProperty(ref search, value ?? "")) ApplySearch();
+        }
+    }
     public ICommand LibraryCommand { get; }
     public ICommand CreateClassCommand { get; }
     public ICommand SearchCommand { get; }
@@ -48,9 +59,25 @@ public sealed class HomeViewModel : ViewModelBase, IRefreshable
         CollectionUpdates.Apply(RecentDecks, HomeOverview.RecentDecks(data).Select(deck =>
             new NamedRow(deck.Name, cardCounts.GetValueOrDefault(deck.Id), "VCardCount",
                 CreateCommand(() => Interaction.NavigateAsync($"deck?deckId={deck.Id}")), Localization)));
-        CollectionUpdates.Apply(Classes, data.Classes.OrderBy(classroom => classroom.Name).Take(6).Select(classroom =>
+        allClasses = data.Classes.OrderBy(classroom => classroom.Name).Select(classroom =>
             new NamedRow(classroom.Name, deckCounts.GetValueOrDefault(classroom.Id), "VDeckCount",
-                CreateCommand(() => Interaction.NavigateAsync($"class?classId={classroom.Id}")), Localization)));
+                CreateCommand(() => Interaction.NavigateAsync($"class?classId={classroom.Id}")), Localization)).ToList();
+        ApplySearch();
         OnPropertyChanged(null);
     });
+
+    private void ApplySearch()
+    {
+        var query = VocabularySearch.Normalize(Search);
+        CollectionUpdates.Apply(Classes, HasSearch
+            ? allClasses.Where(classroom => VocabularySearch.Normalize(classroom.Name).Contains(query, StringComparison.Ordinal))
+            : allClasses.Take(6));
+        OnPropertyChanged(nameof(HasSearch));
+        OnPropertyChanged(nameof(HasClasses));
+        OnPropertyChanged(nameof(IsEmpty));
+        OnPropertyChanged(nameof(HasRecent));
+        OnPropertyChanged(nameof(CanResume));
+        OnPropertyChanged(nameof(EmptyHeading));
+        OnPropertyChanged(nameof(EmptyBody));
+    }
 }

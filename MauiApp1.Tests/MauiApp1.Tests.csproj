@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls.Core" Version="10.0.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
@@ -17,6 +18,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="Microsoft.Maui" />
+    <Using Include="Microsoft.Maui.Controls" />
+    <Compile Include="..\MauiApp1\ViewModels\HomeViewModel.cs" Link="ViewModels\HomeViewModel.cs" />
+    <Compile Include="..\MauiApp1\ViewModels\LibraryViewModel.cs" Link="ViewModels\LibraryViewModel.cs" />
+    <Compile Include="..\MauiApp1\ViewModels\ViewModelBase.cs" Link="ViewModels\ViewModelBase.cs" />
+    <Compile Include="..\MauiApp1\ViewModels\VocabularyRows.cs" Link="ViewModels\VocabularyRows.cs" />
+    <Compile Include="..\MauiApp1\Services\CollectionUpdates.cs" Link="Services\CollectionUpdates.cs" />
+    <Compile Include="..\MauiApp1\Services\EditorLifecycle.cs" Link="Services\EditorLifecycle.cs" />
+    <Compile Include="..\MauiApp1\Services\IUserInteraction.cs" Link="Services\IUserInteraction.cs" />
+    <Compile Include="..\MauiApp1\Localization\LocalizedObject.cs" Link="Localization\LocalizedObject.cs" />
+    <Compile Include="..\MauiApp1\Localization\LocalizationService.cs" Link="Localization\LocalizationService.cs" />
+    <EmbeddedResource Include="..\MauiApp1\Localization\Strings*.resx" Link="Localization\%(Filename)%(Extension)" ManifestResourceName="MauiApp1.Localization.%(Filename)" />
     <Compile Include="..\MauiApp1\Controls\LayoutMetrics.cs" Link="Controls\LayoutMetrics.cs" />
     <Compile Include="..\MauiApp1\Services\HomeOverview.cs" Link="Services\HomeOverview.cs" />
     <None Include="..\MauiApp1\Views\HomePage.xaml" Link="Design\HomePage.xaml" CopyToOutputDirectory="PreserveNewest" />

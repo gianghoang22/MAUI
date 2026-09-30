@@ -45,8 +45,8 @@
                 </VerticalStackLayout>
                 <Border Style="{StaticResource InsetCard}" Padding="20" IsVisible="{Binding IsEmpty}">
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="{DynamicResource L10n.VHomeEmptyHeading}" Style="{StaticResource SectionHeading}" />
-                        <Label Text="{DynamicResource L10n.VHomeEmptyBody}" Style="{StaticResource MutedText}" />
+                        <Label Text="{Binding EmptyHeading}" Style="{StaticResource SectionHeading}" />
+                        <Label Text="{Binding EmptyBody}" Style="{StaticResource MutedText}" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

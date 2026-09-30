@@ -36,6 +36,8 @@ dotnet run
 
 ## Tính năng
 
+- Tìm kiếm ở Trang chủ lọc tên lớp ngay khi gõ, không phân biệt hoa/thường và dấu tiếng Việt. Khi có từ khóa, tìm trong toàn bộ lớp thay vì chỉ 6 lớp trên dashboard. Enter giữ nguyên trang và kết quả; xóa từ khóa khôi phục dashboard. Nút Mở thư viện vẫn điều hướng riêng.
+
 - Android và Windows mở lớp/bộ từ bằng một lần bấm trên card; nút **...** riêng trên card chỉ chứa sửa/xóa, không kích hoạt mở card. Home có nút **Tiếp tục học** dưới card thống kê khi có phiên đang dở, không còn menu cạnh tiêu đề.
 - Bộ từ hiển thị trực tiếp nút thêm từ, import Excel, lưu, xóa, bắt đầu/tiếp tục học; sao đánh dấu đã thuộc nằm ngoài menu trên từng từ. Màn học không dùng menu action: nghe phát âm, đánh dấu đã thuộc, lật, đã nhớ/chưa nhớ, kiểm tra/tiếp theo, tùy chỉnh và học tiếp đều có nút riêng theo trạng thái. Các nhóm nút tự xuống dòng khi màn hình hẹp; xóa và thay phiên học vẫn cần xác nhận.
 
