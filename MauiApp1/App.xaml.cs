@@ -27,7 +27,9 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        var window = new Window(services.GetRequiredService<AppShell>()) { Title = "VocabMate" };
+        var shell = services.GetRequiredService<AppShell>();
+        var window = new Window(shell) { Title = "VocabMate" };
+        window.SizeChanged += (_, _) => shell.UpdateNavigationLayout(window.Width);
 #if WINDOWS
         window.MinimumWidth = 360;
         window.MinimumHeight = 500;

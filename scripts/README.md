@@ -99,6 +99,20 @@ Windows kiểm tra dấu chọn/accessibility hint, hủy, chọn lại cùng gi
 
 Windows helper hỗ trợ cả picker native cũ và nút mở popup custom mới. Nếu desktop capture không khả dụng, helper thử chụp riêng cửa sổ test bằng PrintWindow; không mở khóa desktop hoặc tương tác với cửa sổ app thật.
 
+## Dashboard layout smoke
+
+Build and run the isolated dashboard test (never use the production application ID):
+
+```powershell
+dotnet build MauiApp1/MauiApp1.csproj -c Release -f net10.0-windows10.0.19041.0 `
+  -p:ApplicationId=com.vocabmate.uialayout20260930 `
+  -p:OutputPath=bin/UiLayoutWindows/ -p:IntermediateOutputPath=obj/UiLayoutWindows/ `
+  -p:AppendTargetFrameworkToOutputPath=false -p:AppendRuntimeIdentifierToOutputPath=false -v:q
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/RunDashboardLayoutWindows.ps1
+```
+
+The script verifies the isolated data path before creating a class, deck and saved study session through the UI. It checks home/create/library/search/resume navigation, avoids duplicate desktop tabs beside the sidebar, and captures 360/520/1360-pixel Windows layouts in light/dark themes. Capture uses `PrintWindow` for the test window only. Test records are retained under the isolated ID; the production data hash must stay unchanged. Evidence is written to `MauiApp1/obj/UiAutomationEvidence/Layout/`.
+
 ## Những gì vẫn cần kiểm tra riêng
 
 Chất lượng/âm thanh TTS thực tế; native share/export end-to-end; thiết bị Android vật lý và phiên bản OS khác; TalkBack/Narrator; font hệ thống lớn; landscape; 2.000 thẻ/10 MB; độ bền nhiều giờ, cạn pin/disk và interruption đặc biệt. Ảnh theme không chứng minh việc dùng nhiều giờ sẽ không mỏi mắt.

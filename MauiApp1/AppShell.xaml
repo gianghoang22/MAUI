@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       x:Class="MauiApp1.AppShell" FlyoutBehavior="Disabled"
+       x:Class="MauiApp1.AppShell" FlyoutBehavior="Disabled" FlyoutWidth="224"
+       FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
        Shell.BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
        Shell.ForegroundColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
        Shell.TitleColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
@@ -11,9 +12,19 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" />
     </Shell.BackButtonBehavior>
-    <TabBar>
+    <Shell.FlyoutHeader>
+        <Grid ColumnDefinitions="Auto,*" Padding="20,28,16,24" ColumnSpacing="10">
+            <Image Source="brand_mark.png" WidthRequest="32" HeightRequest="32" AutomationProperties.IsInAccessibleTree="False" />
+            <Label Grid.Column="1" Text="VocabMate" FontFamily="OpenSansSemibold" FontSize="20" VerticalOptions="Center" />
+        </Grid>
+    </Shell.FlyoutHeader>
+    <Shell.FlyoutFooter>
+        <Label Text="{DynamicResource L10n.VLocalFooter}" Style="{StaticResource MutedText}" FontSize="12" Margin="20" />
+    </Shell.FlyoutFooter>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Route="workspace">
+        <ShellContent x:Name="HomeContent" Title="{DynamicResource L10n.VHome}" Icon="nav_home.png" Route="home" />
         <ShellContent x:Name="LibraryContent" Title="{DynamicResource L10n.VLibrary}" Icon="nav_library.png" Route="library" />
         <ShellContent x:Name="HistoryContent" Title="{DynamicResource L10n.VHistory}" Icon="nav_history.png" Route="history" />
         <ShellContent x:Name="SettingsContent" Title="{DynamicResource L10n.SettingsTitle}" Icon="nav_settings.png" Route="settings" />
-    </TabBar>
+    </FlyoutItem>
 </Shell>

@@ -192,6 +192,21 @@
             </VisualStateGroup></VisualStateGroupList>
         </Setter>
     </Style>
+    <DataTemplate x:Key="CompactNamedRowTemplate" x:DataType="vm:NamedRow">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4" MinimumHeightRequest="76">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Button Grid.ColumnSpan="2" Command="{Binding OpenCommand}" Style="{StaticResource CardOpenButton}" BackgroundColor="Transparent" SemanticProperties.Description="{Binding Name}" ToolTipProperties.Text="{Binding Name}" AutomationId="NamedRowOpenButton" />
+                <Border Margin="10,12,0,12" Padding="8" StrokeThickness="0" StrokeShape="RoundRectangle 8" BackgroundColor="{AppThemeBinding Light={StaticResource AccentSubtleLight}, Dark={StaticResource AccentSubtleDark}}" VerticalOptions="Center" InputTransparent="True">
+                    <Image Source="study_stack.png" WidthRequest="22" HeightRequest="22" AutomationProperties.IsInAccessibleTree="False" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" Spacing="4" Padding="0,10,8,10" VerticalOptions="Center" InputTransparent="True">
+                    <Label Text="{Binding Name}" FontFamily="OpenSansSemibold" FontSize="16" LineBreakMode="WordWrap" />
+                    <Label Text="{Binding Summary}" Style="{StaticResource MutedText}" FontSize="13" />
+                </VerticalStackLayout>
+            </Grid>
+            <Button Grid.Column="1" Command="{Binding MenuCommand}" IsVisible="{Binding HasMenu}" Style="{StaticResource ActionMenuButton}" AutomationId="NamedRowActionsButton" />
+        </Grid>
+    </DataTemplate>
     <DataTemplate x:Key="NamedRowTemplate" x:DataType="vm:NamedRow">
         <Border Style="{StaticResource Card}" Padding="8" MinimumHeightRequest="164">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">

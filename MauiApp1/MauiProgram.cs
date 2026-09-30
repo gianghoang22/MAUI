@@ -36,6 +36,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IWorkbookFiles, WorkbookFiles>();
         builder.Services.AddSingleton<IPronunciation, Pronunciation>();
         builder.Services.AddSingleton<LibraryViewModel>();
+        builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<HistoryViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         // Màn chi tiết tạo mới mỗi lần mở, tránh giữ dữ liệu của lớp/bộ từ trước đó.
@@ -45,6 +46,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ImportViewModel>();
         builder.Services.AddTransient<LearningViewModel>();
         builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<HistoryPage>();
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddTransient<ClassPage>();

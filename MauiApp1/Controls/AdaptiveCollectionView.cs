@@ -9,12 +9,14 @@ public sealed class AdaptiveCollectionView : CollectionView
 {
     public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(IEnumerable), typeof(AdaptiveCollectionView), propertyChanged: OnSourceChanged);
     public static readonly BindableProperty TileTemplateProperty = BindableProperty.Create(nameof(TileTemplate), typeof(DataTemplate), typeof(AdaptiveCollectionView), propertyChanged: OnTemplateChanged);
+    public static readonly BindableProperty CompactProperty = BindableProperty.Create(nameof(Compact), typeof(bool), typeof(AdaptiveCollectionView), false, propertyChanged: OnTemplateChanged);
     private readonly ObservableCollection<TileRow> rows = [];
     private INotifyCollectionChanged? observedSource;
     private bool updatePending;
 
     public IEnumerable? Source { get => (IEnumerable?)GetValue(SourceProperty); set => SetValue(SourceProperty, value); }
     public DataTemplate? TileTemplate { get => (DataTemplate?)GetValue(TileTemplateProperty); set => SetValue(TileTemplateProperty, value); }
+    public bool Compact { get => (bool)GetValue(CompactProperty); set => SetValue(CompactProperty, value); }
 
     public AdaptiveCollectionView()
     {
@@ -62,7 +64,7 @@ public sealed class AdaptiveCollectionView : CollectionView
     private void UpdateRows()
     {
         if (TileTemplate is null || Width <= 0) return;
-        var columns = LayoutMetrics.TileColumns(Width);
+        var columns = Compact ? LayoutMetrics.CompactColumns(Width) : LayoutMetrics.TileColumns(Width);
         var items = Source?.Cast<object>().ToList() ?? [];
         var desired = new List<TileRow>();
         for (var offset = 0; offset < items.Count; offset += columns)

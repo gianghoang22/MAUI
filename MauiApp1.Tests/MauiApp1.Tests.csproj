@@ -18,6 +18,11 @@
 
   <ItemGroup>
     <Compile Include="..\MauiApp1\Controls\LayoutMetrics.cs" Link="Controls\LayoutMetrics.cs" />
+    <Compile Include="..\MauiApp1\Services\HomeOverview.cs" Link="Services\HomeOverview.cs" />
+    <None Include="..\MauiApp1\Views\HomePage.xaml" Link="Design\HomePage.xaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\MauiApp1\MainPage.xaml" Link="Design\MainPage.xaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\MauiApp1\AppShell.xaml" Link="Design\AppShell.xaml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\MauiApp1\Localization\Strings*.resx" Link="Design\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\MauiApp1\Themes\StudyTheme.xaml" Link="Design\StudyTheme.xaml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\MauiApp1\Views\SettingsPage.xaml" Link="Design\SettingsPage.xaml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\MauiApp1\Views\DeckPage.xaml" Link="Design\DeckPage.xaml" CopyToOutputDirectory="PreserveNewest" />

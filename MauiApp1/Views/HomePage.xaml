@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MauiApp1.Controls" xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             x:Class="MauiApp1.Views.HomePage" x:DataType="vm:HomeViewModel" Shell.NavBarIsVisible="False" Title="{DynamicResource L10n.VHome}">
+    <Grid x:Name="HomeLayout" RowDefinitions="Auto,*" Padding="20" RowSpacing="20" MaximumWidthRequest="1040" HorizontalOptions="Fill" SizeChanged="OnLayoutSizeChanged">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Border StrokeShape="RoundRectangle 10" Stroke="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}" BackgroundColor="{AppThemeBinding Light={StaticResource FieldLight}, Dark={StaticResource FieldDark}}">
+                <SearchBar Text="{Binding Search}" SearchCommand="{Binding SearchCommand}" Placeholder="{DynamicResource L10n.VSearchClasses}" SemanticProperties.Description="{DynamicResource L10n.VSearchClasses}" AutomationId="HomeSearch" />
+            </Border>
+            <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" WidthRequest="28" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="28" Padding="0,0,0,24">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{DynamicResource L10n.VHome}" Style="{StaticResource PageHeading}" FontSize="28" />
+                    <FlexLayout Direction="Row" Wrap="Wrap">
+                        <Button Text="{DynamicResource L10n.VAddClass}" Command="{Binding CreateClassCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,12,8" AutomationId="HomeCreateClass" />
+                        <Button Text="{DynamicResource L10n.VOpenLibrary}" Command="{Binding LibraryCommand}" Style="{StaticResource QuietButton}" Margin="0,0,0,8" AutomationId="HomeOpenLibrary" />
+                    </FlexLayout>
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding CanResume}">
+                    <Label Text="{DynamicResource L10n.VContinueLearning}" Style="{StaticResource SectionHeading}" />
+                    <Border x:Name="ResumeSurface" Style="{StaticResource Card}" Padding="20" MaximumWidthRequest="620" HorizontalOptions="Start" BackgroundColor="{AppThemeBinding Light={StaticResource HeroBackgroundLight}, Dark={StaticResource HeroBackgroundDark}}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="{Binding ResumeName}" Style="{StaticResource SectionHeading}" TextColor="{AppThemeBinding Light={StaticResource HeroTextLight}, Dark={StaticResource HeroTextDark}}" />
+                                <Label Text="{Binding ResumeSummary}" Style="{StaticResource MutedText}" TextColor="{AppThemeBinding Light={StaticResource HeroMutedLight}, Dark={StaticResource HeroMutedDark}}" />
+                                <ProgressBar Progress="{Binding ResumeProgress}" SemanticProperties.Description="{Binding ResumeSummary}" />
+                                <Button Text="{DynamicResource L10n.VContinueLearning}" Command="{Binding ResumeCommand}" Style="{StaticResource PrimaryButton}" HorizontalOptions="Start" IsEnabled="{Binding IsNotBusy}" AutomationId="ResumeLearningButton" />
+                            </VerticalStackLayout>
+                            <Image x:Name="ResumeArt" Grid.Column="1" Source="study_hero.png" WidthRequest="112" HeightRequest="96" VerticalOptions="Center" AutomationProperties.IsInAccessibleTree="False" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding HasRecent}">
+                    <Label Text="{DynamicResource L10n.VRecentlyStudied}" Style="{StaticResource SectionHeading}" />
+                    <controls:AdaptiveColumns BindableLayout.ItemsSource="{Binding RecentDecks}" BindableLayout.ItemTemplate="{StaticResource CompactNamedRowTemplate}" ColumnSpacing="24" RowSpacing="8" MaximumColumns="2" PreserveColumns="True" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding HasClasses}">
+                    <FlexLayout Direction="Row" Wrap="Wrap" AlignItems="Center" JustifyContent="SpaceBetween">
+                        <Label Text="{DynamicResource L10n.VYourClasses}" Style="{StaticResource SectionHeading}" Margin="0,0,12,0" />
+                        <Button Text="{DynamicResource L10n.VViewAll}" Command="{Binding LibraryCommand}" Style="{StaticResource QuietButton}" AutomationId="HomeViewAll" />
+                    </FlexLayout>
+                    <controls:AdaptiveColumns BindableLayout.ItemsSource="{Binding Classes}" BindableLayout.ItemTemplate="{StaticResource CompactNamedRowTemplate}" ColumnSpacing="24" RowSpacing="8" MaximumColumns="2" PreserveColumns="True" />
+                </VerticalStackLayout>
+                <Border Style="{StaticResource InsetCard}" Padding="20" IsVisible="{Binding IsEmpty}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{DynamicResource L10n.VHomeEmptyHeading}" Style="{StaticResource SectionHeading}" />
+                        <Label Text="{DynamicResource L10n.VHomeEmptyBody}" Style="{StaticResource MutedText}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
