@@ -2,7 +2,7 @@
 
 > Tài liệu này tập trung vào ranh giới giữa ứng dụng MAUI dùng chung và từng nền tảng. Mục tiêu là hiểu target, build, cấu hình native, API thiết bị và cách chẩn đoán khác biệt; không phải học thuộc API Android hay Windows.
 >
-> Ví dụ trong repo dùng VocabMate: .NET MAUI 10 / .NET 10, targets Android và Windows. iOS/Mac Catalyst có thư mục scaffold nhưng không phải target đang build trong project hiện tại.
+> Ví dụ trong repo dùng VocabMate: .NET MAUI 10 / .NET 10, targets Android và Windows. Source tree có bootstrap files iOS/Mac Catalyst, nhưng hai target Apple chưa được khai báo để build trong project hiện tại. Trong MAUI, ứng dụng desktop Apple dùng target **Mac Catalyst**; không nhầm nó với một target `macOS` độc lập.
 
 ## 1. “Platform” có mấy nghĩa?
 
@@ -24,12 +24,10 @@ MAUI cho phép một project định nghĩa nhiều target framework. Khi build,
 
 ```text
 Một project / phần code dùng chung
-             │
-        ┌────┴────┐
-        ▼         ▼
-   Android TFM  Windows TFM
-   build riêng  build riêng
-   APK/AAB      app Windows
+       ├── Android TFM      → build Android
+       ├── Windows TFM      → build Windows
+       ├── iOS TFM          → build iOS (cần toolchain Apple)
+       └── Mac Catalyst TFM → build app macOS (cần toolchain Apple)
 ```
 
 Không có một gói cài đặt duy nhất tự chạy trên mọi OS. Mỗi bản được build cho target cụ thể. Code dùng chung giúp tránh nhân đôi nghiệp vụ, nhưng không xóa khác biệt runtime, input, quyền, giao diện native, vòng đời hoặc cách phát hành.
@@ -40,7 +38,53 @@ Project hiện khai báo `net10.0-android` và `net10.0-windows10.0.19041.0` tro
 
 Các folder `Platforms/Android`, `Platforms/Windows`, `Platforms/iOS`, `Platforms/MacCatalyst` có thể tồn tại do template hoặc lịch sử project. **Folder tồn tại không tự thêm target framework.** Hãy kiểm tra target frameworks trong `.csproj` để biết build nào thực sự nằm trong phạm vi project.
 
-## 3. Ranh giới dùng chung và riêng nền tảng
+## 3. Mỗi platform đưa app vào MAUI như thế nào?
+
+Điểm chung cuối cùng là mỗi bootstrap platform gọi `MauiProgram.CreateMauiApp()`. Điểm khác là OS bắt đầu ở entry point khác nhau. Đọc hai tầng riêng:
+
+1. **Native bootstrap:** OS/host nào nhận lệnh mở app, và lớp platform nào được tạo?
+2. **MAUI bootstrap:** lớp nào gọi factory chung, sau đó tạo `MauiApp1.App`, `Window`, Shell và Page?
+
+```text
+Android OS → MainApplication + MainActivity ─┐
+Windows/WinUI → Platforms/Windows/App ────────┤
+iOS/UIKit → Program.Main → AppDelegate ───────┼→ MauiProgram.CreateMauiApp()
+Mac Catalyst/UIKit → Program.Main → AppDelegate┘       ↓
+                                            MauiApp1.App
+                                                 ↓
+                                      App.CreateWindow() → AppShell → Page
+```
+
+| Nền tảng | Entry point/host | Cầu nối tới MAUI | Ý cần nhớ |
+| --- | --- | --- | --- |
+| Android | Android tạo process/application rồi mở Activity có `MainLauncher = true`. | `MainApplication : MauiApplication` override `CreateMauiApp()`; `MainActivity : MauiAppCompatActivity` là Activity hiển thị UI. | `MainApplication` dựng host/factory MAUI; `MainActivity` mới là Activity launcher. Chúng không phải cùng một vai trò. |
+| Windows | WinUI kích hoạt lớp được khai báo ở `Platforms/Windows/App.xaml`. | `Platforms/Windows/App.xaml.cs` kế thừa `MauiWinUIApplication`, override `CreateMauiApp()`. | Lớp này là `MauiApp1.WinUI.App`, khác với `MauiApp1.App` dùng chung. WinUI/MAUI host nối native window với `Application.CreateWindow()`. |
+| iOS | `Platforms/iOS/Program.cs` gọi `UIApplication.Main(...)`; UIKit khởi chạy delegate. | `Platforms/iOS/AppDelegate.cs` kế thừa `MauiUIApplicationDelegate`, override `CreateMauiApp()`. | `Program.Main` là managed entry point; `AppDelegate` là điểm lifecycle/bootstrap UIKit-MAUI. |
+| Mac Catalyst | `Platforms/MacCatalyst/Program.cs` gọi `UIApplication.Main(...)`; UIKit/Catalyst khởi chạy delegate. | `Platforms/MacCatalyst/AppDelegate.cs` kế thừa `MauiUIApplicationDelegate`, override `CreateMauiApp()`. | Cấu trúc giống iOS nhưng target/runtime là Mac Catalyst; đây là cách MAUI chạy app trên macOS. |
+
+### Android: Application không phải Activity
+
+Trên Android, OS tạo `Application` cho process trước khi tạo Activity. `MainApplication` của MAUI cung cấp `MauiApp` qua `MauiProgram`; sau đó launcher Activity `MainActivity` được Android mở để đưa app ra màn hình. Trong VocabMate, attribute `MainLauncher = true` nằm trên `MainActivity`; `OnCreate` gọi `base.OnCreate()` để MAUI khởi tạo Activity rồi cấu hình resize bàn phím. Vì vậy, diễn đạt chính xác là: **MainApplication khởi tạo MAUI host, MainActivity là cửa vào UI do Android launch.**
+
+### Windows: WinUI App khác MAUI App
+
+Tên `App` bị trùng nhưng namespace/trách nhiệm khác nhau:
+
+- `MauiApp1.WinUI.App` trong `Platforms/Windows` kế thừa `MauiWinUIApplication`; đây là platform bootstrap class mà WinUI kích hoạt.
+- `MauiApp1.App` ở project gốc kế thừa MAUI `Application`; nó chứa cấu hình/tài nguyên chung và override `CreateWindow()`.
+- `MauiProgram` là composition root chung, nơi đăng ký handler, font, service và page rồi trả về `MauiApp`.
+
+Không đọc `Platforms/Windows/App.xaml` như thể đó là page đầu tiên của người dùng. XAML đó khai báo WinUI application host; nội dung MAUI hiển thị được tạo sau khi factory chạy và `MauiApp1.App` tạo Window chứa Shell.
+
+### iOS và Mac Catalyst: UIKit khởi chạy delegate
+
+Hai target có `Program.Main` gọi `UIApplication.Main` với loại `AppDelegate`. Delegate MAUI override factory giống `MainApplication` ở vai trò nối tới `MauiProgram`, nhưng không phải Android Application và không có `MainActivity`. Sau bootstrap, cả hai đi vào application model dùng chung của MAUI. Phần UIKit lifecycle, window/scene và cấu hình native vẫn thuộc từng target.
+
+Source files tồn tại không đồng nghĩa chúng đang được compile: VocabMate hiện chỉ khai báo Android/Windows TFM trong `.csproj`. Muốn build iOS hoặc Mac Catalyst phải thêm target phù hợp, cài workload/toolchain và kiểm chứng cấu hình Apple; đặc biệt build target Apple cần môi trường macOS phù hợp.
+
+Sau khi `MauiProgram.CreateMauiApp()` trả về, luồng shared tiếp tục qua `UseMauiApp<MauiApp1.App>()`, resolve application class, nạp resources và cuối cùng tạo MAUI `Window`/Shell/Page. Trình tự native callback trước điểm hội tụ có khác biệt; không nên giả định bốn OS gọi cùng một callback hoặc cùng một thứ tự lifecycle.
+
+## 4. Ranh giới dùng chung và riêng nền tảng
 
 Hãy đặt mỗi yêu cầu vào đúng một trong ba vùng:
 
@@ -54,7 +98,7 @@ Hãy đặt mỗi yêu cầu vào đúng một trong ba vùng:
 
 **Một phép thử tốt:** nếu quy tắc sản phẩm giống nhau ở Android và Windows thì giữ quy tắc đó ngoài code native. Nếu cách mở file, xin quyền hoặc nhận kết quả khác nhau, bọc phần khác biệt sau một service/adapter có hợp đồng chung.
 
-## 4. API chung không có nghĩa hành vi/điều kiện giống nhau
+## 5. API chung không có nghĩa hành vi/điều kiện giống nhau
 
 Một API MAUI có thể cung cấp cùng điểm gọi trên nhiều target, nhưng mỗi hệ điều hành vẫn có thể:
 
@@ -76,7 +120,7 @@ Vì vậy, khi chọn API, hãy hiểu hợp đồng chứ không chỉ tên met
 
 Các chi tiết cho từng API nằm trong [Platform.md](Platform.md). Tài liệu này tập trung vào cách suy nghĩ xuyên nền tảng.
 
-## 5. Cấu hình OS khác với logic của ứng dụng
+## 6. Cấu hình OS khác với logic của ứng dụng
 
 Hệ điều hành thường cần metadata để biết app có thể làm gì và được khởi chạy thế nào. Cấu hình tương ứng thường nằm ở manifest hoặc project metadata:
 
@@ -102,7 +146,7 @@ Khi Android không tìm thấy service, kiểm tra lần lượt:
 
 Không chữa lỗi manifest bằng cách thêm khai báo tùy đoán; xác nhận điều kiện API và kiểm tra package đã build.
 
-## 6. Ba cách tạo khác biệt theo platform
+## 7. Ba cách tạo khác biệt theo platform
 
 Khi yêu cầu khác theo hệ điều hành, có thể tổ chức khác biệt ở vài mức:
 
@@ -120,7 +164,7 @@ Dùng thông tin platform/capability để chọn nhánh khi app đang chạy. H
 
 Chọn cách đơn giản nhất còn giữ được ranh giới rõ. Một nhánh nhỏ có thể chỉ cần điều kiện build; tích hợp lớn thường đáng được bọc thành adapter. Tránh rải điều kiện OS trong nhiều ViewModel, vì lúc đó logic sản phẩm bị trộn với chi tiết hệ điều hành.
 
-## 7. Native control, handler và API hệ điều hành
+## 8. Native control, handler và API hệ điều hành
 
 Có hai hướng khác nhau thường bị gọi chung là “platform code”:
 
@@ -133,7 +177,7 @@ Handler liên quan đến vòng đời native view. Native object chỉ hợp l�
 
 Xem [Handler.md](Handler.md) cho mô hình handler và [Fundamentals.md](Fundamentals.md) cho lifecycle.
 
-## 8. Vòng đời: OS, Window và control là các cấp khác nhau
+## 9. Vòng đời: OS, Window và control là các cấp khác nhau
 
 Mỗi OS quản lý process, activity/window, focus và native control theo quy tắc riêng. MAUI đưa ra một số abstraction chung, nhưng không làm mọi callback của các OS trở thành tương đương tuyệt đối.
 
@@ -146,7 +190,7 @@ Mỗi OS quản lý process, activity/window, focus và native control theo quy 
 
 Không coi sự kiện “app sắp đóng” là cơ hội duy nhất để ghi dữ liệu. Trên mobile, OS có thể kết thúc process khi app ở nền; trên desktop, window có thể resize, minimize hoặc đóng theo tương tác người dùng. Hãy thiết kế persist và resume theo mức bảo đảm thực tế của API.
 
-## 9. Android và Windows: khác nhau ở trải nghiệm nào?
+## 10. Android và Windows: khác nhau ở trải nghiệm nào?
 
 Không cần học toàn bộ nội bộ OS ngay từ đầu. Hãy bắt đầu từ những khác biệt người dùng nhìn thấy và API mà app thực sự dùng.
 
@@ -159,7 +203,7 @@ Không cần học toàn bộ nội bộ OS ngay từ đầu. Hãy bắt đầu 
 
 Đây là nhóm câu hỏi để kiểm chứng, không phải mô tả đầy đủ mọi phiên bản OS. Luồng cốt lõi VocabMate nên giữ chung; bố cục, input, picker, TTS, theme/system bars và lifecycle cần thử theo target.
 
-## 10. Tài nguyên và identity cũng có phạm vi platform
+## 11. Tài nguyên và identity cũng có phạm vi platform
 
 Một ảnh dùng trong UI chung có thể được khai báo như MAUI image resource; icon launcher, splash screen, native color resource và package identity có thể cần cấu hình build riêng hoặc biến đổi theo target. **File nằm trong repo chưa chắc đã được đóng gói**: build action và metadata `.csproj` quyết định vai trò.
 
@@ -167,7 +211,7 @@ Application ID/package identity cũng có tác động thực tế: OS dùng nó
 
 VocabMate khai báo Android manifest overlay và native colors theo điều kiện target Android; icon, splash, fonts và images khai báo trong project MAUI. Release checklist của project có thêm các lưu ý riêng về application ID, Android signing và Windows packaging.
 
-## 11. Cách chẩn đoán một khác biệt platform
+## 12. Cách chẩn đoán một khác biệt platform
 
 Khi một tính năng chạy trên target này nhưng hỏng/khác trên target kia, đi theo thứ tự sau:
 
@@ -188,7 +232,7 @@ Khi một tính năng chạy trên target này nhưng hỏng/khác trên target 
 | App resume nhưng dữ liệu cũ | Window lifecycle, nguồn dữ liệu, quy tắc refresh và draft đang sửa. |
 | Hoạt động trên emulator nhưng không có thiết bị thật | OS version/provider/hardware/permission hoặc giả định về đường dẫn file. |
 
-## 12. Ma trận kiểm thử theo tính năng
+## 13. Ma trận kiểm thử theo tính năng
 
 Không nhất thiết chạy mọi tổ hợp OS/device cho mọi thay đổi. Chọn ma trận theo rủi ro và capability mà tính năng sử dụng.
 
@@ -203,7 +247,7 @@ Không nhất thiết chạy mọi tổ hợp OS/device cho mọi thay đổi. C
 
 Một build thành công chứng minh code/config biên dịch được, không chứng minh permission, UI hay native capability hoạt động đúng trên thiết bị thật.
 
-## 13. Lộ trình học Platforms
+## 14. Lộ trình học Platforms
 
 ### Bước 1: Đọc target trước
 
@@ -227,7 +271,7 @@ Thêm target không chỉ là thêm chuỗi TFM. Cần workload/toolchain, boots
 
 **Đích đến:** phân biệt được “logic app dùng chung”, “API MAUI có abstraction” và “phần OS-specific”; dự đoán được file/cấu hình/build target nào cần thay khi thêm một nền tảng.
 
-## 14. Hiểu nhầm thường gặp
+## 15. Hiểu nhầm thường gặp
 
 | Hiểu nhầm | Cách hiểu chính xác hơn |
 | --- | --- |
@@ -239,7 +283,7 @@ Thêm target không chỉ là thêm chuỗi TFM. Cần workload/toolchain, boots
 | Build được là chạy đúng trên thiết bị. | Build kiểm tra compile/package; runtime permission, provider, UI và lifecycle cần kiểm tra riêng. |
 | Một lần thêm target là xong đa nền tảng. | Mỗi target tạo trách nhiệm về UX, cấu hình, toolchain, kiểm thử, signing và support. |
 
-## 15. Đọc tiếp trong repo
+## 16. Đọc tiếp trong repo
 
 - [MAUI-ban-chat.md](MAUI-ban-chat.md): mô hình tổng thể từ app startup tới luồng dữ liệu và UI.
 - [Platform.md](Platform.md): API thiết bị, App Links và các chủ đề platform cụ thể.

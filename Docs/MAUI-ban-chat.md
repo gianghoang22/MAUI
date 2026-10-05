@@ -21,11 +21,10 @@ Mã ứng dụng dùng chung
   ├─ mô hình Page, Layout, Control
   ├─ binding, resources, điều hướng
   └─ handler và API nền tảng
-       ╱             ╲
-      ▼               ▼
- Android           Windows
- target/build      target/build
- native runtime    native runtime
+  ╱       │          │          ╲
+   ▼        ▼          ▼           ▼
+Android  Windows      iOS      Mac Catalyst
+target   target       target      target
  ```
 
 **Chia sẻ code không đồng nghĩa chia sẻ một binary duy nhất**, và cũng không đảm bảo hình thức hay hành vi pixel-perfect giống nhau. Project vẫn phải được build, cài, chạy và kiểm chứng theo từng nền tảng đích.
@@ -45,19 +44,34 @@ Một lỗi dễ gặp khi học là trộn các lớp này lại. Ví dụ: “
 
 Ứng dụng cần một **composition root**: nơi dựng cấu hình, đăng ký dịch vụ và nối các đối tượng lớn với nhau. Trong project này, `MauiProgram` đăng ký dịch vụ và page; `App` khởi tạo tài nguyên, ngôn ngữ/theme rồi tạo `Window` với `AppShell`.
 
+Luồng chung sau khi nền tảng đã gọi factory của MAUI:
+
 ```text
-Build target Android hoặc Windows
-  → nền tảng khởi chạy app
-  → MAUI dựng MauiApp từ MauiProgram
-  → cấu hình font, handler và dependency registrations
-  → tạo App, nạp application resources
-  → App tạo Window
-  → Window chứa AppShell
+MauiProgram.CreateMauiApp()
+  → builder.UseMauiApp<MauiApp1.App>() + đăng ký DI/handler
+  → build MauiApp
+  → tạo MauiApp1.App và nạp application resources
+  → App.CreateWindow() tạo Window chứa AppShell
   → Shell hiển thị route/page hiện hành
   → Page tạo cây giao diện và kết nối trạng thái
 ```
 
-Đây là luồng khái niệm, không phải thứ tự gọi mọi callback ở mọi nền tảng. Điểm cốt yếu là phân biệt:
+Mỗi hệ điều hành có bootstrap/entry point riêng để đi tới `MauiProgram.CreateMauiApp()`. Trong project này, các file nằm dưới `MauiApp1/Platforms/`; Mac Catalyst là target MAUI cho ứng dụng chạy trên macOS.
+
+| Target | OS/native entry point | Vai trò trong bootstrap |
+| --- | --- | --- |
+| Android | `MainActivity` và `MainApplication` | Android tạo `MainApplication`; MAUI gọi `MainApplication.CreateMauiApp()`. Activity có `MainLauncher = true` là màn hình native được OS mở, kế thừa `MauiAppCompatActivity` và gắn UI MAUI. |
+| Windows | `Platforms/Windows/App.xaml` và `App.xaml.cs` (`MauiWinUIApplication`) | WinUI kích hoạt platform App; override `CreateMauiApp()` gọi factory chung. WinUI/MAUI host quản lý native window và nối nó với `MauiApp1.App.CreateWindow()`. |
+| iOS | `Program.Main` → `UIApplication.Main` → `AppDelegate` | UIKit khởi chạy `MauiUIApplicationDelegate`; delegate override `CreateMauiApp()` để gọi factory chung. |
+| Mac Catalyst | `Program.Main` → `UIApplication.Main` → `AppDelegate` | Cấu trúc bootstrap gần như iOS, nhưng được build/chạy bằng target Mac Catalyst và ứng dụng cửa sổ macOS. |
+
+Android cần phân biệt hai vai trò: **`MainApplication` khởi tạo host MAUI/factory; `MainActivity` là Activity launcher mà Android mở để hiển thị ứng dụng.** Nói “MainApplication khởi động app” có thể đúng theo nghĩa nó tham gia tạo MAUI app, nhưng nó không phải Activity được người dùng nhìn thấy đầu tiên.
+
+Windows cũng có hai lớp tên `App`: `MauiApp1.WinUI.App` trong `Platforms/Windows` là bootstrap WinUI; `MauiApp1.App` ở project gốc là lớp `Application` dùng chung. `CreateMauiApp()` nối bootstrap với MAUI; `MauiProgram` đăng ký cấu hình/dịch vụ; `MauiApp1.App.CreateWindow()` dựng cửa sổ nội dung của app. Đây là ba trách nhiệm khác nhau.
+
+Trong repo hiện tại, `.csproj` chỉ target Android và Windows. Các file iOS/Mac Catalyst có thể có mặt trong source tree, nhưng hai nhánh đó chưa nằm trong build/release hiện hành cho tới khi target frameworks và toolchain được cấu hình. iOS cần môi trường build Apple; Mac Catalyst cũng cần toolchain macOS phù hợp.
+
+Đây là sơ đồ khái niệm; callback chi tiết và cách OS kích hoạt process khác nhau. Điểm cốt yếu là phân biệt:
 
 - **App** đại diện phần ứng dụng chung và tài nguyên cấp app.
 - **Window** là cửa sổ đang hiển thị app; app có thể có lifecycle/window-specific behavior.
