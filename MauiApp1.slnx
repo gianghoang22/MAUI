@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Mobile/">
+    <Project Path="Mobile/MauiBasics.csproj" />
+  </Folder>
   <Project Path="MauiApp1.Tests/MauiApp1.Tests.csproj" />
   <Project Path="MauiApp1/MauiApp1.csproj" />
 </Solution>

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Maui.Controls.Core" Version="10.0.20" />
+    <Using Include="Microsoft.Maui.Controls" />
+    <!-- Link mã thật để test trên .NET, không cần boot Android. -->
+    <Compile Include="../Domain/*.cs" Link="Domain/%(Filename)%(Extension)" />
+    <Compile Include="../Data/*.cs" Link="Data/%(Filename)%(Extension)" />
+    <Compile Include="../ViewModels/ObservableObject.cs" Link="ViewModels/ObservableObject.cs" />
+    <Compile Include="../ViewModels/TaskRow.cs" Link="ViewModels/TaskRow.cs" />
+    <Compile Include="../ViewModels/TasksViewModel.cs" Link="ViewModels/TasksViewModel.cs" />
+  </ItemGroup>
+</Project>

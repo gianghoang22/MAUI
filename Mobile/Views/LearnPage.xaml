@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiBasics.ViewModels"
+             x:Class="MauiBasics.Views.LearnPage" x:DataType="vm:LearnViewModel"
+             Title="Khám phá" SafeAreaEdges="All">
+  <ScrollView>
+    <VerticalStackLayout Padding="24" Spacing="24" MaximumWidthRequest="640" HorizontalOptions="Fill">
+      <VerticalStackLayout Spacing="8">
+        <Label Text="CHẠM ĐỂ HIỂU" Style="{StaticResource MutedLabel}" CharacterSpacing="2" />
+        <Label Text="Một lần chạm.&#10;Một thay đổi." FontSize="32" FontAttributes="Bold" SemanticProperties.HeadingLevel="Level1" />
+        <Label Text="Thử bộ đếm nhỏ để thấy giao diện phản hồi dữ liệu." Style="{StaticResource MutedLabel}" />
+      </VerticalStackLayout>
+      <Border BackgroundColor="{AppThemeBinding Light={StaticResource Tint}, Dark={StaticResource TintDark}}">
+        <VerticalStackLayout Spacing="16">
+          <Label Text="{Binding Count}" FontSize="64" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                 SemanticProperties.Description="{Binding CounterDescription}" AutomationId="CounterValue" />
+          <Button Text="Chạm +1" Command="{Binding IncrementCommand}" AutomationId="IncrementButton" />
+          <Button Text="Đặt lại" Command="{Binding ResetCommand}" Style="{StaticResource SecondaryButton}" AutomationId="ResetCounterButton" />
+          <Label Text="Bộ đếm giữ khi đổi tab; về 0 khi tiến trình app khởi động lại." Style="{StaticResource MutedLabel}" />
+        </VerticalStackLayout>
+      </Border>
+      <VerticalStackLayout Spacing="12">
+        <Label Text="Điều gì vừa xảy ra?" Style="{StaticResource SectionTitle}" />
+        <Label Text="1. Button nhận thao tác chạm." />
+        <Label Text="2. Command tăng Count trong ViewModel." />
+        <Label Text="3. PropertyChanged báo giá trị vừa đổi." />
+        <Label Text="4. Binding đưa Count mới lên Label." />
+      </VerticalStackLayout>
+      <Border>
+        <VerticalStackLayout Spacing="8">
+          <Label Text="Đang chạy trên máy bạn" Style="{StaticResource SectionTitle}" />
+          <Label Text="{Binding DeviceDescription}" AutomationId="DeviceInfo" />
+          <Label Text="DeviceInfo là API C# của MAUI, đọc thông tin từ Android bên dưới." Style="{StaticResource MutedLabel}" />
+        </VerticalStackLayout>
+      </Border>
+      <Label Text="Mở Mobile/README.md để lần theo mã nguồn, từ lúc Android mở app đến lúc dữ liệu được lưu." Style="{StaticResource MutedLabel}" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

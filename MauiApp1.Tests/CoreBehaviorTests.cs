@@ -105,6 +105,26 @@ public sealed class CoreBehaviorTests
         Assert.All(preview.Rows, row => Assert.Null(row.ErrorKey));
     }
 
+    [Theory]
+    [InlineData("VocabMate-template-daily-life.xlsx", 10, 0, 0)]
+    [InlineData("VocabMate-template-travel.xlsx", 10, 0, 0)]
+    [InlineData("VocabMate-template-preview-cases.xlsx", 5, 1, 1)]
+    public async Task SampleWorkbooksAreReadableByImporter(string fileName, int expectedRows, int expectedInvalidRows, int expectedDuplicatePairs)
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "Samples", fileName);
+        await using var stream = File.OpenRead(path);
+
+        var preview = await new XlsxWorkbook().ReadAsync(stream);
+
+        Assert.Equal("vi", preview.FirstLanguage);
+        Assert.Equal("en", preview.SecondLanguage);
+        Assert.Equal(expectedRows, preview.Rows.Count);
+        Assert.Equal(expectedInvalidRows, preview.Rows.Count(row => row.ErrorKey is not null));
+        Assert.Equal(expectedDuplicatePairs, preview.Rows
+            .GroupBy(row => VocabularyRules.PairKey(row.Vietnamese, row.English))
+            .Count(group => group.Count() > 1));
+    }
+
     private sealed class TemporaryDirectory : IDisposable
     {
         public TemporaryDirectory() => Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "vocabmate-tests-" + Guid.NewGuid().ToString("N"));
