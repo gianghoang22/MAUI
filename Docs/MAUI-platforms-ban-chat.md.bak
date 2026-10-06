@@ -218,7 +218,7 @@ App không chỉ mở/đóng. Có nhiều mức lifecycle khác nhau:
 
 | Cấp | Câu hỏi |
 | --- | --- |
-| Process / App | App còn sống không? |
+| Process / App | App còn sống không? | 
 | Window | Cửa sổ đang foreground, background, minimized? |
 | Page | Màn hình nào đang hiện lên? |
 | Handler | control native còn gắn chưa? |
